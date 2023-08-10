@@ -1,0 +1,35 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:html tag="style">
+        .branch-search .responsive.slds-visual-picker__figure.slds-visual-picker__text { 
+        background:url("{!$Resource.location_icon}");
+        }
+    </aura:html>
+    <div class="guest-branch-page-wapper">         
+        <div class="guest-branch-info">
+        	<div class="branch-title">Welcome to DX Financial's Virtual Branch</div>
+            <p class="info-text">
+                Out Virtual branch is specifically designed to give you the service you expect
+                from your local branch while respecting the social distancing recommendations.
+            </p> 
+            <h2 class="branch-sub-title">This 100% digital banking experince allows you to get services like:</h2>
+            <div class="service-type">
+            	<ul> 
+                    <li><img src="{!$Resource.maintenance_icon}" />Account Maintenance Requests</li>
+                    <li><img src="{!$Resource.Application_icon}" />Loan Applications</li>
+                    <li><img src="{!$Resource.Debit_card_icon}" />Debit Card Issues</li>
+                    <li><img src="{!$Resource.Appointment_icon}" />Appointment Scheduling</li>
+                    <li><img src="{!$Resource.Loan_request_icon}" />Loan Forbearance Requests</li>
+                    <li><img src="{!$Resource.Article_icon}" />Text, Chat and Article Searches</li>
+                </ul>
+            </div>
+        </div> 
+        <div class="branch-search">
+            <h2 class="blue-title">Please enter your zip code to find the nearest branch</h2>
+            <lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
+        </div>
+        <div class="help-link">
+            <a href="" >I don't know. Choose for me. </a>
+        </div>
+    </div>
+</aura:component>

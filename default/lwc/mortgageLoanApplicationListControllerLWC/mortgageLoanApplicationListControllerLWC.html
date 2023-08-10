@@ -1,0 +1,40 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div style="box-shadow: 1px 1px 15px #8ca3b7">
+    <lightning-card
+      variant="Narrow"
+      title="My Applications"
+      icon-name="custom:custom18"
+    >
+      <div>
+        <lightning-button
+          label="New application"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={handleNewApplication}
+        ></lightning-button>
+      </div>
+      <div>
+        <lightning-datatable
+          key-field="Id"
+          data={listApplications}
+          columns={column}
+          hide-checkbox-column
+        ></lightning-datatable>
+      </div>
+      <div
+        if:false={isNoData}
+        class="slds-var-m-around_large slds-align_absolute-center"
+      >
+        <p>No items to display.</p>
+      </div>
+    </lightning-card>
+  </div>
+</template>

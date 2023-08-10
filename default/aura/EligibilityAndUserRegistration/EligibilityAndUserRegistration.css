@@ -1,0 +1,42 @@
+.THIS {
+}
+
+.THIS .new-user-container{
+    margin: 20px auto;
+    max-width: 1200px;
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0px;
+}
+
+.THIS .eligibilty-container{    
+    margin: 20px auto;
+    max-width: 1200px;
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0px;
+}
+
+.THIS .cust-table-eligibilty{
+    table-layout: fixed; width: 100%;
+}
+.THIS .cust-table-eligibilty tr td {
+    word-wrap: break-word;
+    padding: 10px;
+    vertical-align: top;
+}
+.THIS .main-container{
+    margin: 20px auto;
+}
+.THIS table.cust-table-eligibilty tr td span.slds-radio {
+    display: inline-block;
+}
+.THIS .success-msg{    
+    text-align: center;
+    padding-top: 20px;
+}
+.THIS .border-top{ border-top: 1px solid #e0e0e0;}
+.THIS legend.slds-form-element__legend.slds-form-element__label {
+    font-weight: normal;    font-size: .8125rem;color:#5d5d5d;
+}
+.THIS .date-width{
+    width:40%
+}

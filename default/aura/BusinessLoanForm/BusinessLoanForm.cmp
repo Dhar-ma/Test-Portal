@@ -1,0 +1,1168 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="BusinessLoanFormController">
+    
+    <aura:attribute name="BusinessLoanProgram" type="object"  />
+    <aura:attribute name="BusinessLoanProgramMap" type="Map"/>
+    <aura:attribute name="BusinessOptions" type="Map" />
+    <aura:attribute name="showFormTypeSelector" type="boolean" default="true"/>
+    <aura:attribute name="selectedBusinessType" type="String" default=""/>
+    
+    <aura:attribute name="IsSelfEmployed" type="boolean" default="false"/>
+    <aura:attribute name="currentTab" type="String" default="0"/>
+    <aura:attribute name="ApplicationQuestion" type="object"  />
+    <aura:attribute name="DeclarationQuestions" type="object"/>
+    <aura:attribute name="Yes_No_options" type="List"/>
+    <aura:attribute name="ResidentialLoanApplication" type="object" /> 
+    <aura:attribute name="LoanApplicant" type="object"  />
+    <aura:attribute name="LoanApplicantMap" type="List"  />
+    <aura:attribute name="NewLoanApplicant" type="object"  />
+    <!--<aura:attribute name="LoanApplicationId" type="String" default=""/>-->
+    <aura:attribute name="showBorrowerForm" type="boolean" default="false"/>
+    
+    <aura:attribute name="PersonalInfoCurrentTab" type="String" default="0"/>
+    <aura:attribute name="currentUser" type="object" />
+    <aura:attribute name="selectedBusinessInfoAccountId" type="String" default=""  />
+    
+    <aura:attribute name="LoanApplicantAddress" type="object"/>
+    <aura:attribute name="LoanApplicantMalingAddress" type="object"/> 
+    <aura:attribute name="LoanApplicantEmployment" type="object"/>
+    <aura:attribute name="currentUserContact" type="object"/>
+    <aura:attribute name="LoanApplicantIncomes" type="object"/>
+    
+    <aura:attribute name="financialDetails" type="object" />
+    <aura:attribute name="showCertificationForm" type="boolean" default="false"/>
+    
+    
+    <aura:attribute name="collateralInfoList" type="object"  />
+     <aura:attribute name="NewCollateralInfo" type="object"  />
+    <aura:attribute name="statusOption" type="List"  />
+    <aura:attribute name="collateralTypes" type="List"  />
+    <aura:attribute name="MaritalStatus" type="List"  />
+    <aura:attribute name="purposeOfLoan" type="Map"/>
+    <aura:attribute name="showCollateralInfoForm" type="boolean" default="false"/>
+    <aura:attribute name="requiredDocumentIds" type="String" />
+    
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:handler name="change" value="{!v.selectedBusinessInfoAccountId}" 
+                  action="{!c.handleBusinessAccountChange}"/>
+    
+    <div class="page-section-box">
+        <article class="slds-card">
+            
+            <div class="slds-text-heading_medium slds-text-align_center header-cust">
+                {!v.BusinessLoanProgram.Name} Application Form
+            </div>
+            <div class="cust-progress-bar">     
+                <lightning:progressIndicator currentStep="{!v.ResidentialLoanApplication.Status}" 
+                                             type="path" variant="base">
+                    <aura:iteration items="{!v.statusOption}" var="option">
+                        <lightning:progressStep label="{!option}" value="{!option}"/>
+                    </aura:iteration>
+                    
+                </lightning:progressIndicator>
+            </div>
+            
+            <div class="main-container">
+                
+                <div class="slds-align_absolute-center" style="display: block; text-align: center; color: rgb(25,17,105);width:75%;">
+                    <div>
+                        <p>
+                            {!v.BusinessLoanProgram.Applicant_Instruction__c}
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="tab-section">
+                    
+                    <lightning:tabset variant="vertical" selectedTabId="{!v.currentTab}">
+                        
+                        <lightning:tab label="Pre App" id="11" class="disabledTab">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Pre App</div>
+                            <div class="tab-container">
+                                <div class="slds-align_absolute-center" style="display: block; text-align: center; padding: 2%;">
+                                    <p style="text-align: justify;">
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                        </lightning:tab>
+                        
+                        <lightning:tab label="1. Instructions" id="0">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Instructions</div>
+                            
+                            
+                            <div class="tab-container">
+                                <div class="slds-align_absolute-center" style="display: block; text-align: center; padding: 2%;">
+                                    <div>
+                                        <p style="text-align: justify;">
+                                            <!--This application is designed to be completed by the main Applicant/Borrower, who will also enter the information for any CoBorrowers with their assistance.  Co-borrower information must also be provided when the income or assets of a person other than Borrower (including Borrower's spouse) will be used as a basis for loan qualification or the income or assets of the Borrower's spouse or other person who has community property rights pursuant to state law will not be used as basis for loan qualification, but his or her liabilities must be considered because the spouse or other person has community property rights pursuant to applicable law and Borrower resides in community property state, the security property is located in a community property state, or the Borrower is relying on the other property located in a community property state as a basis for repayment of the loan.-->
+                                            {!v.BusinessLoanProgram.Loan_Instructions__c}
+                                        </p>
+                                    </div>
+                                    <br/><br/>
+                                    <lightning:input aura:id="read-me" type="checkbox" 
+                                                     label="I have read the above instructions."
+                                                     name="read-me-input1"/>
+                                </div>                        
+                                
+                                <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                    <lightning:button variant="brand" label="Next" title="Next"
+                                                      onclick="{! c.showBusinessInfoTab }"/>
+                                    
+                                    <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                                </div>
+                            </div>                    
+                            
+                        </lightning:tab>
+                        
+                        <lightning:tab label="2. Business Information" id="1">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Business Information</div>
+                            <div class="tab-container">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small" title="Business Information">Business Information</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <c:CustomLookup objectName="Account" fieldName="Name" label="Select Business Name"
+                                                        iconName="standard:account" placeholder="Enter Business Name"
+                                                        value="{!v.selectedBusinessInfoAccountId}"
+                                                        whereClause="{! '(CreatedById=\'' + v.currentUser.Id +'\''
+                                                                     +  ' OR Id = \''+ v.currentUserContact.AccountId +'\')'}" />
+                                        
+                                        <div class="slds-text-color_weak">Note: Please select Business name above or fill below form if it's not available.</div>
+                                        
+                                        <lightning:input aura:id="businessInfo" type="text" 
+                                                         label="Business Legal Name" required="true"
+                                                         value="{!v.ResidentialLoanApplication.Name}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" type="text" 
+                                                         label="Business TIN (EIN, SSN)" required="true"
+                                                         value="{!v.ResidentialLoanApplication.Business_TIN__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" type="text" 
+                                                         label="DBA or Tradename if applicable" required="true"
+                                                         value="{!v.ResidentialLoanApplication.DBA_or_Tradename__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" type="number" max="500"
+                                                         label="Number of Employees (must be 500 or less)" 
+                                                         required="true" value="{!v.ResidentialLoanApplication.Number_of_Employees__c}"/>
+                                        
+                                        <lightning:select  aura:id="businessInfo" label="Business Classification" 
+                                                          required="true"
+                                                          value="{!v.ResidentialLoanApplication.Business_Classification__c}">
+                                            <option value="">--None--</option>
+                                            <option value="Sole Proprietor">Sole Proprietor</option>
+                                            <option value="Partnership">Partnership</option>
+                                            <option value="C-Corp">C-Corp</option>
+                                            <option value="S-Corp">S-Corp</option>
+                                            <option value="LLC">LLC</option>
+                                            <option value="Indepedent Contractor">Indepedent Contractor</option>
+                                            <option value="Eligible self-employed individual">Eligible self-employed individual</option>
+                                            <option value="501(c)(3) nonprofit">501(c)(3) nonprofit</option>
+                                            <option value="501(c)(19) veterans organization">501(c)(19) veterans organization</option>
+                                            <option value="Tribal business (sec. 31(b)(2)(C) of Small Business Act)">
+                                                Tribal business (sec. 31(b)(2)(C) of Small Business Act)</option>
+                                            <option value="Other">Other</option>
+                                        </lightning:select>
+                                        
+                                        <aura:if isTrue="{!v.ResidentialLoanApplication.Business_Classification__c == 'Other'}">          
+                                            <lightning:input aura:id="businessInfo" type="text" 
+                                                             label="Describe Business Classification - 'Other' "
+                                                             value="{!v.ResidentialLoanApplication.Business_Classification_Other__c}"/>
+                                        </aura:if>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="Phone" type="tel" label="Phone" 
+                                                         value="{!v.ResidentialLoanApplication.Business_Phone__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="Fax" type="tel" label="Fax" 
+                                                         value="{!v.ResidentialLoanApplication.Business_Fax__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="Fax" type="url" label="Website" 
+                                                         value="{!v.ResidentialLoanApplication.Business_Website__c}"/>
+                                        
+                                        <lightning:select  aura:id="businessInfo" label="Legal Status" 
+                                                          required="true"
+                                                          value="{!v.ResidentialLoanApplication.Legal_Status__c}">
+                                            <option value="">--None--</option>
+                                            <option value="Partnership">Partnership</option>
+                                            <option value="Corporation">Corporation</option>
+                                            <option value="LLC">LLC</option>
+                                            <option value="Sole Proprietorship">Sole Proprietorship</option>
+                                            <option value="Trust">Trust</option>
+                                            <option value="Non Profit">Non Profit</option>
+                                        </lightning:select>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="taxId" type="number" label="Tax ID Number" 
+                                                         value="{!v.ResidentialLoanApplication.Tax_ID_Number__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="DateBusEstablished" type="date" label="Date Bus. Established" 
+                                                         value="{!v.ResidentialLoanApplication.Date_Bus_Established__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="#OfLocations" type="number" label="# Of Locations" 
+                                                         value="{!v.ResidentialLoanApplication.No_Of_Locations__c}"/>
+                                        
+                                        <lightning:input aura:id="businessInfo" name="AnnualNetIncome" type="number" label="Annual Net Income" 
+                                                         value="{!v.ResidentialLoanApplication.Annual_Net_Income__c}"/>
+                                        
+                                        <h2 id="modal-heading-01" >Business Address</h2>
+                                        
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_3-of-3 slds-p-around_medium">
+                                                <lightning:textarea aura:id="businessInfo" name="Street" label="Street" 
+                                                                    value="{!v.ResidentialLoanApplication.Street__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_2-of-3 slds-p-around_medium">
+                                                <lightning:input aura:id="businessInfo" name="City" type="text" label="City" 
+                                                                 value="{!v.ResidentialLoanApplication.City__c}"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3 slds-p-around_medium">
+                                                <lightning:input aura:id="businessInfo" name="State" type="text" label="State or Province" 
+                                                                 value="{!v.ResidentialLoanApplication.State__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_2-of-3 slds-p-around_medium">
+                                                <lightning:input aura:id="businessInfo" name="PostalCode" type="text" label="PostalCode" 
+                                                                 value="{!v.ResidentialLoanApplication.PostalCode__c}"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3 slds-p-around_medium">
+                                                <lightning:input aura:id="businessInfo" name="Country" type="text" label="Country" 
+                                                                 value="{!v.ResidentialLoanApplication.Country__c}"/>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                    <lightning:button variant="brand" label="Save and Next" 
+                                                      title="Next" onclick="{! c.saveLoanInformation }" />
+                                    
+                                    <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                                </div>
+                            </div>
+                            
+                        </lightning:tab>
+                        
+                        <lightning:tab label="3. Loan Information" id="2" onactive="{!c.getCollateralInfo}">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Loan Information</div>
+                            <div class="tab-container">   
+                                <div style="display:flex;">
+                                    <lightning:input aura:id="loanApp-form" type="number" class="cust-width"
+                                                     label="Requested Loan Amount " required="true" step="0.01"
+                                                     value="{!v.ResidentialLoanApplication.Requested_Loan_Amount__c}"
+                                                     max="10000000"/>
+                                    
+                                </div>
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_2-of-4 slds-p-around_medium">
+                                        <lightning:checkboxGroup aura:id="loanApp-form" name="Purpose_of_Loan"
+                                                                 label="Purpose of Loan"
+                                                                 options="{! v.purposeOfLoan }"
+                                                                 value="{!v.ResidentialLoanApplication.Purpose_of_Loan}"
+                                                                 required="true"/>
+                                        
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4 slds-p-around_medium">
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason Of Expand Product Offering"
+                                                         value="{!v.ResidentialLoanApplication.Expand_Product_Offering_Describe__c}"/><br/>
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason Of Add New Location(s)"
+                                                         value="{!v.ResidentialLoanApplication.Add_New_Location_Description__c}"/><br/>
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason Of Buy Operational Equipment/Assets"
+                                                         value="{!v.ResidentialLoanApplication.Buy_Operational_Assets_Description__c}"/><br/>
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason Of Building Maintainance/Improvements"
+                                                         value="{!v.ResidentialLoanApplication.Building_Maintenance_Description__c}"/><br/>
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason Of Cover Expense During Economic Downturn"
+                                                         value="{!v.ResidentialLoanApplication.Cover_Expense_Description__c}"/><br/>
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason Of Expand Business Operations, Staff And Recruiting"
+                                                         value="{!v.ResidentialLoanApplication.Expand_Business_Operations_Description__c}"/><br/>
+                                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                                         label="Describe Reason if 'Other' selected"
+                                                         value="{!v.ResidentialLoanApplication.OtherLoanPurpose}"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <lightning:input aura:id="loanApp-form" type="checkbox" 
+                                                 label="Add Collateral Info"
+                                                 name="hasCollateralInfo"
+                                                 checked="{!v.ResidentialLoanApplication.hasCollateralInfo__c}"
+                                                 onchange="{!c.setCollateralInfo}"/>
+                                
+                                <aura:if isTrue="{!v.ResidentialLoanApplication.hasCollateralInfo__c}">
+                                    <lightning:card variant="Narrow" title="Collateral Info" iconName="action:add_contact">
+                                        <aura:set attribute="actions">
+                                            <lightning:button label="New" iconName="utility:add" 
+                                                              iconPosition="left" onclick="{!c.addNewCollateralInfo}" />
+                                            
+                                        </aura:set>
+                                        <p class="slds-p-horizontal_small">                                 
+                                            
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout:fixed;">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Action">Action</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Collateral Type">Collateral Type</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Collateral Value">Collateral Value</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Collateral Description">Collateral Description</div>
+                                                        </th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <aura:iteration items="{!v.collateralInfoList}" var="corlateral" indexVar="indx">
+                                                        <tr class="slds-hint-parent">                                                 
+                                                            <td>
+                                                                <div class="slds-truncate">                                                         
+                                                                    <button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-border-filled" 
+                                                                            title="More Options" data-row="{!indx}" onclick="{!c.editCollateralInfo}">
+                                                                        <lightning:Icon iconName="utility:edit" size="x-small"
+                                                                                        alternativeText="edit" title="edit" />
+                                                                        <span class="slds-assistive-text">More options</span>
+                                                                    </button>                                                         
+                                                                </div>
+                                                            </td>
+                                                            <th>
+                                                                <div class="slds-truncate">{!corlateral.Collateral_Type__c}</div>
+                                                            </th>
+                                                            <td>
+                                                                <div class="slds-truncate">{!corlateral.Collateral_Value__c}</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">{!corlateral.Collateral_Description__c}</div>
+                                                            </td>
+                                                        </tr>   
+                                                    </aura:iteration>
+                                                </tbody>
+                                            </table>
+                                        </p>
+                                    </lightning:card>
+                                </aura:if>
+                                
+                                <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                                    <lightning:button variant="brand" label="Next" title="Next" onclick="{!c.saveApplicationLoanInfo}"/>
+                                    
+                                    <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                                </div>        
+                            </div>
+                        </lightning:tab>
+                        
+                        <lightning:tab label="4. Application Questions" id="3" onactive="{!c.getLoanapplicationQuestion}">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Application Questions</div>
+                            <div class="tab-container">     
+                                <table class="cust-table-eligibilty">
+                                    <aura:iteration items="{!v.DeclarationQuestions}" var="ques" indexVar="Indx">
+                                        <aura:if isTrue="{!ques.QuestionType == 'Declaration'}">
+                                            <tr>
+                                                <td>{!ques.Description}</td>
+                                            </tr>
+                                            <td style="width:15%;"> 
+                                                <aura:if isTrue="{!ques.Answer == true}">
+                                                    <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="{!ques.Answer}"  label="Yes" change="{!c.onGroup}" class="slds-radio"/>
+                                                    <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="false"  label="No" change="{!c.onGroup}" class="slds-radio"/>
+                                                    <aura:set attribute="else">
+                                                        <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="{!ques.Answer}"  label="Yes" change="{!c.onGroup}" class="slds-radio"/>
+                                                        <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="true"  label="No" change="{!c.onGroup}" class="slds-radio"/>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </td>
+                                        </aura:if>
+                                        
+                                    </aura:iteration> 
+                                </table>
+                                <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                    <lightning:button variant="brand" label="Save and Next" title="Next" 
+                                                      value="applicantDeclaration" onclick="{!c.saveApplicationDeclaration}"/>
+                                </div>
+                            </div>
+                        </lightning:tab>
+                        
+                        <lightning:tab label="5. Business Owner(s)" id="4">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Business Owner Information</div>
+                            <div class="tab-container">
+                                List all owners of 20% or more of the equity of the Applicant.
+                                <lightning:card variant="Narrow" title="Business Owner Information" iconName="action:add_contact">
+                                    <aura:set attribute="actions">
+                                        <lightning:button label="New" iconName="utility:add" 
+                                                          iconPosition="left" onclick="{!c.showNewBorrowerForm}" />
+                                        
+                                    </aura:set>
+                                    <p class="slds-p-horizontal_small">                                 
+                                        
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout:fixed;">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Action">Action</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="First Name">Name</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Title">SSN</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="% of Ownership">Home Phone</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="TIN (EIN or SSN)">Mobile</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Address">Email</div>
+                                                    </th>                                             
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <aura:iteration items="{!v.LoanApplicant}" var="applicant" indexVar="indx">
+                                                    <tr class="slds-hint-parent">                                                 
+                                                        <td>
+                                                            <div class="slds-truncate">                                                         
+                                                                <button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-border-filled" 
+                                                                        title="More Options" data-row="{!indx}" onclick="{!c.editBorrowerForm}">
+                                                                    <lightning:Icon iconName="utility:edit" size="x-small"
+                                                                                    alternativeText="edit" title="edit" />
+                                                                    <span class="slds-assistive-text">More options</span>
+                                                                </button>                                                         
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <th>
+                                                            <div class="slds-truncate">
+                                                                <a href="javascript:void(0);" tabindex="-1">{!applicant.Name}</a>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.SSN__c}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.Phone__c}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.Mobile__c}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.Email__c}</div>
+                                                        </td>
+                                                    </tr>                                         
+                                                    
+                                                </aura:iteration>
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                                    </p>
+                                </lightning:card>
+                                <div class="slds-text-color_weak">Note: All business owners in total must equal 90% or higher of the total ownership of the business.</div>
+                            </div>
+                            
+                            <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                                <lightning:button variant="brand" label="Submit PreApp" title="PreAppSubmit" 
+                                                  value="ExpenseInfo" onclick="{!c.submitPreApp}"/>
+                                
+                            </div> 
+                        </lightning:tab>
+                        
+                        <lightning:tab label="Full App" id="5" class="disabledTab">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Full App</div>
+                            <div class="tab-container">
+                                <div class="slds-align_absolute-center" style="display: block; text-align: center; padding: 2%;">
+                                    <p style="text-align: justify;">
+                                        After loan applicants have been entered, the PreApp will be submitted for initial review.  The below sections, can be completed after pre-approval, or you can start completing this information at your convenience.
+                                    </p>
+                                </div>
+                            </div>
+                        </lightning:tab>
+                        
+                        <lightning:tab label="1. Financial Statement" id="6" onactive="{!c.getFinancialDetails}">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Financial Statement</div>
+                            <div class="tab-container">
+                                <div class="slds-align_absolute-center" style="display: block; padding: 2%;">
+                                    <lightning:input aura:id="financialStatement" name="cashOnHandInLFCU" type="number" 
+                                                     label="Cash On Hand In Our Institute" value="{!v.ResidentialLoanApplication.Cash_On_Hand_In_LFCU__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="depositInOtherInstitute" type="number" 
+                                                     label="Deposit In Other Institute" value="{!v.ResidentialLoanApplication.Deposit_In_Other_Institute__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="NotesAndAccountDue" type="number" 
+                                                     label="Notes And Accounts Due Me Collectible" value="{!v.ResidentialLoanApplication.Notes_And_Account_Due__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="LifeInsuranceValue" type="number" 
+                                                     label="Cash Value of Life Insurance" value="{!v.ResidentialLoanApplication.Life_Insurance_Value__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="TaxesAccrued" type="number" 
+                                                     label="Taxes Accrued But Unpaid" value="{!v.ResidentialLoanApplication.Taxes_Accrued__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="AsEndorser" type="number" 
+                                                     label="As Endorser, Co-Maker Or Guarantor" value="{!v.ResidentialLoanApplication.As_Endorser__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="legalClaims" type="number" 
+                                                     label="Legal Claims" value="{!v.ResidentialLoanApplication.Legal_Claims__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="specialDebt" type="number" 
+                                                     label="Other Special Debt" value="{!v.ResidentialLoanApplication.Special_Debt__c}"/>
+                                    
+                                    <lightning:input aura:id="financialStatement" name="AmountOfContested" type="number" 
+                                                     label="Amount of Contested Income Tax Liens" value="{!v.ResidentialLoanApplication.Amount_Of_Contested__c}"/>
+                                    
+                                    
+                                    <div class="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small" title="FinancialDetails">Financial Details</span>
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">                               
+                                            
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout:fixed;">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th class="" scope="col" width="60%">
+                                                            <div class="slds-truncate" title="Schedule Type">Schedule Type Financial Total</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Asset">Asset</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Liability">Liability</div>
+                                                        </th>                                     
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="slds-hint-parent"> 
+                                                        <td>
+                                                            <div class="slds-truncate" width="60%">Real Estate</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.AssetScheduleAFinancialValue}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.LiabilityScheduleAFinancialValue}</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="slds-hint-parent"> 
+                                                        <td>
+                                                            <div class="slds-truncate" width="60%">Stock And Bonds</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.AssetScheduleBFinancialValue}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.LiabilityScheduleBFinancialValue}</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="slds-hint-parent"> 
+                                                        <td>
+                                                            <div class="slds-truncate" width="60%">Debts Owed To Banks, Credit Unions</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.AssetScheduleCFinancialValue}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.LiabilityScheduleCFinancialValue}</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="slds-hint-parent"> 
+                                                        <td>
+                                                            <div class="slds-truncate" width="60%">Debts And Accounts Owed To Others</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.AssetScheduleDFinancialValue}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.LiabilityScheduleDFinancialValue}</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="slds-hint-parent"> 
+                                                        <td>
+                                                            <div class="slds-truncate" width="60%">Life Insurance</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.AssetScheduleFFinancialValue}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!v.financialDetails.LiabilityScheduleFFinancialValue}</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                                        <lightning:button variant="brand" label="Save and Next" title="Next" onclick="{!c.saveFinancialStatement}"/>
+                                        
+                                        <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                                    </div> 
+                                </div>
+                            </div>
+                            
+                            
+                        </lightning:tab>
+                        
+                        <lightning:tab label="2. Assets" id="7" >
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Assets</div>
+                            <div class="tab-container"> 
+                                <c:LoanApplicationAssets ResidentialLoanApplication="{!v.ResidentialLoanApplication}"
+                                                         currentTab="{!v.currentTab}"/>
+                            </div> 
+                        </lightning:tab>
+                        
+                        <lightning:tab label="3. Liabilities" id="8" >
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Liabilities</div>
+                            <div class="tab-container"> 
+                                <c:BusinessLoanApplicationLiabilities ResidentialLoanApplication="{!v.ResidentialLoanApplication}"
+                                                                      currentTab="{!v.currentTab}"/>
+                            </div>
+                        </lightning:tab>
+                        
+                        <lightning:tab label="4. Required Document Uploads" id="9">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Required Document Uploads</div>
+                            <div class="tab-container"> 
+                                
+                                <aura:if isTrue="{! and(not(empty(v.requiredDocumentIds)), not(empty(v.ResidentialLoanApplication.Id)) )}">
+                                    <c:requiredFileUpload recordId="{!v.ResidentialLoanApplication.Id}"
+                                                          childLookupRelationshipName=""
+                                                          storageObjectName="Required_Application_Document__c"
+                                                          storageParentLookup="Residential_Loan_Application__c"
+                                                          storageFileTypeLookup="File_Type__c"
+                                                          fileTypeIds="{!v.requiredDocumentIds}">
+                                    </c:requiredFileUpload>
+                                    
+                                    <aura:set attribute="else">
+                                        
+                                        <div class="slds-text-color_weak slds-text-align_center 
+                                                    slds-text-heading_small">
+                                            Please fill the previous sections of the form</div>
+                                        
+                                    </aura:set>
+                                </aura:if>
+                                
+                                <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                    <lightning:button variant="brand" label="Next" title="Next" onclick="{!c.setCertificationTab}"/>
+                                </div>  
+                            </div>
+                            
+                        </lightning:tab>
+                        
+                        <lightning:tab label="5. Certifications And Authorizations" id="10">
+                            
+                            <div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+                                Certifications And Authorizations</div>
+                            <div class="tab-container">
+                                <lightning:card variant="Narrow" title="Certifications And Authorizations" iconName="action:add_contact">
+                                    <aura:set attribute="actions">
+                                        <lightning:button label="New" iconName="utility:add" 
+                                                          iconPosition="left" onclick="{!c.showCertificationForm}" />
+                                        
+                                    </aura:set>
+                                    <p class="slds-p-horizontal_small">                                 
+                                        
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout:fixed;">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Action">Action</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Name">Name</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="SSN">SSN</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Mobile">Mobile</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Email">Email</div>
+                                                    </th>      
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <aura:iteration items="{!v.LoanApplicant}" var="applicant" indexVar="indx">
+                                                    <tr class="slds-hint-parent">                                                 
+                                                        <td>
+                                                            <div class="slds-truncate">                                                         
+                                                                <button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-border-filled" 
+                                                                        title="More Options" data-row="{!indx}" onclick="{!c.editCertificationForm}">
+                                                                    <lightning:Icon iconName="utility:edit" size="x-small"
+                                                                                    alternativeText="edit" title="edit" />
+                                                                    <span class="slds-assistive-text">More options</span>
+                                                                </button>                                                         
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <th>
+                                                            <div class="slds-truncate">
+                                                                <a href="javascript:void(0);" tabindex="-1">{!applicant.Name}</a>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.SSN__c}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.Mobile__c}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="slds-truncate">{!applicant.Email__c}</div>
+                                                        </td>
+                                                    </tr>   
+                                                </aura:iteration>
+                                            </tbody>
+                                        </table>
+                                    </p>
+                                </lightning:card>
+                            </div>
+                            <div class="slds-align_absolute-center">
+                                <lightning:button variant="brand" label="Submit Full App" title="FullAppComplete" 
+                                                  value="PersonalInfo" onclick="{!c.submitFullApp}"/>
+                            </div>
+                            
+                        </lightning:tab>
+                        
+                    </lightning:tabset>
+                </div>
+            </div>
+        </article>
+    </div>
+    
+    <aura:if isTrue="{!v.showBorrowerForm}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideBorrowerForm}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!" title="close" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <aura:if isTrue="{!v.NewLoanApplicant.Name}">
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!v.NewLoanApplicant.Name} Information</h2>
+                        <aura:set attribute="else">
+                            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Borrower Personal Information</h2>
+                        </aura:set>
+                    </aura:if>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="">
+                        <lightning:tabset variant="vertical" selectedTabId="{!v.PersonalInfoCurrentTab}">
+                            <lightning:tab label="Personal Information" id="0">
+                                <div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+                                    Personal Information
+                                </div>
+                                <div class="tab-container">
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="text" required="true"
+                                                     label="First Name" value="{!v.NewLoanApplicant.First_Name__c}"/>
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="text" required="true"
+                                                     label="Last Name" value="{!v.NewLoanApplicant.Last_Name__c}"/>                                            
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="text" 
+                                                     label="Social Security Number" required="true"
+                                                     value="{!v.NewLoanApplicant.SSN__c}"/>
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="number" 
+                                                     label="No. of Dependents" required="true"
+                                                     value="{!v.NewLoanApplicant.DependentCount}"/>
+                                    
+                                    <lightning:select aura:id="PersonalInfo" name="select" label="Marital Status"
+                                                      required="false" value="{!v.NewLoanApplicant.MaritalStatus}">
+                                        
+                                        <aura:iteration items="{!v.MaritalStatus}" var="maritalStatus">
+                                            <option text="{!maritalStatus.label}" value="{!maritalStatus.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="tel" 
+                                                     label="Home Phone" required="true"
+                                                     value="{!v.NewLoanApplicant.Phone__c}"/>
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="tel" 
+                                                     label="Mobile Phone" required="true"
+                                                     value="{!v.NewLoanApplicant.Mobile__c}"/>
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="email" name="Email" 
+                                                     placeholder="youraddress@company.com" required="true"
+                                                     label="Email" value="{!v.NewLoanApplicant.Email__c}"/>
+                                    
+                                    <lightning:input aura:id="PersonalInfo" type="text" name="DriverLicenceNumber" 
+                                                     required="true" label="Driver Licence Number"
+                                                     value="{!v.NewLoanApplicant.Licence_Number__c}"/>
+                                    
+                                    <div class="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small" title="Ownership Info">Ownership Info</span>
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            
+                                            <lightning:input aura:id="PersonalInfo" type="text" 
+                                                             label="Title" required="true"
+                                                             value="{!v.NewLoanApplicant.Title__c}"/>
+                                            
+                                            <lightning:input aura:id="PersonalInfo" type="number" max="100"
+                                                             label="% of Ownership" required="true"
+                                                             value="{!v.NewLoanApplicant.Percent_of_Ownership__c}"/>
+                                            
+                                            <lightning:input aura:id="PersonalInfo" name="OwnerSince" 
+                                                             type="Date" label="Owner Since" 
+                                                             value="{!v.NewLoanApplicant.Owner_Since__c}"/>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                        <lightning:button variant="brand" label="Save and Next" title="Next" 
+                                                          value="PersonalInfo" onclick="{!c.saveLoanApplicantInfo}"/>
+                                    </div>
+                                    
+                                </div>
+                            </lightning:tab>
+                            
+                            <lightning:tab label="Credit Approval" id="1">
+                                <div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+                                    Credit Approval
+                                </div>
+                                <div class="tab-container">
+                                    <p style="text-align: justify;">
+                                        I authorize EMS Financial Services to obtain a consumer credit report on me. EMS Financial Services will use the consumer credit report to “Determine Loan Options”, Upon request, EMS Financial Services will provide me with the name and address of the Consumer Reporting Agency contacted to supply the report. I understand that credit inquiries have the potential to impact my credit score.
+                                    </p>
+                                    <br/>
+                                    <div class="slds-grid">
+                                        <lightning:input aura:id="certification" type="checkbox" 
+                                                         label="I accept"
+                                                         name="Iaccept"
+                                                         checked="{!v.NewLoanApplicant.Approval_Accept__c}"/>
+                                    </div>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <span><lightning:input aura:id="certification"  type="text" required="false" label="Name" value="{!v.NewLoanApplicant.Approval_Name__c}"/></span>
+                                        </div>
+                                        <div class="slds-col">
+                                            <span><lightning:input aura:id="certification"  type="date" name="BirthDate" value="{!v.NewLoanApplicant.BirthDate__c}" label="Date of Birth" /></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                        <lightning:button variant="brand" label="Save and Next" title="Next" 
+                                                          value="CreditApproval" onclick="{!c.saveLoanApplicantInfo}"/>
+                                    </div>
+                                </div>
+                            </lightning:tab>
+                            
+                            <lightning:tab label="Application Questions" id="2">
+                                
+                                <div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+                                    Application Questions</div>
+                                <div class="tab-container">     
+                                    <table class="cust-table-eligibilty">
+                                        <aura:iteration items="{!v.DeclarationQuestions}" var="ques" indexVar="Indx">
+                                            <aura:if isTrue="{!ques.QuestionType == 'Application Question'}">
+                                                <tr>
+                                                    <td>{!ques.Description}</td>
+                                                </tr>
+                                                <td style="width:15%;"> 
+                                                    <aura:if isTrue="{!ques.Answer == true}">
+                                                        <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="{!ques.Answer}"  label="Yes" change="{!c.onGroup}" class="slds-radio"/>
+                                                        <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="false"  label="No" change="{!c.onGroup}" class="slds-radio"/>
+                                                        <aura:set attribute="else">
+                                                            <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="{!ques.Answer}"  label="Yes" change="{!c.onGroup}" class="slds-radio"/>
+                                                            <ui:inputRadio aura:id="applicantDeclaration" name="{!ques.Loan_Declaration_Field}" value="true"  label="No" change="{!c.onGroup}" class="slds-radio"/>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </td>
+                                            </aura:if>
+                                            
+                                        </aura:iteration> 
+                                    </table>
+                                    <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                        <lightning:button variant="brand" label="Save and Next" title="Next" 
+                                                          value="applicantDeclaration" onclick="{!c.saveApplicantQuestions}"/>
+                                    </div>
+                                </div>
+                            </lightning:tab>
+                            
+                            <lightning:tab label="Address Information" id="3">
+                                
+                                <div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+                                    Address Information
+                                </div>
+                                <div class="tab-container"> 
+                                    <aura:if isTrue="{!v.NewLoanApplicant.BorrowerType != 'Borrower'}">
+                                        <lightning:input type="checkbox" 
+                                                         label="Copy From Main Borrower"
+                                                         name="copyBorrowerAddress" onchange="{!c.getBorrowerAddress}"/>
+                                    </aura:if>
+                                    
+                                    <lightning:inputAddress aura:id="AddressInfo" addressLabel="Present Address"
+                                                            streetLabel="Street"
+                                                            cityLabel="City"
+                                                            countryLabel="Country"
+                                                            provinceLabel="State or Province"
+                                                            postalCodeLabel="PostalCode"            
+                                                            required="false"                                                  
+                                                            street="{!v.LoanApplicantAddress.ResidenceStreet}"
+                                                            city="{!v.LoanApplicantAddress.ResidenceCity}"
+                                                            country="{!v.LoanApplicantAddress.ResidenceCountry }"
+                                                            province="{!v.LoanApplicantAddress.ResidenceState}"
+                                                            postalCode="{!v.LoanApplicantAddress.ResidencePostalCode}"
+                                                            />
+                                    
+                                    <lightning:input aura:id="AddressInfo" label="Years at current residence" type="number"  
+                                                     required="false" value="{!v.LoanApplicantAddress.ResidenceYearCount }" >
+                                    </lightning:input>
+                                    <lightning:input aura:id="AddressInfo" label="Months at current residence" type="number" 
+                                                     required="false" value="{!v.LoanApplicantAddress.ResidenceAdditionalMonthCount}" >
+                                    </lightning:input>
+                                    
+                                    <lightning:input aura:id="AddressInfo" type="checkbox" 
+                                                     label="Same as above"
+                                                     name="copyMailingAddress" onclick="{! c.copyAddress}"/>
+                                    
+                                    <lightning:inputAddress aura:id="AddressInfo" addressLabel="Mailing Address"
+                                                            streetLabel="Street"
+                                                            cityLabel="City"
+                                                            countryLabel="Country"
+                                                            provinceLabel="State or Province"
+                                                            postalCodeLabel="PostalCode"            
+                                                            required="false"                                                  
+                                                            street="{!v.LoanApplicantMalingAddress.ResidenceStreet}"
+                                                            city="{!v.LoanApplicantMalingAddress.ResidenceCity}"
+                                                            country="{!v.LoanApplicantMalingAddress.ResidenceCountry }"
+                                                            province="{!v.LoanApplicantMalingAddress.ResidenceState}"
+                                                            postalCode="{!v.LoanApplicantMalingAddress.ResidencePostalCode}"/>
+                                    
+                                    <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                        <lightning:button variant="brand" label="Save and Next" title="Next" 
+                                                          value="AddressInfo" onclick="{!c.saveApplicantAddress}"/>
+                                    </div>
+                                </div>
+                                
+                            </lightning:tab>
+                            
+                            <lightning:tab label="Income Information" id="4">
+                                
+                                <div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+                                    Monthly Income Information
+                                </div>
+                                <div class="tab-container">    
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Base Salary" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Base_Monthly_Salary__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Overtime" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Monthly_Overtime_Amount__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Bonus" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Monthly_Bonus_Amount__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Comission" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Monthly_Commission_Amount__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Dividends/Interest" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Devidends_Interest__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Net Rental Income" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Net_rental_Income__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    <lightning:input aura:id="IncomeInfo" label="Monthly Other Income" type="number" formatter="currency" 
+                                                     required="false" value="{!v.LoanApplicantIncomes.Other_Income__c}" onchange="{!c.calculateTotalIncome}">
+                                    </lightning:input>
+                                    
+                                    <lightning:input name="IncomeInfo" value="{!v.LoanApplicantIncomes.MonthlyIncomeAmount}"
+                                                     type="number" formatter="currency" label="Monthly Income Amount" readonly="true" />
+                                    
+                                    <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                                        <lightning:button variant="brand" label="Add Co-Borrower" title="AddCoBorrower" 
+                                                          value="ExpenseInfo" onclick="{!c.saveApplicantIncomes}"/>
+                                        
+                                        <lightning:button variant="brand" label="Save" title="actionName" 
+                                                          value="IncomeInfo" onclick="{!c.saveApplicantIncomes}"/>
+                                    </div>
+                                </div>
+                                
+                            </lightning:tab>
+                            
+                        </lightning:tabset>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showFormTypeSelector}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" onclick="{!c.closeSelectApplicationType}" alternativeText="close"/>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Select Business Type</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning:select aura:id="loan-type" name="select" label="Select a Business Type"
+                                      required="true" class="cust-padd">
+                        <aura:iteration items="{!v.BusinessOptions}" var="option">
+                            <option text="{!option.key}" value="{!option.value}"></option>
+                        </aura:iteration>
+                    </lightning:select>
+                    <div class="slds-align_absolute-center" style="height:5rem;">
+                        <button class="slds-button slds-button_brand" onclick="{!c.setBusinessType}" >Submit</button>
+                    </div>
+                </div>
+            </div> 
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showCertificationForm}">
+        <section style="background: rgba(0,0,0,0.5);" role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideCertificationForm}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!" title="close" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Certifications And Authorizations</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning:formattedRichText  value="{!v.BusinessLoanProgram.Certification_Description__c}"/>
+                    <br/>
+                    <br/>
+                    
+                    <div class="slds-grid">
+                        <lightning:input aura:id="certification" type="checkbox" 
+                                         label="I accept"
+                                         name="Iaccept"
+                                         checked="{!v.ApplicationQuestion.I_Accept__c}"/>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <span><lightning:input aura:id="certification"  type="text" required="false" label="Name" value="{!v.ApplicationQuestion.Name_On_Certification__c}"/></span>
+                        </div>
+                        <div class="slds-col">
+                            <span><lightning:input aura:id="certification"  type="date" name="BirthDate" value="{!v.ApplicationQuestion.BirthDate__c}" label="Date of Birth" /></span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.hideCertificationForm}">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick="{!c.saveCertificationForm}">Save</button>
+                </footer>
+            </div>
+        </section>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showCollateralInfoForm}">
+    	<section style="background: rgba(0,0,0,0.5);" role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideCollateralInfoForm}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!" title="close" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Collateral Info</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-4 slds-p-around_medium">
+                            <lightning:select aura:id="CollateralInfo" name="select" label="Collateral Type"
+                                              required="false" value="{!v.NewCollateralInfo.Collateral_Type__c}">
+                                <aura:iteration items="{!v.collateralTypes}" var="option">
+                                    <option text="{!option}" value="{!option}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-p-around_medium">
+                            <lightning:input aura:id="CollateralInfo" label="Collateral Value" type="number" formatter="currency" 
+                                             required="false" value="{!v.NewCollateralInfo.Collateral_Value__c}" >
+                            </lightning:input>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-2 slds-p-around_medium">
+                            <lightning:input aura:id="CollateralInfo" type="text" class="cust-width"
+                                             label="Collateral Description"
+                                             value="{!v.NewCollateralInfo.Collateral_Description__c}"/>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button label="Cancel" title="ScheduleAForm" onclick="{! c.hideCollateralInfoForm }"/>
+                    <lightning:button label="Save" title="ScheduleAForm" onclick="{! c.saveCollateralInfo }"/>
+                </footer>
+            </div>
+        </section>
+    </aura:if>    
+    
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

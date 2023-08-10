@@ -1,0 +1,520 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div class="main-container">
+    <div if:true={getcurrentStep1}>
+      <!-- currentStep == 'step-1' -->
+      <div class="slds-text-heading_large">Mortgage Forbearance</div>
+      <div class="inner-contents">
+        <p>Last Updated : 05-07-2020</p>
+        <br /><br />
+        <p>
+          If you are one of the many impacted by the coronavirus pandemic you
+          might need some temporary relief. The COVID-19 payment assistance
+          program will allow you to defer your required mortgage payment for up
+          to three billing cycles.* There are several things you need to
+          consider when taking advantage of the COVID-19 Payment Assisstance
+          Program so please educate yourself and assess your situation before
+          requesting forbearance.
+        </p>
+      </div>
+      <div class="slds-text-align_center" style="padding: 2rem">
+        <div class="slds-text-heading_medium">
+          Learn More &amp; Request Your Forbearance
+        </div>
+        <ul class="slds-has-dividers_around-space Forbearance-opt">
+          <li class="slds-item">
+            <div class="num-dv">1</div>
+            <article class="slds-tile slds-tile_board">
+              <article class="slds-tile slds-media">
+                <div class="slds-media__figure">
+                  <img src={survey} />
+                  <!-- !$ -->
+                </div>
+                <div class="slds-media__body">
+                  <div class="slds-tile__detail">
+                    <dl class="slds-list_horizontal slds-wrap">
+                      <a onclick={showEducateYourself}
+                        >Educate <br />Yourself</a
+                      >
+                    </dl>
+                  </div>
+                </div>
+              </article>
+            </article>
+          </li>
+          <li class="slds-item">
+            <div class="num-dv">2</div>
+            <article class="slds-tile slds-tile_board">
+              <article class="slds-tile slds-media">
+                <div class="slds-media__figure">
+                  <img src={request} />
+                  <!-- !$Resource.Mortgage_Forbearance_Icons + '/request.svg' -->
+                </div>
+                <div class="slds-media__body">
+                  <div class="slds-tile__detail">
+                    <dl class="slds-list_horizontal slds-wrap">
+                      <a onclick={handleSkipPaymentHomeOwner}
+                        >Request <br />Forbearance</a
+                      >
+                    </dl>
+                  </div>
+                </div>
+              </article>
+            </article>
+          </li>
+        </ul>
+        <div class="slds-text-align_center">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/br5EPugsnLs"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen="true"
+          ></iframe>
+        </div>
+
+        <div class="slds-grid slds-gutters img-section">
+          <div class="slds-col" style="max-width: 360px; margin-left: 33%">
+            <img src={jason_briscoe} />
+            <!-- !$Resource.Mortgage_Forbearance_Icons + '/jason_briscoe.png -->
+            <a
+              href="https://www.consumerfinance.gov/ask-cfpb/what-is-forbearance-en-289/"
+            >
+              What is the forbearance process?
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div if:true={getcurrentStep3}>
+      <!-- currentStep == 'step-3' -->
+      <div class="slds-text-heading_large">Forbearance Request</div>
+      <div class="inner-contents">
+        <p>Last Updated : 05-07-2020</p>
+        <br /><br />
+        <div if:true={Sub_Type__c}>
+          <!-- caseRec.Sub_Type__c == 'Homeowner needing to skip payments' -->
+          <p><strong>Homeowner Questionnaire</strong></p>
+          <p>
+            Please select the federally backed mortgage company for your
+            mortgage loan. Please know that the CARES Act only covers about
+            federally backed mortgage loans which is only about 70% of mortgages
+            in the current market.
+          </p>
+
+          <!-- <lightning:select name="select" label=""
+                                      value="{! v.caseRec.Federally_Backed_Mortgage_Type__c}>               
+                        <option value="">--Please select--</option> 
+                        <option value="Fannie Mae or Freddie Mac">Fannie Mae or Freddie Mac</option> 
+                        <option value="Federal Housing Administration (FHA)">Federal Housing Administration (FHA)</option> 
+                        <option value="VA Loans">VA Loans </option>
+                        <option value="USDA Loans">USDA Loans </option>
+                        <option value="HUD">HUD </option>
+                        <option value="I don’t know">I don’t know</option>
+                    </lightning:select> -->
+          <lightning-combobox
+            name="Federally_Backed_Mortgage_Type__c"
+            label=""
+            class="caseRec"
+            value={caseRec.Federally_Backed_Mortgage_Type__c}
+            placeholder="Please select"
+            options={Federally_Backed_Mortgage_Type}
+            onchange={handleChange}
+          ></lightning-combobox>
+        </div>
+
+        <lightning-radio-group
+          name="radioGroup"
+          label="Is your mortgage loan with our organisation?"
+          options={yes_no_options}
+          value={form_data.loanWithDXFinancial}
+          onchange={handleRadioGroup}
+          type="radio"
+        >
+        </lightning-radio-group>
+        <br /><br />
+
+        <div if:true={getloanWithDXFinancialNo}>
+          <!-- form_data.loanWithDXFinancial == 'No' -->
+          <p><strong>How do I know who owns my mortgage?</strong></p>
+          <br /><br />
+          <p>
+            <lightning-formatted-text
+              linkify="true"
+              value="You need to know who owns your mortgage before you can determine if you’re eligible for mortgage relief. 
+                                                                       The place you send or make your payments might be different than they the company that owns your loan."
+            >
+            </lightning-formatted-text>
+            <br /><br />
+            <lightning-formatted-text
+              linkify="true"
+              value="Many mortgages are owned by government-sponsored entities Fannie Mae and Freddie Mac. To find out if your
+                                                                       mortgage is owned by one of these, simply go to Fannie Mae (https://www.knowyouroptions.com/loanlookup)’s 
+                                                                       or Freddie Mac (https://ww3.freddiemac.com/loanlookup/)’s lookup pages and enter your name, 
+                                                                       address and last four digits of your Social Security number."
+            >
+            </lightning-formatted-text>
+            <br /><br />
+            <lightning-formatted-text
+              linkify="true"
+              value="If you don’t find your mortgage there, you’ll need to contact your mortgage servicer
+                                                                       which is the company you make your payments. Usually you can refer to your monthly 
+                                                                       mortgage statement and call the number listed on the statement."
+            >
+            </lightning-formatted-text>
+            <br /><br />
+            <lightning-formatted-text
+              linkify="true"
+              value="If you can’t figure out who owns your loan then you can send a written request to
+                                                                       the loan servicer usually the company you pay each month. The servicer is legally 
+                                                                       obligated to tell you the name, address and telephone number of the loan’s actual owner.
+                                                                       The Consumer Financial Protection Bureau offers a sample letter you can send 
+                                                                       (https://files.consumerfinance.gov/f/201401_cfpb_mortgage_request-information-servicer.doc)."
+            >
+            </lightning-formatted-text>
+          </p>
+        </div>
+
+        <div if:true={loanWithDXFinancial}>
+          <!-- form_data.loanWithDXFinancial == 'Yes' -->
+          <p><strong>Please complete the following information.</strong></p>
+          <br /><br />
+          <lightning-record-edit-form
+            class="caseEditForm"
+            object-api-name="Case"
+            record-type-id="0125w000001PsvFAAS"
+            onload={handleFormLoad}
+            onsuccess={handleCaseSaveSuccess}
+            onsubmit={handleSubmit}
+            onerror={onerror}
+          >
+            <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-1" style="width: 70%">
+                <div if:false={userLoggedIn}>
+                  <!-- !not(v.userLoggedIn) -->
+                  <lightning-input-field
+                    field-name="SuppliedName"
+                    required
+                  ></lightning-input-field>
+                  <lightning-input-field
+                    field-name="SuppliedEmail"
+                    required
+                  ></lightning-input-field>
+                  <lightning-input-field
+                    field-name="SuppliedPhone"
+                    required
+                  ></lightning-input-field>
+                </div>
+                <lightning-input
+                  type="date"
+                  name="Current_Payment_Date__c"
+                  class="caseRec"
+                  label="Current Payment Date"
+                  variant="label-inline"
+                  date-style="short"
+                  value={caseRec.Current_Payment_Date__c}
+                  required
+                ></lightning-input>
+                <lightning-input
+                  type="date"
+                  name="Requested_Payment_Date__c"
+                  label="Requested Payment Date"
+                  variant="label-inline"
+                  class="caseRec"
+                  date-style="short"
+                  value={caseRec.Requested_Payment_Date__c}
+                  required
+                ></lightning-input>
+                <lightning-input-field
+                  field-name="Request_Reason__c"
+                  required
+                ></lightning-input-field>
+
+                <div style="display: none">
+                  <lightning-input-field
+                    data-id="type"
+                    field-name="Type"
+                    required
+                    disabled="true"
+                  ></lightning-input-field>
+                  <lightning-input-field
+                    data-id="sub_type"
+                    field-name="Sub_Type__c"
+                    required
+                  ></lightning-input-field>
+                </div>
+                <lightning-input-field
+                  data-id="subject"
+                  field-name="Subject"
+                  required
+                ></lightning-input-field>
+
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="text-input-id-1">
+                    <abbr class="slds-required" title="required">* </abbr
+                    >Explain the reason for this forbearance request</label
+                  >
+                  <div class="slds-form-element__control">
+                    <lightning-input-field
+                      variant="label-hidden"
+                      field-name="Description"
+                      required
+                    ></lightning-input-field>
+                  </div>
+                </div>
+                <div style="display: none">
+                  <lightning-input-field
+                    data-id="Federally_Backed_Mortgage_Type"
+                    field-name="Federally_Backed_Mortgage_Type__c"
+                  ></lightning-input-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="slds-align_absolute-center" style="height: 3rem">
+              <lightning-button
+                class="slds-m-top_small"
+                variant="brand"
+                type="submit"
+                label="Save"
+              ></lightning-button>
+            </div>
+          </lightning-record-edit-form>
+        </div>
+      </div>
+    </div>
+
+    <div if:true={educateYourself}>
+      <img src={faq_img} />
+      <br /><br />
+      <div>
+        <div class="slds-text-heading_large" style="float: left">
+          Educate Yourself
+        </div>
+        <div style="float: right">
+          <lightning-button
+            variant="success"
+            label="Request Forbearance"
+            title="Request Forbearance"
+            onclick={handleHomeForbearance}
+          ></lightning-button>
+        </div>
+      </div>
+      <br /><br />
+      <div class="inner-contents">
+        <br /><br />
+        <lightning-accordion active-section-name="A">
+          <lightning-accordion-section
+            name="A"
+            label="Are all mortgage providers covered under the CARES Act? "
+          >
+            <div class="accordian-contents">
+              <p>
+                No. Only about 70% of mortgages are federally backed and
+                elibible for assistance under the CARES Act. Federally backed
+                mortgages are defined as mortgages for single-family homes that
+                are:
+              </p>
+
+              <ul style="list-style: disc; margin-left: 2em">
+                <li>Purchased or securitized by Fannie Mae or Freddie Mac;</li>
+                <li>
+                  Insured by the Federal Housing Administration (FHA), including
+                  reverse mortgages or Home Equity Conversion Mortgages (HECMs);
+                </li>
+                <li>
+                  Guaranteed, directly provided by, or insured by the Department
+                  of Veterans Affairs (VA);
+                </li>
+                <li>
+                  Guaranteed, directly provided by, or insured by the Department
+                  of Agriculture (USDA); or
+                </li>
+                <li>
+                  Guaranteed under HUD’s Native American or Native Hawaiian Home
+                  Loan Guarantee programs
+                </li>
+              </ul>
+            </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section
+            name="B"
+            label="How do I know who owns my mortgage? "
+          >
+            <div class="accordian-contents">
+              <p>
+                You need to know who owns your mortgage before you can determine
+                if you’re eligible for mortgage relief. The place you send or
+                make your payments might be different than they the company that
+                owns your loan.
+              </p>
+              <br /><br />
+              <p>
+                Many mortgages are owned by government-sponsored entities Fannie
+                Mae and Freddie Mac. To find out if your mortgage is owned by
+                one of these, simply go to Fannie Mae’s or Freddie Mac’s lookup
+                pages and enter your name, address and last four digits of your
+                Social Security number.
+              </p>
+              <br /><br />
+              <p>
+                If you don’t find your mortgage there, you’ll need to contact
+                your mortgage servicer which is the company you make your
+                payments. Usually you can refer to your monthly mortgage
+                statement and call the number listed on the statement.
+              </p>
+              <br /><br />
+              <p>
+                If you can’t figure out who owns your loan then you can send a
+                written request to the loan servicer usually the company you pay
+                each month. The servicer is legally obligated to tell you the
+                name, address and telephone number of the loan’s actual owner.
+                The Consumer Financial Protection Bureau offers a sample letter
+                you can send.
+              </p>
+            </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section
+            name="C"
+            label="What do I do if my mortgage is not federally backed? "
+          >
+            <div class="accordian-contents">
+              <p>
+                Even though only 70% of all mortgages are federally backed and
+                eligible for assistance many lenders are voluntarily aligning
+                the relief they are providing with the relief provided for the
+                federally backed mortgages.
+              </p>
+            </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section
+            name="D"
+            label="What type of assistance is available for eligible
+                                                                homeowners under this bill? "
+          >
+            <div class="accordian-contents">
+              <p>
+                Homeowners are provided with a foreclosure moratorium of at
+                least 60 days starting on March 18, 2020. This includes the
+                initiation of new foreclosures as well as the continuation of
+                foreclosures that had already been initiated; this does not
+                include vacant or abandoned properties. They are also provided
+                with the right to request and receive forbearance on their
+                mortgage payments for up to 6 months, with the option to extend
+                for an additional 6 months (total max of 1 year), as well as the
+                option to discontinue the forbearance at any time. During the
+                forbearance period, servicers are prohibited from charging fees
+                or interest beyond what the borrower would have had to pay if
+                they were making their payments as scheduled.
+              </p>
+              Source:
+              <a
+                href="https://financialservices.house.gov/news/documentsingle.aspx?DocumentI
+                                             D=406472"
+                >https://financialservices.house.gov/news/documentsingle.aspx?DocumentI
+                D=406472</a
+              >
+            </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section
+            name="E"
+            label="Is a mortgage forbearance mean that I don’t have to pay? "
+          >
+            <div class="accordian-contents">
+              <p>
+                No. A mortgage forebearance is NOT a forgiveness of debt. Anyone
+                who requests and receives a mortgage forbearance from their
+                lender will have to work out a loan modification or repayment
+                plan with the servicer at the end of the forebearance period to
+                resume making payments including missed payments.
+              </p>
+            </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section
+            name="E"
+            label="How will this impact my credit score? "
+          >
+            <div class="accordian-contents">
+              <p>
+                If you are approved for a forbearance, a payment delay, or other
+                payment arrangement with your creditor or servicer, and you are
+                current on your accounts, then the creditor or servicer will
+                continue to report you to the credit rating agencies (or CRAs)
+                as current or up-to-date. In this case, your credit report and
+                score would not be negatively impacted by these non- or delayed
+                payments during the covered period of the arrangement.
+                Unfortunately, if you were already reported to be behind on
+                payments prior to the payment arrangement, the creditor or
+                servicer can continue to report you as late to the CRAs, meaning
+                continued non-payments may be treated negatively on your credit
+                report and score.
+              </p>
+              <br /><br />
+              <p>
+                Federal student loan payments, which are suspended through
+                September 2020, are treated on credit reports as if the payments
+                are made. Therefore, if you are unable to make payments on your
+                federal student loan, non-payments through September 2020 will
+                not negatively impact your credit report and score.
+              </p>
+              Source:
+              <a
+                href="https://financialservices.house.gov/news/documentsingle.aspx?DocumentI
+                                             D=406472"
+              >
+                https://financialservices.house.gov/news/documentsingle.aspx?DocumentI
+                D=406472</a
+              >
+            </div>
+          </lightning-accordion-section>
+        </lightning-accordion>
+      </div>
+    </div>
+  </div>
+  <div if:true={showSuccessMessage}>
+    <section
+      role="dialog"
+      tabindex="-1"
+      class="slds-modal slds-fade-in-open slds-modal_small modal-container"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+    >
+      <div class="slds-modal__container modal-body-content">
+        <button
+          class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+          title="Close"
+          onclick={closeSuccessMessage}
+        >
+          <lightning-icon
+            icon-name="utility:close"
+            variant="inverse"
+            size="x-small"
+          ></lightning-icon>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+        <h1>Thank you!</h1>
+        <h2>We received your request.</h2>
+        <div class="inner-modal-content" id="modal-content-id-1">
+          <p>
+            We are working diligently to process your request the same business
+            day.
+            <br /><br />
+            If you submit your request after 2:00pm, we will start processing
+            <br /><br />
+            by the next business day.
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+</template>

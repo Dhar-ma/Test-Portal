@@ -1,0 +1,19 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />    
+    <div id="LightningComponentid">    </div>
+    <script>
+    console.log('LWC Componenet added in VF page');
+    
+    
+    $Lightning.use("c:testTaker", function() {
+        $Lightning.createComponent("c:candidateLogin",
+          { 
+               
+          },
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</apex:page>

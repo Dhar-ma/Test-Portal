@@ -1,0 +1,88 @@
+<!--
+ - Created by Joe Cadd on 2/31/2020.
+
+ -->
+
+<!--TODO Add form factor dynamic layout styling/sizing-->
+
+<!-- Required File Upload -->
+<template>
+    <!--    <div if:true={cmpData} class="slds-grid slds-wrap">-->
+    <!--        <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-center slds-wrap slds-gutters slds-p-bottom_medium">-->
+    <!--            <template for:each={cmpData.fileStorageInfoList} for:item='storageRecordInfo'>-->
+    <!--                <c-required-file-upload-status-->
+    <!--                        key={storageRecordInfo.fileStorageRecord.Id}-->
+    <!--                        allow-upload-->
+    <!--                        file-storage-info={storageRecordInfo}>-->
+    <!--                </c-required-file-upload-status>-->
+    <!--            </template>-->
+    <!--        </div>-->
+    
+    <!--        <div class="slds-col slds-size_1-of-1">-->
+    <!--            <template for:each={cmpData.fileStorageInfoList} for:item='storageRecordInfo'>-->
+    <!--                <c-required-file-upload-card-->
+    <!--                        key={storageRecordInfo.fileStorageRecord.Id}-->
+    <!--                        allow-upload-->
+    <!--                        file-storage-info={storageRecordInfo}-->
+    <!--                        onreload_component={handleComponentReload}>-->
+    <!--                </c-required-file-upload-card>-->
+    <!--            </template>-->
+    <!--        </div>-->
+    <!--    </div>-->
+        <div class="slds-text-heading_large slds-p-bottom_xx-small">
+            {headerTitle}
+        </div>
+        <div class="slds-text-heading_small slds-p-bottom_small">
+            {headerDescription}
+        </div>
+    
+        <div if:true={cmpData}>
+    <!--        <template iterator:it={cmpData.fileStorageInfoList}>-->
+            <template for:each={cmpData.fileStorageInfoList} for:item='storageRecordInfo'>
+    <!--            <div key={storageRecordInfo.fileStorageRecord.Id}>-->
+                <div key={storageRecordInfo.fileStorageRecord.Id} class="slds-p-bottom_small">
+                    {setRowNumber}
+                    <!--    SHOWS on medium+ size form factor-->
+                    <div class="slds-show_medium slds-grid slds-gutters_direct-xx-small slds-grid_vertical-stretch">
+                        <div class="slds-media__figure">
+                            <div class="slds-progress-ring slds-progress-ring_large">
+                                <div class="slds-progress-ring__content">{getRowNumber}</div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-grow-none">
+                            <c-required-file-upload-status
+                                    file-storage-info={storageRecordInfo}>
+                            </c-required-file-upload-status>
+                        </div>
+                        <div class="slds-col">
+                            <c-required-file-upload-card
+                                    allow-upload
+                                    file-storage-info={storageRecordInfo}
+                                    onreload_component={handleComponentReload}>
+                            </c-required-file-upload-card>
+                        </div>
+                    </div>
+    
+                    <!--    HIDES on medium+ size form factor-->
+                    <div class="slds-hide_medium slds-grid">
+                        <div class="slds-col slds-grow-none">
+                            <div class="slds-media__figure">
+                                <div class="slds-progress-ring slds-progress-ring_large">
+                                    <div class="slds-progress-ring__content">{getRowNumber}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <c-required-file-upload-card
+                                    allow-upload
+                                    file-storage-info={storageRecordInfo}
+                                    onreload_component={handleComponentReload}
+                                    include-status-icon
+                                    row-number={getRowNumber}>
+                            </c-required-file-upload-card>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>

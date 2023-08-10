@@ -1,0 +1,57 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:html tag="style">
+        .slds-col--padded.contentRegion.comm-layout-column {padding: 0;}
+    </aura:html>
+    <div>
+        <div class="page-banner">
+            <img src="{!$Resource.EMFS_Splash + '/EMFS_Splash/banner.png'}" class="banner-img"/>
+            <div class="banner-text">
+                <h1>Let Us Help.</h1>
+                <p>
+                    Handle all of your banking needs anytime, anywhere on any device. We make it easy 
+                    to perform most of your tasks online like performing maintenance, applying for a 
+                    loan, submit various requests related to your accounts, find helpful articles and 
+                    frequently asked questions, just to name a few. You can also collaborate with your 
+                    bank representative online via Live Chat or use the self guided Appointment 
+                    Scheduling for virtual or in- person appointments for your specific request with the
+                    right resource the first time.
+                </p>
+                <a href="/loanportal/s/login/SelfRegister" class="banner-btn">START NOW</a>
+            </div>
+        </div>         
+        <div class="page-content">
+            <h2 class="page-headline">Explore Banking Anywhere</h2>
+            <div class="bank-info-sections">
+                <div class="info-type">
+                    <img src="{!$Resource.EMFS_Splash + '/EMFS_Splash/01.png'}" class="section-img"/>
+                    <h3>Account Maintenance</h3>
+                    <p>
+                        Submit requests or
+                        issues online like a new card,
+                        a skip payment, address/
+                        name info updates, etc.
+                    </p>
+                </div>
+                <div class="info-type">
+                    <img src="{!$Resource.EMFS_Splash + '/EMFS_Splash/03.png'}" class="section-img"/>
+                    <h3>Apply for a Loan</h3>
+                    <p>
+                        Whether you are buying
+                        a new car or new home,
+                        you can do it all here
+                        at your convenience.
+                    </p>
+                </div>
+                <div class="info-type">
+                    <img src="{!$Resource.EMFS_Splash + '/EMFS_Splash/02.png'}" class="section-img"/>
+                    <h3>Receive Other Assistance</h3>
+                    <p>
+                        With Banking Anywhere, you
+                        can take care of a variety of
+                        tasks digitally
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,117 @@
+<template>
+    <div class="relative">
+        <!-- SPINNER -->
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+        </template>
+        <article class="slds-card">
+            <lightning-layout class="slds-card_header slds-p-around_medium custom-header" horizontal-align="spread">
+                <lightning-layout-item flexibility="no-shrink" class="slds-has-flexi-truncate">
+                    <lightning-layout>
+                        <div class="slds-p-right_small">
+                            <div class="custom-icon-container" style={iconStyle}>
+                               <img src={iconName}></img>
+                            </div>
+                            <!-- <lightning-icon icon-name={iconName} title="customIcon" size="small"></lightning-icon>  -->
+                        </div>
+                        <lightning-layout-item class="slds-has-flexi-truncate">
+                            <h2 class="slds-card__header-title">
+                                <a class="slds-card__header-link baseCard__header-title-container" href={titleUrl}>
+                                    <span class="slds-truncate slds-m-right_xx-small" title={title}>{title}</span>
+                                    <!-- <span title="(2)" class="slds-shrink-none slds-m-right_xx-small">{numberOfRecords}</span> -->
+                                </a>
+                            </h2>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <template if:true={records}>
+                <!-- ITEMS -->
+                <lightning-layout multiple-rows class="slds-border__left slds-border__right slds-card__body">
+                    <template for:each={records} for:item="record">
+                        
+                        <lightning-layout-item key={record.Id} size="12" class="slds-var-p-vertical_xx-small slds-var-p-horizontal_medium">
+                            <lightning-record-view-form record-id={record.Id} object-api-name={objectAPIName} onerror={handleError}>
+                            <lightning-layout horizontal-align="spread">
+                                <div class="slds-media__body">
+                                    <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                        <h3 class="slds-tile__title slds-truncate">
+                                            <a href={record.nameurl} tabindex="0" class="flex-wrap-ie11 slds-truncate">
+                                            {record.Name}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-tile__detail">
+                                        <dl class="slds-list_horizontal slds-wrap">
+                                            <template if:true={fieldInfo.fieldOne}>
+                                                <dt class="slds-item_label slds-text-color_weak slds-truncate">
+                                                    {fieldInfo.fieldOne.label}:
+                                                </dt>
+                                                <dd class="slds-item_detail slds-truncate">
+                                                    <lightning-output-field field-name={fieldInfo.fieldOne.apiName} variant="label-hidden" field-class="slds-text-body_regular slds-truncate"></lightning-output-field>
+                                                </dd>
+                                            </template>
+                                            <template if:true={fieldInfo.fieldTwo}>
+                                                <dt class="slds-item_label slds-text-color_weak slds-truncate">
+                                                    {fieldInfo.fieldTwo.label}:
+                                                </dt>
+                                                <dd class="slds-item_detail slds-truncate">
+                                                    <lightning-output-field field-name={fieldInfo.fieldTwo.apiName} variant="label-hidden" field-class="slds-text-body_regular slds-truncate"></lightning-output-field>
+                                                </dd>
+                                            </template>
+                                            <template if:true={fieldInfo.fieldThree}>
+                                                <dt class="slds-item_label slds-text-color_weak slds-truncate">
+                                                    {fieldInfo.fieldThree.label}:
+                                                </dt>
+                                                <dd class="slds-item_detail slds-truncate">
+                                                    <lightning-output-field field-name={fieldInfo.fieldThree.apiName} variant="label-hidden" field-class="slds-text-body_regular slds-truncate"></lightning-output-field>
+                                                </dd>
+                                            </template>
+                                            <template if:true={fieldInfo.fieldFour}>
+                                                <dt class="slds-item_label slds-text-color_weak slds-truncate">
+                                                    {fieldInfo.fieldFour.label}:
+                                                </dt>
+                                                <dd class="slds-item_detail slds-truncate">
+                                                    <lightning-output-field field-name={fieldInfo.fieldFour.apiName} variant="label-hidden" field-class="slds-text-body_regular slds-truncate"></lightning-output-field>
+                                                </dd>
+                                            </template>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <!-- <lightning-button-menu alternative-text="Show menu" menu-alignment="auto" onselect={handleRecordAction} icon-size="x-small" class="slds-dropdown-trigger slds-dropdown-trigger_click">
+                                    <lightning-menu-item value={record.editKey} label="Edit"></lightning-menu-item>
+                                    <lightning-menu-item value={record.deleteKey} label="Delete"></lightning-menu-item>
+                                </lightning-button-menu> -->
+                            </lightning-layout>
+                        </lightning-record-view-form>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+
+                 <!-- FOOTER -->
+                <template if:true={displayViewMore}>
+                    <a href="javascript:void(0)" onclick={handleViewAll}>
+                        <div class="slds-card__footer">
+                            <span class="">
+                                View More
+                            </span>
+                        </div>
+                    </a>       
+                </template> 
+            </template>
+        </article>
+
+        <!-- VERIFY DELETE MODAL -->
+        <!-- <template if:true={showNotificationModal}>
+            <c-notification-modal
+                action-button-label="Delete"
+                center
+                content={deleteModalMessage}
+                onclosemodal={handleCloseModal}
+                onaction={handleDeleteRecord}
+                title={deleteModalTitle}>
+            </c-notification-modal>
+        </template> -->
+    </div>
+</template>

@@ -1,0 +1,32 @@
+.custom-header {
+    background-color: #f3f2f2;
+    border-top-left-radius:.25rem;
+    border-top-right-radius:.25rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+ }
+ 
+.slds-card {
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: 0.25rem;
+}
+
+.slds-card__header-title {
+    font-weight: 700;
+    padding-top: .1875rem;
+}
+
+.relative {
+    position: relative;
+}
+.detail-item {
+    font-size: 0.8125rem !important;
+}
+.custom-icon-container {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--sds-c-icon-radius-border, var(--lwc-borderRadiusMedium,0.25rem));
+}
+.custom-icon {
+    background-image: url(https://fscdemoenv.force.com/img/icon/t4v35/standard/case_120.png);
+}

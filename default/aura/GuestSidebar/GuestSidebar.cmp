@@ -1,0 +1,25 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<div class="left-panel">
+    	<h2 class="left-blue-title">Start Here!</h2>
+        <p class="help-info-txt">What can we help you with today?</p>
+        <img src="{!$Resource.Left_side_img}" class="left-pnl-img"/>
+        <div class="left search-section">
+            <input type="text" /> 
+            <button class="search-icn-btn">
+                <lightning:icon iconName="utility:search" size="x-small" />
+            </button>
+        </div>
+        <h3 class="recent-srch-txt">Recent Searches</h3>
+        <ul class="question-ans-list">
+            <li>
+                <p class="question">What's my routing number?</p>
+                <p>Your routing number is 123456</p>
+            </li>
+            <li>
+                <p class="question">How do i change my address and/or phone number?</p>
+                <p>If you have Online Banking, you can update this information within your Profile
+                under My settings, or you can log a service Request.</p>
+            </li>
+        </ul>
+    </div>
+</aura:component>

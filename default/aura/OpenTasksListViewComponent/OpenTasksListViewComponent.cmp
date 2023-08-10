@@ -1,0 +1,6 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+	<!--<div class="page-section-box">
+        
+    </div>-->
+    <c:ListViewComponent objectInfo="Task" currentListViewName="OpenTasks"/>
+</aura:component>

@@ -1,0 +1,265 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global"
+                controller="EligibilityAndUserRegistrationController">
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/> 
+    
+    <aura:attribute name="form_data" type="object" /> 
+    <aura:attribute name="currentStep" type="String" default="step-3" /> 
+    <aura:attribute name="isEligibleForLoan" type="boolean" default="true"/>
+    <aura:attribute name="errorMsg" type ="String" default = ""/>
+    
+    
+    <aura:attribute name="Yes_No_options" type="List" default="[
+                                                               {'label': 'Yes', 'value': 'Yes'},
+                                                               {'label': 'No', 'value': 'No'}
+                                                               ]"/>
+    <aura:attribute name="US_citizen_options" type="List" default="[
+                                                                   {'label': 'I am U.S. Citizen', 'value': 'I am U.S. Citizen'},
+                                                                   {'label': 'I have Lawful Permanent Resident status', 
+                                                                   'value': 'I have Lawful Permanent Resident status'},
+                                                                   {'label': 'No', 'value': 'No'}
+                                                                   ]"/>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:html tag="style"> 
+        div#centerPanel {
+        width: 100%; 
+        max-width: 520px;
+        text-align: center;
+        min-width: 280px;
+        } 
+        .new-user-container {
+        text-align: left;
+        padding:10px !important;
+        }
+    </aura:html>
+    <article class="slds-card">
+        
+        <div class="main-container">
+            
+            <aura:if isTrue="{!v.currentStep == 'step-1'}">
+                <div class="slds-text-heading_medium slds-text-align_center">Eligibility Form</div>        
+                <div class="eligibilty-container">
+                    
+                    The below questions must be answered for all Business Owners who own 20% or greater of the business as a whole. For example;
+                    If any business owner has to answer the question with a “Yes”, then the entire question has to be answered with a “Yes. 
+                    
+                    <table class="cust-table-eligibilty">
+                        <tr>
+                            <td>                    
+                                1. Is the Applicant or any owner of the Applicant presently suspended, debarred,
+                                proposed for debarment, declared ineligible, voluntarily excluded from participation
+                                in this transaction by any Federal department or agency, or presently involved in any bankruptcy?                   
+                            </td>
+                            <td style="width:15%;">                    
+                                <lightning:radioGroup aura:id="eligibilty-form" name="q1"
+                                                      label="q1"
+                                                      variant="label-hidden"
+                                                      options="{! v.Yes_No_options }"
+                                                      value="{! v.form_data.q1 }"
+                                                      type="radio"
+                                                      required="true"/>
+                            </td>
+                        </tr>            
+                        <tr>
+                            <td>                    
+                                2. Has the Applicant, any owner of the Applicant, or any business owned or controlled by any of them, ever obtained a direct or guaranteed loan from SBA or any other Federal agency that is currently delinquent or has defaulted in the last 7 years and caused a loss to the government?
+                            </td>
+                            <td style="width:15%;">                    
+                                <lightning:radioGroup aura:id="eligibilty-form" name="q2"
+                                                      label="q2"
+                                                      variant="label-hidden"
+                                                      options="{! v.Yes_No_options }"
+                                                      value="{! v.form_data.q2 }"
+                                                      type="radio"
+                                                      required="true"/>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>                    
+                                3.  Is the Applicant (if an individual) or any individual owning 20% or more 
+                                of the equity of the Applicant subject to an indictment, criminal information, 
+                                arraignment, or other means by which formal criminal charges are brought in any jurisdiction, 
+                                or presently incarcerated, or on probation or parole?
+                            </td>
+                            <td style="width:15%;">                    
+                                <lightning:radioGroup aura:id="eligibilty-form" name="q3"
+                                                      label="q3"
+                                                      variant="label-hidden"
+                                                      options="{! v.Yes_No_options }"
+                                                      value="{! v.form_data.q3 }"
+                                                      type="radio"
+                                                      required="true"/>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>                    
+                                4. Within the last 5 years, for any felony, has the Applicant (if an individual) or any owner of the Applicant 1) been convicted; 2) pleaded guilty; 3) pleaded nolo contendere; 4) been placed on pretrial diversion; or 5) been placed on any form of parole or probation (including probation before judgment)?
+                            </td>
+                            <td style="width:15%;">
+                                <lightning:radioGroup aura:id="eligibilty-form" name="q4"
+                                                      label="q4"
+                                                      variant="label-hidden"
+                                                      options="{! v.Yes_No_options }"
+                                                      value="{! v.form_data.q4 }"
+                                                      type="radio"
+                                                      required="true"/>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td>                    
+                                <lightning:radioGroup aura:id="eligibilty-form" name="q5"
+                                                      label="5. Are you resident of U.S.?"
+                                                      options="{!v.US_citizen_options}"
+                                                      value="{! v.form_data.q5 }"
+                                                      type="radio"
+                                                      required="true"/>
+                            </td>
+                        </tr>-->
+                    </table>
+                    
+                    <div class="slds-align_absolute-center border-top" style="height:5rem">
+                        <lightning:button variant="brand" label="Next" title="Next" onclick="{! c.checkEligibility }" />
+                        
+                        <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                    </div>
+                </div>
+            </aura:if>
+            
+            
+            <aura:if isTrue="{!v.currentStep == 'step-2'}">
+                
+                
+                <aura:if isTrue="{!v.isEligibleForLoan}">                
+                    <div class="slds-text-heading_large success-msg">You have passed the initial Eligibility questions for your loan application</div>
+                    
+                    <div class="slds-text-heading_small slds-align_absolute-center" 
+                         style="height:5rem; text-align: center; width: 85%;">
+                       If you have any questions, see the left side bar section of the screen for options for communicating with a representative, and the ability to search common Knowledge Articles for Frequently Asked Questions
+                    </div>
+                </aura:if>
+                
+                <aura:if isTrue="{!not(v.isEligibleForLoan)}">                
+                    <div class="slds-text-heading_large success-msg">Sorry! You're not eligible for loan</div>
+                    
+                    <div class="slds-text-heading_small slds-align_absolute-center" 
+                         style="height:5rem; text-align: center; width: 85%;">
+                        Based on the answers you provided you are not eligible for the loan.<br/>
+                        If you have any questions, see the left side bar section of the screen for options for communicating with a representative, and the ability to search common Knowledge Articles for Frequently Asked Questions
+                    </div>
+                    
+                </aura:if>
+                <div class="slds-align_absolute-center border-top" style="height:5rem">
+                    <aura:if isTrue="{!v.isEligibleForLoan}">  
+                        <lightning:button variant="brand" label="Register as New Applicant" 
+                                          title="Register as New Applicant"
+                                          onclick="{! c.showNewUserForm }"/>
+                        
+                        <lightning:button variant="brand" label="Existing Applicant? Log In here" 
+                                          title="Existing Applicant? Log In here" 
+                                          onclick="{! c.navigateToLogin }"/>
+                    </aura:if>
+                    <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                </div>
+                
+            </aura:if>
+            
+            <aura:if isTrue="{!v.currentStep == 'step-3'}">
+            
+                <div class="slds-text-heading_medium slds-text-align_center">New User</div>        
+                
+                <div class="new-user-container">
+                    
+                    <div class="accordian-section">
+                        <div class="section-title">Contact Information</div>
+                    </div>
+                    
+                    <!--<lightning:input aura:id="user-form" type="text" label="Applicant's business legal name" 
+                                     required="true" value="{!v.form_data.businessName}"/>
+                    <lightning:input aura:id="user-form" type="text" label="Zip code of Business" 
+                                     required="true" value="{!v.form_data.businessZipcode}"/>
+                    <lightning:input aura:id="user-form" type="text" label="Business Phone Number" 
+                                     required="true" value="{!v.form_data.businessPhoneNumber}"/>-->
+                    
+                    <lightning:input aura:id="user-form" type="text" label="First Name" required="true"
+                                     value="{!v.form_data.FirstName}"/>
+                    <lightning:input aura:id="user-form" type="text"  label="Last Name" required="true"
+                                     value="{!v.form_data.LastName}"/>
+                    <lightning:input aura:id="user-form" type="email" label="Email" required="true"
+                                     value="{!v.form_data.Email}"/>
+                    <lightning:input aura:id="user-form" type="tel" label="Mobile Phone" required="true"
+                                     value="{!v.form_data.MobilePhone}"/>
+                    <lightning:input aura:id="user-form" type="Date" label="Birth date" required="true"
+                                     value="{!v.form_data.Birthdate}" dateStyle="short"
+                                     placeholder="MM/DD/YYYY" class="date-width"/>
+                    <lightning:input aura:id="user-form" type="text" limit="4"
+                                     label="Last 4 # of Social Security Number" required="true"
+                                     value="{!v.form_data.Social_Security_Number}"/>
+                    
+                    <div class="slds-align_absolute-center border-top" style="height:5rem">
+                        <lightning:button variant="brand" label="Register" title="Register"
+                                          onclick="{! c.handleNewUserSubmit }" />
+                        
+                        <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                    </div>
+                    
+                </div>
+            
+            </aura:if>
+            
+            <aura:if isTrue="{!v.currentStep == 'step-4'}">
+                
+                <div class="slds-text-heading_large success-msg">Acccount Created</div>
+                
+                <div class="slds-text-heading_small slds-align_absolute-center" 
+                     style="height:5rem; text-align: center; width: 85%;">
+                    
+                    We have created your account and sent you a password reset email.
+                    <br/>                     
+                    Please setup your password and login to this portal.
+                    
+                </div>
+                
+                <div class="slds-align_absolute-center border-top" style="height:5rem">
+                                        
+                    <lightning:button variant="brand" label="Log In" 
+                                      title="Log In" 
+                                      onclick="{! c.navigateToLogin }"/>
+                </div>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.currentStep == 'step-5'}">
+                
+                <div class="slds-text-heading_large success-msg">Enable To Create Account</div>
+                
+                <div class="slds-text-heading_small slds-align_absolute-center" 
+                     style="height:5rem; text-align: center; width: 85%;">
+                    
+                    {!v.errorMsg}
+                    
+                </div>
+                
+                <div class="slds-align_absolute-center border-top" style="height:5rem">
+                                        
+                    <lightning:button variant="brand" label="Try Again" 
+                                      title="Try Again" 
+                                      onclick="{! c.showNewUserForm }"/>
+                </div>
+            </aura:if>
+        </div>
+    </article>
+    
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

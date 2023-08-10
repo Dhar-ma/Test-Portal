@@ -1,0 +1,14 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="objectInfo" type="String" default="Case" />
+    <aura:attribute name="currentListViewName" type="String" default="MyCases"/>
+    <aura:attribute name="iconName" type="String" default="MyCases"/>
+    <div class="page-section-box">
+        <lightning:listView objectApiName="{!v.objectInfo}"
+                            listName="{!v.currentListViewName}"
+                            rows="5"
+                            showSearchBar="false"
+                            showActionBar="false"
+                            enableInlineEdit="false"
+                            showRowLevelActions="false" />
+    </div>
+</aura:component>

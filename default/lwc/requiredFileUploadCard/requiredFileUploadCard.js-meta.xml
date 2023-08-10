@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Required File Upload Card</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Required File Upload Card</masterLabel>
+</LightningComponentBundle>

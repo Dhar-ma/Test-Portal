@@ -1,0 +1,112 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" 
+                controller="WorkGroupTypeSelection">
+    
+    <aura:attribute name="workTypeWorkGroupMap" type="map" />
+    <aura:attribute name="workType" type="List"  />
+    <aura:attribute name="additionalInfoList" type="List" />
+    <aura:attribute name="selectedAdditionalInfo" type="String"/>
+    <aura:attribute name="showWorkTypes" type="boolean" default="true"/>
+    <aura:attribute name="showWorkTypeGroups" type="boolean" default="false"/>
+    <aura:attribute name="workGoups" type="object" />
+    <aura:attribute name="selectedWorkTypeGroup" type="String"/>
+    <aura:attribute name="appointmentTopic" type="String"/>
+    <aura:attribute name="selectedGroupType" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:html tag="style">
+        header.slds-media.slds-media_center.slds-has-flexi-truncate {
+        display: none;
+        }
+    </aura:html>
+      
+
+    <aura:if isTrue="{!v.showWorkTypes}">
+          <div class="slds-text-heading_large slds-text-align_center slds-m-top_small slds-m-bottom_small slds-text-color_default">
+            Select Group Type
+    </div>
+        <fieldset class="slds-form-element">
+            <div class="slds-form-element__control form-content">
+                <aura:iteration items="{!v.workType}" var="type" >
+                    <div class="slds-visual-picker slds-visual-picker_vertical">
+                        <input type="radio" id="{!type}" value="{!type}" name="workTypes" onclick="{!c.showWorkTypeGroupSelection}"/>
+                        <label for="{!type}">
+                            <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                                <span>
+                                    <span class="slds-text-heading_medium slds-m-bottom_x-small">{!type}</span>
+                                </span>
+                            </span>
+                            <span class="slds-icon_container slds-visual-picker__text-check">
+                                
+                            </span>
+                        </label>
+                    </div>
+                </aura:iteration>
+            </div>
+        </fieldset>
+    </aura:if>
+    <aura:if isTrue="{!v.showWorkTypeGroups}">
+            <div class="slds-text-heading_large slds-text-align_center slds-m-top_small slds-m-bottom_small slds-text-color_default">Select Work Group</div>
+        <div class="positionRel">
+            <fieldset class="slds-form-element">
+                <div class="slds-form-element__control form-content">
+                    <aura:iteration items="{!v.workGoups}" var="workGroup" >
+                        
+                        <div class="slds-visual-picker slds-visual-picker_vertical">
+                            <input type="radio" id="{!workGroup.Id}" value="{!workGroup.Name}" name="options" onclick="{!c.showGroupSelection}"/>
+                            <label for="{!workGroup.Id}">
+                                <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                                    <span>
+                                        <span class="slds-text-heading_medium slds-m-bottom_x-small">{!workGroup.Name}</span>
+                                    </span>
+                                </span>
+                                <span class="slds-icon_container slds-visual-picker__text-check check-icn">
+                                    <lightning:icon iconName="utility:check" size="xx-small" />
+                                </span>
+                            </label>
+                        </div>
+                        
+                        <aura:if isTrue="{!v.additionalInfoList.length > 0}">
+                            
+                            <aura:if isTrue="{!(workGroup.Id == v.selectedWorkTypeGroup)}">
+                                <div class="list-view">
+                                    <lightning:checkboxGroup name="Checkbox Group"                                                              
+                                                             options="{!v.additionalInfoList}"
+                                                             value=""
+                                                             onchange="{! c.handleChange }"/>
+                                </div>
+                            </aura:if>
+                            
+                        </aura:if>
+                    </aura:iteration>
+                </div>
+            </fieldset>
+            <lightning:button variant="brand" label="Previous" title="Previous" onclick="{! c.showWorkTypesSection}" class="prv-btn"/>
+        </div>
+        <!--<div class="demo-only">
+            <ul class="slds-has-dividers_around-space">
+                <aura:iteration items="{!v.workGoups}" var="workGroup" >
+                    <li class="slds-item">
+                        <article class="slds-tile slds-tile_board">
+                            <h3 class="slds-tile__title slds-truncate" title="Anypoint Connectors">
+                                                               
+                                <lightning:button variant="base" name="{!workGroup.Id}" label="{!workGroup.Name}" title="{!workGroup.Name}" onclick="{!c.showGroupSelection}" class="slds-m-left_x-small"/>
+                                
+                            </h3>
+                        </article>
+                    </li>
+                    <aura:if isTrue="{!v.additionalInfoList.length > 0}">
+                        
+                        <aura:if isTrue="{!(workGroup.Id == v.selectedWorkTypeGroup)}">
+                            <lightning:checkboxGroup name="Checkbox Group"
+                                                     label="Additional Info"
+                                                     options="{!v.additionalInfoList}"
+                                                     value="{!v.selectedAdditionalInfo}"
+                                                     onchange="{! c.handleChange }"/>
+                        </aura:if>                        
+                    </aura:if>
+                    
+                </aura:iteration>
+            </ul>
+        </div>--> 
+    </aura:if>
+    
+</aura:component>

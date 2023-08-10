@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Estimated_Monthly_Liabilities__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Estimated total monthly payments you make.. (Student loans, auto loans, minimum credit card
+payments, personal loans).
+*Excludes child support and alimony</inlineHelpText>
+    <label>Total Estimated Monthly Liabilities</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

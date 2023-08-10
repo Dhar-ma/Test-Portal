@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Required File Upload</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Required File Upload</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightningCommunity__Default">
+            <property name="headerTitle" type="String" label="Heading title text"/>
+            <property name="headerDescription" type="String" label="Heading description text"/>
+            <property name="parentId" label="Destination Parent Object Id" description="Record Id of the parent object that files are being stored on. Ex: Contact, Account, etc..." type="String"/>
+            <!--            TODO DETERMINE WHICH OF THE 2 BELOW ARE BEST TO USE--><property name="childLookupRelationshipName" label="File Storage Child Lookup Relationship Name" description="" type="String"/>
+            <property name="storageObjectName" label="File Storage Child Object: API Name" description="" type="String"/>
+            <property name="storageParentLookup" label="File Storage Child Object: Lookup to Parent Field API Name" description="" type="String"/>
+            <property name="storageFileTypeLookup" label="File Storage Child Object: File_Type__c Lookup API Name" description="" type="String"/>
+            <!-- #1 (Simplest) - Provided Config Set: If component is supplied with a list of File_Type__c record Id's --><property name="fileTypeIds" label="List of File_Type__c Ids (comma separated)" description="" type="String"/>
+            <!-- #2 - Provided Config Set: Definition/Required File parent and joined object information is entered here (Ex: Case Id w/ Required Documents)  --><!--            <property name="requiredFileParentId" label="" description="" type="text" />--><!--            <property name="requiredFileChildLookupRelationshipName" label="" description="" type="text" />--><!--            <property name="requiredFileTypeLookupApiName" label="" description="" type="text" />--></targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

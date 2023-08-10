@@ -1,0 +1,14 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" 
+                controller="CommunityUtils">
+	<!--Submit Request Attributes -->
+    <aura:attribute name="objDetail" type="Case" default="{'sobjectType' : 'Case'}"/>
+    <aura:attribute name="caseType" type="string" default="Type" />
+    <aura:attribute name="caseReason" type="string" default="Action_Type__c" />
+    <aura:attribute name="productType" type="string" default="Product_Type__c" />
+    <aura:attribute name="listCaseType" type="list" default="[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <c:HomeScreen_Actions listCaseType = "{!v.listCaseType}"/>
+    
+</aura:component>

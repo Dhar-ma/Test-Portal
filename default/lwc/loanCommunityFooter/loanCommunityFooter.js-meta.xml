@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Loan Community Footer</masterLabel>
+    <description>Footer component for the Loan Community</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="fontColor" type="String" label="Font Color" description="An RGB, RGBA, or Hex value for Font Color"/>
+            <property name="backgroundColor" type="String" label="Background Color" description="An RGB, RGBA, or Hex value for Background Color"/>
+            <property name="footerDescription" type="String" label="Footer Description" description="HTML including footer description text"/>
+            <property name="linkSectionOneTitle" type="String" label="Link Section One Header" description="Header for First Section of Links"/>
+            <property name="linkSectionOneLinkOneLabel" type="String" label="Link Section One First Link Label" description="Label for the first link in section one"/>
+            <property name="linkSectionOneLinkOneUrl" type="String" label="Link Section One First Link Url" description="Url for the first link in section one"/>
+            <property name="linkSectionOneLinkTwoLabel" type="String" label="Link Section One Second Link Label" description="Label for the second link in section one"/>
+            <property name="linkSectionOneLinkTwoUrl" type="String" label="Link Section One Second Link Url" description="Url for the second link in section one"/>
+            <property name="linkSectionOneLinkThreeLabel" type="String" label="Link Section One Third Link Label" description="Label for the third link in section one"/>
+            <property name="linkSectionOneLinkThreeUrl" type="String" label="Link Section One Third Link Url" description="Url for the third link in section one"/>
+            <property name="linkSectionTwoTitle" type="String" label="Link Section Two Header" description="Header for Second Section of Links"/>
+            <property name="linkSectionTwoLinkOneLabel" type="String" label="Link Section Two First Link Label" description="Label for the first link in section two"/>
+            <property name="linkSectionTwoLinkOneUrl" type="String" label="Link Section Two First Link Url" description="Url for the first link in section two"/>
+            <property name="linkSectionTwoLinkTwoLabel" type="String" label="Link Section Two Second Link Label" description="Label for the second link in section two"/>
+            <property name="linkSectionTwoLinkTwoUrl" type="String" label="Link Section Two Second Link Url" description="Url for the second link in section two"/>
+            <property name="linkSectionTwoLinkThreeLabel" type="String" label="Link Section Two Third Link Label" description="Label for the third link in section two"/>
+            <property name="linkSectionTwoLinkThreeUrl" type="String" label="Link Section Two Third Link Url" description="Url for the third link in section two"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

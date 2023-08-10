@@ -1,0 +1,70 @@
+.THIS {
+}
+.THIS.left-panel {
+    background: #e8edf0;
+    padding: 20px;
+    height: 100%;
+}
+.THIS h2.left-blue-title {
+    color: #282773;
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+.THIS p.help-info-txt {
+    font-size: .8125rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 6px 0px;
+}
+.THIS img.left-pnl-img {
+    margin: 20px auto;
+    display: inherit;
+}
+.THIS h3.recent-srch-txt {
+    font-size: 1.125rem;
+    padding: 10px 20px;
+}
+.THIS ul.question-ans-list {
+    list-style-type: none;
+    padding: 10px 20px 0px; 
+}
+.THIS ul.question-ans-list li {
+    display: block;
+    border-bottom: 1px solid #a2a2a2;
+    padding: 15px 0px;
+}
+.THIS ul.question-ans-list li p {
+    font-size: .8125rem;
+    color: #000;
+}
+.THIS ul.question-ans-list li p.question {
+   font-weight:bold;    margin-bottom: 8px;
+}
+.THIS ul.question-ans-list li:last-child {
+    border: none;
+}
+.THIS .left.search-section {
+    background: #fff;
+    display: flex;
+    padding: 5px 10px;
+    border-radius:6px; 
+    overflow:hidden;
+    margin: 0 auto 15px; 
+    width: 100%;
+    max-width: 360px;
+}
+.THIS .left.search-section input {
+    font-size: 14px;
+    width: 100%;
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+}
+.THIS .search-icn-btn{background:none;border:none;}
+.THIS .search-icn-btn:hover, .THIS .search-icn-btn:focus { 
+    outline: none;
+}
+.THIS .search-icn-btn:hover svg, .THIS .search-icn-btn:focus svg{
+    fill: #282773;
+}

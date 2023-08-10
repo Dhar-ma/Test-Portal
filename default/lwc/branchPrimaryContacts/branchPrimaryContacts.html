@@ -1,0 +1,125 @@
+<template>
+    <lightning-layout multiple-rows>
+        <template if:true={selectedBranch.Primary_Contact_1__c}>
+            <lightning-layout-item size="12" large-device-size="6" medium-device-size="12" small-device-size="12" 
+                class="primary-contact bottom-space">
+                <div class="primary-contact-container">
+                    <article class="slds-tile slds-tile_board">
+                        <article class="slds-tile slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-avatar src={selectedBranch.Primary_Contact_1__r.MediumPhotoUrl}
+                                    fallback-icon-name="standard:user" variant="circle" size="large"></lightning-avatar>
+                                
+                            </div>
+                            <div class="slds-media__body">
+                                <h3 class="slds-tile__title slds-truncate">
+                                    <a href="javascript:void(0);">{selectedBranch.Primary_Contact_1__r.Name}</a>
+                                </h3>
+                                <div class="slds-tile__detail">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Title">
+                                            Title:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for first label">
+                                            {selectedBranch.Primary_Contact_1__r.Title}</dd>
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Email">
+                                            Email:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for second label">
+                                            {selectedBranch.Primary_Contact_1__r.Email}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </article>                   
+                    </article>
+                </div>
+            </lightning-layout-item>
+        </template>
+        <template if:true={selectedBranch.Primary_Contact_2__c}>
+            <lightning-layout-item size="12" large-device-size="6" medium-device-size="12" small-device-size="12" 
+                class="primary-contact bottom-space">
+                <div class="primary-contact-container">
+                    <article class="slds-tile slds-tile_board">
+                        <article class="slds-tile slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-avatar src={selectedBranch.Primary_Contact_2__r.MediumPhotoUrl} 
+                                    fallback-icon-name="standard:user" variant="circle" size="large"></lightning-avatar>
+                            </div>
+                            <div class="slds-media__body">
+                                <h3 class="slds-tile__title slds-truncate">
+                                    <a href="javascript:void(0);">{selectedBranch.Primary_Contact_2__r.Name}</a>
+                                </h3>
+                                <div class="slds-tile__detail">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Title">
+                                            Title:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for first label">
+                                            {selectedBranch.Primary_Contact_2__r.Title}</dd>
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Email">
+                                            Email:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for second label">
+                                            {selectedBranch.Primary_Contact_2__r.Email}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </article>                   
+                    </article>
+                </div>
+            </lightning-layout-item>
+        </template>
+        <template if:true={selectedBranch.Primary_Contact_3__c}>
+            <lightning-layout-item size="12" large-device-size="6" medium-device-size="12" small-device-size="12" class="primary-contact bottom-space-mobile">
+                <div class="primary-contact-container">
+                    <article class="slds-tile slds-tile_board">
+                        <article class="slds-tile slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-avatar src={selectedBranch.Primary_Contact_3__r.MediumPhotoUrl}
+                                                fallback-icon-name="standard:user"
+                                                variant="circle" size="large"></lightning-avatar>
+                            </div>
+                            <div class="slds-media__body">
+                                <h3 class="slds-tile__title slds-truncate">
+                                    <a href="javascript:void(0);">{selectedBranch.Primary_Contact_3__r.Name}</a>                           
+                                </h3>
+                                <div class="slds-tile__detail">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Title">Title:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for first label">{selectedBranch.Primary_Contact_3__r.Title}</dd>
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Email">Email:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for second label">{selectedBranch.Primary_Contact_3__r.Email}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </article>                   
+                    </article>
+                </div>
+            </lightning-layout-item> 
+        </template>
+        <template if:true={selectedBranch.Primary_Contact_4__c}>
+            <lightning-layout-item size="12" large-device-size="6" medium-device-size="12" small-device-size="12" class="primary-contact">
+                <div class="primary-contact-container">
+                    <article class="slds-tile slds-tile_board">
+                        <article class="slds-tile slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-avatar src={selectedBranch.Primary_Contact_4__r.MediumPhotoUrl}
+                                                fallback-icon-name="standard:user"
+                                                variant="circle" size="large"></lightning-avatar>
+                            </div>
+                            <div class="slds-media__body">
+                                <h3 class="slds-tile__title slds-truncate">
+                                    <a href="javascript:void(0);">{selectedBranch.Primary_Contact_4__r.Name}</a>
+                                </h3>
+                                <div class="slds-tile__detail">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Title">Title:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for first label">{selectedBranch.Primary_Contact_4__r.Title}</dd>
+                                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Email">Email:</dt>
+                                        <dd class="slds-item_detail slds-truncate" title="Description for second label">{selectedBranch.Primary_Contact_4__r.Email}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </article>                   
+                    </article>
+                </div>
+            </lightning-layout-item> 
+        </template>
+    </lightning-layout>
+</template>

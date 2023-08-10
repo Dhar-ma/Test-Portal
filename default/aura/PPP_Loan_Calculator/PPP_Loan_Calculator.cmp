@@ -1,0 +1,156 @@
+<aura:component access="global" >
+    <aura:attribute name="form_data" type="object" />    
+    <aura:attribute name="totalPayrollGrossWages" type="Decimal" />
+    <aura:attribute name="total_Other_Payroll_Costs" type="Decimal" />
+    <aura:attribute name="average_Monthly_Payroll_Costs" type="Decimal" />
+    <aura:attribute name="total_Estimated_Requested_Loan_Amount" type="Decimal" />    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    <aura:html tag="style">   
+        .slds-modal__container {width: 98% !important;}
+        .slds-modal__container lightning-icon.slds-icon-utility-close.slds-icon_container svg {fill: #fff;width: 22px;}
+    </aura:html>
+    <div>
+        <h3 class="note-text">
+            * NOTE:  This applies to small businesses who were negatively impacted by COVID-19 between Feb 12, 2020 to June 30, 2020 Only, and fall within the Small Business Criteria defined in the Paycheck Protection Program.  This is an estimation tool only and some information included in this estimator is subject to change based on ongoing interpretation and issuance of guidance by the SBA and others.  The applicant is responsible for verifying with their accountant to ensure the numbers estimated are accurate.
+        </h3>    
+        <div class="slds-p-horizontal_small">
+            <h2 class="header">PERIOD FOR CALCULATION</h2>
+            <div class="calculate-section section-align-top">            
+                <lightning:input type="date" aura:id="calc-form" name="periodBeginDate" dateStyle="short"
+                                 label="Period Begin" value="{!v.form_data.start_date}" required="true"
+                                 placeholder="MM/DD/YYY"/>
+                <lightning:input type="date" aura:id="calc-form" name="periodEndDate" dateStyle="short"
+                                 label="Period End" value="{!v.form_data.end_date}" required="true"
+                                 placeholder="MM/DD/YYY"/>
+                <p>
+                    Can be either the year of 2019, or last 12 months, or if you are a seasonal employer or have not been in business a full year, enter the time period reporting your annualized earnings
+                </p>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <div class="calculate-section">  
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.totalGS}"
+                                 name="" label="Total of Gross Salary, Wages, Commission, Tips for the period above, excluding the Employer Paid Portion of Federal Payroll Taxes " 
+                                 formatter="currency" step="0.01"/>
+                
+                <p class="collabse-section" aura:id="text-info">
+                    Do not include payments to sole proprietors or independent contractors, if you are a small business that is not a sole proprietor or independent contractor.   If this application is for a sole proprietor or indepependent contractor, you will include your wage, commissions, income, or net earnings from self-employment or similar in this section compensation. 
+                    <br/>
+                    Under the Act, payroll costs are calculated on a gross basis without regard to
+                    (i.e., not including subtractions or additions based on) federal taxes imposed or withheld,
+                    such as the employee’s and employer’s share of Federal Insurance Contributions Act
+                    (FICA) and income taxes required to be withheld from employees. As a result, payroll
+                    costs are not reduced by taxes imposed on an employee and required to be withheld by
+                    the employer, but payroll costs do not include the employer’s share of payroll tax. For
+                    example, an employee who earned $4,000 per month in gross wages, from which $500 in
+                    federal taxes was withheld, would count as $4,000 in payroll costs. The employee would
+                    receive $3,500, and $500 would be paid to the federal government. However, the
+                    employer-side federal payroll taxes imposed on the $4,000 in wages are excluded from
+                    payroll costs under the statute.2
+                    Payroll DOES NOT include: 
+                    Other Tax Exclusions: 
+                    Federal employment taxes imposed or withheld between February 15, 2020 and June 30, 2020, including the employee’s and employer’s share of FICA (Federal Insurance Contributions Act) and Railroad Retirement Act taxes, and income taxes required to be withheld from employee.
+                    <a href="" class="more-info" onclick="{!c.showMoretext}">Read More</a>
+                </p> 
+            </div>
+            <br/>
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.totalGSExceed100K}"
+                                 label="Total of the Amount of Gross Salary/Wages which exceed  $100,000  for Employees who make more than $100,000.00.  "
+                                 formatter="currency" step="0.01"/>
+                
+                
+                <p> 
+                    The Difference Amount of Gross Wages that exceed $100K, 
+                    are excluded and are subtracted from the Total Gross Wages for the period.  
+                    Only $100K of Gross Wages can be included per employee.  
+                    For example if an employee makes $150,000, you would add $50,000 in this section 
+                    for the overage, so it will be subtracted from the Total Gross Wages
+                </p>
+            </div>
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.residenceNotInUSA}"
+                                 label="Total Gross Wages for Employees whose principal place of residence is not in the USA. (excluded)"
+                                 formatter="currency" step="0.01"/>
+                <p> 
+                    Wages for employees who do not live in the USA, are subtracted from the Total 
+                    Gross Wages
+                </p> 
+            </div>
+        </div>
+        
+        <div aura:id="p-tohide" class="slds-p-horizontal_small" >
+            <h3 class="header">Other Payroll Costs:</h3>
+            
+            <div class="calculate-section"> 
+            <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.totalPaidLeave}"
+                                 label="Total of Paid Vacation and Leave (Parental, Family, Medical, Sick)" 
+                                 formatter="currency" step="0.01"/>
+            <p></p>
+            </div>
+            <div class="calculate-section"> 
+                 <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.healthBenefit}"
+                                 label="Total of Group Health Benefit Costs  (Employer portion only)"
+                                 formatter="currency" step="0.01"/>
+                
+                <p>Include on the Employer portion of the Benefit Costs</p>
+            </div>
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.retirementBenefit}"
+                                 label="Retirement Benefit Costs" formatter="currency" step="0.01"/>
+            <p></p>
+            </div>
+            <div class="calculate-section"> 
+               <lightning:input type="number" aura:id="calc-form"  value="{!v.form_data.EPST}"
+                                 label="Employer Paid State Tax" formatter="currency"/>   
+            
+           <p> Do not add in Employer FICA</p>
+            </div>
+            
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.EPLT}"
+                                 label="Employer Paid Local Tax" formatter="currency"/> 
+                <p>Do not add in Employer FICA</p>
+            </div>
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.coronaAct70001}"
+                                 label="Exclusion - Qualified Sick Leave wages in which a credit is allowed under section 70001 of the Families First Corona Virus Response Act (Public Law 116-5 127)" 
+                                 formatter="currency"/> 
+           
+            <p>Excluded from Payroll Costs</p>
+            </div>
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.coronaAct70003}"
+                                 label="Exclusion - Qualified Family Leave wages in which a credit is allowed under 7003 of the Families First Corona Virus Response Act" 
+                                 formatter="currency"/>
+            
+            <p>Excluded from Total Payroll Costs</p>
+            </div>
+            
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" value="{!v.form_data.outstandingAmount}"
+                                 label="Outstanding amount of EIDL Loan made between Jan 31, 2020 and April 3, 2020, if you would like to pay it off with this PPP Loan (If applicable)" formatter="currency"/>    
+            <p></p>
+            </div>
+            <div class="calculate-section"> 
+                <lightning:input type="number" aura:id="calc-form" name="input4"  value="{!v.form_data.advanceLoan}"
+                                 label="Subtract amount of any 'advance' under an EIDL COVID-19 Loan, which is forgivable (If applicable)" formatter="currency"/>
+            <p></p>
+            </div>
+            <lightning:button variant="brand" label="Calculate" title="Brand action"
+                              class="slds-align_absolute-center"
+                              onclick="{! c.calculatePayrollCosts }" />
+        </div>
+        <div class="calculation-detail">
+            Calculations: 
+            Total Payroll Gross Wages : {!v.totalPayrollGrossWages} <br/>
+            Total Other Payroll Costs:  {!v.total_Other_Payroll_Costs} <br/>
+            Average Monthly Payroll Costs: {!v.average_Monthly_Payroll_Costs} <br/>
+            Total Estimated Requested Loan Amount: {!v.total_Estimated_Requested_Loan_Amount}<br/>
+            
+            <p>
+                *Rules:  The maxium Loan Amount will be cap to 10M
+            </p>
+        </div>
+    </div>
+</aura:component>

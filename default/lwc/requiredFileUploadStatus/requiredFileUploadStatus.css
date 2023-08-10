@@ -1,0 +1,26 @@
+/* requiredFileUploadStatus CSS */
+.section-status-card {
+    width: 10rem;
+}
+
+.green-card > .section-status-card {
+    background: #f3f2f2;
+    border-color: #04844b;
+}
+.gray-card > .section-status-card {
+    background: #dddbda;
+    border-color: #706e6b;
+}
+/*.yellow-card > .section-status-card {*/
+/*    background: #faffbd;*/
+/*    border-color: #ffb75d;*/
+/*}*/
+
+.slds-box {
+    padding: 0.5rem;
+    /*min-height: 7rem;*/
+}
+.status-card-text {
+    padding-left: 0;
+    padding-right: 0;
+}

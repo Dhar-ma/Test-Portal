@@ -1,0 +1,55 @@
+<!--
+ - Created by Joe Cadd on 2/31/2020.
+ -->
+<!--TODO Add form factor dynamic layout styling/sizing-->
+
+<!-- Required File Upload Card -->
+<template>
+    <div class="slds-card slds-p-around_x-small slds-m-bottom_x-small">
+        <div class="slds-grid slds-grid_align-center slds-wrap slds-gutters">
+            <div if:true={allowUpload} class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-grid">
+
+                <div>
+                    <h2 class="slds-text-heading_medium slds-p-left_small">
+                        {fileStorageInfo.fileType.Name}
+                    </h2>
+                    <div class="slds-text-body_regular slds-p-left_small">
+                        <lightning-formatted-rich-text value={fileStorageInfo.fileType.Description__c}></lightning-formatted-rich-text>
+                    </div>
+                </div>
+                <div class="slds-col_bump-left">
+                    <c-required-file-upload-status if:true={includeStatusIcon} file-storage-info={fileStorageInfo} icon-only></c-required-file-upload-status>
+                </div>
+            </div>
+            <div if:true={allowUpload} class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 ">
+                <lightning-file-upload
+                        label=""
+                        name={fileStorageInfo.fileStorageRecord.Id}
+                        record-id={fileStorageInfo.fileStorageRecord.Id}
+                        onuploadfinished={reloadComponentEvent}
+                        accept={acceptedFormats}
+                        multiple>
+                </lightning-file-upload>
+            </div>
+
+            <!-- UPLOAD NOT ALLOWED -->
+            <div if:false={allowUpload} class="slds-col slds-size_1-of-1">
+                <h2 class="slds-text-heading_medium slds-p-left_small">{fileStorageInfo.fileType.Name}</h2>
+                <div class="slds-text-body_regular slds-p-left_small">
+                    <lightning-formatted-rich-text value={fileStorageInfo.fileType.Description__c}></lightning-formatted-rich-text>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-grid_align-center slds-wrap slds-gutters_small">
+            <template for:each={fileStorageInfo.cdlList} for:item="cdl" >
+                <c-existing-file-card
+                        key={cdl.ContentDocumentId}
+                        allow-delete={allowUpload}
+                        content-document-link={cdl}
+                        onreload_component={reloadComponentEvent}
+                ></c-existing-file-card>
+            </template>
+        </div>
+    </div>
+</template>

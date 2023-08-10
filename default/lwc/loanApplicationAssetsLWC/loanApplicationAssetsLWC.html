@@ -1,0 +1,642 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 04-17-2023
+  @last modified by  : 
+-->
+<template>
+  <div>
+    <lightning-card
+      variant="Narrow"
+      title="Real Estate"
+      icon-name="custom:custom24"
+    >
+      <div slot="actions">
+        <lightning-button
+          label="New"
+          data-action="ScheduleAForm"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={showAssetsForm}
+        >
+        </lightning-button>
+      </div>
+
+      <div class="slds-p-horizontal_small">
+        <lightning-datatable
+          key-field="id"
+          hide-checkbox-column="true"
+          onrowaction={editAssetForm}
+          data={ScheduleAAssets}
+          columns={AssetsAcolumns}
+        >
+        </lightning-datatable>
+      </div>
+    </lightning-card>
+  </div>
+
+  <div>
+    <lightning-card
+      variant="Narrow"
+      title="Stock and Bonds"
+      icon-name="custom:custom17"
+    >
+      <div slot="actions">
+        <lightning-button
+          label="New"
+          data-action="ScheduleBForm"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={showAssetsForm}
+        >
+        </lightning-button>
+      </div>
+
+      <div class="slds-p-horizontal_small">
+        <lightning-datatable
+          key-field="id"
+          hide-checkbox-column="true"
+          onrowaction={editAssetForm}
+          data={ScheduleBAssets}
+          columns={AssetsBcolumns}
+        >
+        </lightning-datatable>
+      </div>
+    </lightning-card>
+  </div>
+
+  <div>
+    <lightning-card
+      variant="Narrow"
+      title="Debts Owed To Banks, Credit Unions"
+      icon-name="custom:custom40"
+    >
+      <div slot="actions">
+        <lightning-button
+          label="New"
+          data-action="ScheduleCForm"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={showAssetsForm}
+        >
+        </lightning-button>
+      </div>
+
+      <div class="slds-p-horizontal_small">
+        <lightning-datatable
+          key-field="id"
+          hide-checkbox-column="true"
+          onrowaction={editAssetForm}
+          data={showScheduleCForm}
+          columns={AssetsCcolumns}
+        >
+        </lightning-datatable>
+      </div>
+    </lightning-card>
+  </div>
+
+  <div>
+    <lightning-card
+      variant="Narrow"
+      title="Debts And Accounts Owed To Banks"
+      icon-name="custom:custom62"
+    >
+      <div slot="actions">
+        <lightning-button
+          label="New"
+          data-action="ScheduleDForm"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={showAssetsForm}
+        >
+        </lightning-button>
+      </div>
+
+      <div class="slds-p-horizontal_small">
+        <lightning-datatable
+          key-field="id"
+          hide-checkbox-column="true"
+          onrowaction={editAssetForm}
+          data={ScheduleDAssets}
+          columns={AssetsDcolumns}
+        >
+        </lightning-datatable>
+      </div>
+    </lightning-card>
+  </div>
+
+  <div>
+    <lightning-card
+      variant="Narrow"
+      title="Life Insurance"
+      icon-name="custom:custom86"
+    >
+      <div slot="actions">
+        <lightning-button
+          label="New"
+          data-action="ScheduleFForm"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={showAssetsForm}
+        >
+        </lightning-button>
+      </div>
+
+      <div class="slds-p-horizontal_small">
+        <lightning-datatable
+          key-field="id"
+          hide-checkbox-column="true"
+          onrowaction={editAssetForm}
+          data={ScheduleFAssets}
+          columns={AssetsEcolumns}
+        >
+        </lightning-datatable>
+      </div>
+    </lightning-card>
+  </div>
+
+  <div if:true={showScheduleAForm}>
+    <section
+      style="background: rgba(0, 0, 0, 0.5)"
+      role="dialog"
+      tabindex="-1"
+      class="slds-modal slds-fade-in-open slds-modal_medium"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close"
+            title="Close"
+            onclick={hideAssetsForm}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close!"
+              title="close"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-modal__title slds-hyphenate">Real Estate</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-input-address
+            class="ScheduleAForm"
+            address-label="Address"
+            street-label="Street"
+            city-label="City"
+            country-label="Country"
+            province-label="State or Province"
+            postal-code-label="PostalCode"
+            street={NewAsset.RealEstateStreet}
+            city={NewAsset.RealEstateCity}
+            country={NewAsset.RealEstateCountry}
+            province={NewAsset.RealEstateState}
+            postal-code={NewAsset.RealEstatePostalCode}
+            onchange={handelAddress}
+          ></lightning-input-address>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            type="text"
+            data-field-name="Type_of_Property__c"
+            label="Type of Property"
+            value={NewAsset.Type_of_Property__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            type="text"
+            label="Titled In Name Of"
+            data-field-name="Titled_In_Name_Of__c"
+            value={NewAsset.Titled_In_Name_Of__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            label="Cost"
+            type="number"
+            formatter="currency"
+            data-field-name="Cost__c"
+            value={NewAsset.Cost__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            type="number"
+            label="year Acquired"
+            data-field-name="year_Acquired__c"
+            value={NewAsset.year_Acquired__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            label="Present Market Value"
+            type="number"
+            data-field-name="PresentMarketValue"
+            formatter="currency"
+            value={NewAsset.PresentMarketValue}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            label="Total Balance Owed"
+            type="number"
+            formatter="currency"
+            data-field-name="Balance__c"
+            value={NewAsset.Balance__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            type="text"
+            label="Mortgage Held By"
+            data-field-name="Mortgage_Held_By__c"
+            value={NewAsset.Mortgage_Held_By__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            label="Payment"
+            type="number"
+            formatter="currency"
+            data-field-name="Payment__c"
+            value={NewAsset.Payment__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleAForm ScheduleForm"
+            label="Frequency"
+            type="number"
+            formatter="currency"
+            data-field-name="Frequency__c"
+            value={NewAsset.Frequency__c}
+          ></lightning-input>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            label="Cancel"
+            title="ScheduleAForm"
+            onclick={hideAssetsForm}
+          ></lightning-button>
+
+          <lightning-button
+            label="Save"
+            title="ScheduleAForm"
+            onclick={saveAssetForm}
+          ></lightning-button>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <div if:true={showScheduleBForm}>
+    <section
+      style="background: rgba(0, 0, 0, 0.5)"
+      role="dialog"
+      tabindex="-1"
+      class="slds-modal slds-fade-in-open slds-modal_medium"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close"
+            title="Close"
+            onclick={hideAssetsForm}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close!"
+              title="close"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-modal__title slds-hyphenate">Stock And Bonds</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-input
+            class="ScheduleBForm ScheduleForm"
+            label="Number of Shares Or Bond Amount"
+            type="number"
+            data-field-name="CashOrMarketValue"
+            value={NewAsset.CashOrMarketValue}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleBForm ScheduleForm"
+            type="text"
+            label="Description"
+            data-field-name="Description__c"
+            value={NewAsset.Description__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleBForm ScheduleForm"
+            type="text"
+            data-field-name="Titled_In_Name_Of__c"
+            label="Titled In Name Of"
+            value={NewAsset.Titled_In_Name_Of__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleBForm ScheduleForm"
+            label="Amount At Which Carried on this Statement"
+            type="number"
+            formatter="currency"
+            data-field-name="Amount_Carried_on_Statemen__c"
+            value={NewAsset.Amount_Carried_on_Statemen__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleBForm ScheduleForm"
+            label="Present Market Value"
+            type="number"
+            formatter="currency"
+            data-field-name="PresentMarketValue"
+            value={NewAsset.PresentMarketValue}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleBForm ScheduleForm"
+            type="text"
+            label="L-Listed or U-Unlisted"
+            data-field-name="Listed_OR_Unlisted__c"
+            value={NewAsset.Listed_OR_Unlisted__c}
+          ></lightning-input>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            label="Cancel"
+            title="ScheduleBForm"
+            onclick={hideAssetsForm}
+          ></lightning-button>
+
+          <lightning-button
+            label="Save"
+            title="ScheduleBForm"
+            onclick={saveAssetForm}
+          ></lightning-button>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <div if:true={showScheduleCForm}>
+    <section
+      style="background: rgba(0, 0, 0, 0.5)"
+      role="dialog"
+      tabindex="-1"
+      class="slds-modal slds-fade-in-open slds-modal_medium"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close"
+            title="Close"
+            onclick={hideAssetsForm}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close!"
+              title="close"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-modal__title slds-hyphenate">
+            Debts Owed To Banks, Credit Unions
+          </h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-input
+            class="ScheduleCForm ScheduleForm"
+            type="text"
+            label="Name Of Bank/CU"
+            data-field-name="FinancialInstitutionName"
+            value={NewAsset.FinancialInstitutionName}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleCForm ScheduleForm"
+            type="text"
+            data-field-name="Collateral_Pledged__c"
+            label="Collateral Pledged as Security or Name Of Co-Maker Or Endorser"
+            value={NewAsset.Collateral_Pledged__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleCForm ScheduleForm"
+            label="Monthly Payment"
+            type="number"
+            formatter="currency"
+            data-field-name="Payment__c"
+            value={NewAsset.Payment__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleCForm ScheduleForm"
+            label="Current Balance"
+            type="number"
+            formatter="currency"
+            data-field-name="Balance__c"
+            value={NewAsset.Balance__c}
+          ></lightning-input>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            label="Cancel"
+            title="ScheduleCForm"
+            onclick={hideAssetsForm}
+          ></lightning-button>
+          <lightning-button
+            label="Save"
+            title="ScheduleCForm"
+            onclick={saveAssetForm}
+          ></lightning-button>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <div if:true={showScheduleDForm}>
+    <section
+      style="background: rgba(0, 0, 0, 0.5)"
+      role="dialog"
+      tabindex="-1"
+      class="slds-modal slds-fade-in-open slds-modal_medium"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close"
+            title="Close"
+            onclick={hideAssetsForm}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close!"
+              title="close"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-modal__title slds-hyphenate">
+            Debts And Accounts Owed To Others
+          </h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-input
+            class="ScheduleDForm ScheduleForm"
+            type="text"
+            label="Name Of Creditor"
+            data-field-name="FinancialInstitutionName"
+            value={NewAsset.FinancialInstitutionName}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleDForm ScheduleForm"
+            type="text"
+            label="Collateral"
+            data-field-name="Collateral_Pledged__c"
+            value={NewAsset.Collateral_Pledged__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleDForm ScheduleForm"
+            label="Monthly Payment"
+            type="number"
+            formatter="currency"
+            data-field-name="Payment__c"
+            value={NewAsset.Payment__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleDForm ScheduleForm"
+            label="Current Balance"
+            type="number"
+            formatter="currency"
+            data-field-name="Balance__c"
+            value={NewAsset.Balance__c}
+          ></lightning-input>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            label="Cancel"
+            title="ScheduleDForm"
+            onclick={hideAssetsForm}
+          ></lightning-button>
+          <lightning-button
+            label="Save"
+            title="ScheduleDForm"
+            onclick={saveAssetForm}
+          ></lightning-button>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <div if:true={showScheduleFForm}>
+    <section
+      style="background: rgba(0, 0, 0, 0.5)"
+      role="dialog"
+      tabindex="-1"
+      class="slds-modal slds-fade-in-open slds-modal_medium"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close"
+            title="Close"
+            onclick={hideAssetsForm}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close!"
+              title="close"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-modal__title slds-hyphenate">Life Insurance</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-input
+            class="ScheduleFForm ScheduleForm"
+            type="text"
+            data-field-name="FinancialInstitutionName"
+            label="Insurance Company"
+            value={NewAsset.FinancialInstitutionName}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleFForm ScheduleForm"
+            type="text"
+            data-field-name="Insure__c"
+            label="Insure"
+            value={NewAsset.Insure__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleFForm ScheduleForm"
+            type="text"
+            label="Beneficiary"
+            data-field-name="Beneficiary__c"
+            value={NewAsset.Beneficiary__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleFForm ScheduleForm"
+            label="Face Value"
+            type="number"
+            data-field-name="Face_Value__c"
+            formatter="currency"
+            value={NewAsset.Face_Value__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleFForm ScheduleForm"
+            label="Policy Loan"
+            type="number"
+            formatter="currency"
+            data-field-name="Policy_Loan__c"
+            value={NewAsset.Policy_Loan__c}
+          ></lightning-input>
+
+          <lightning-input
+            class="ScheduleFForm ScheduleForm"
+            label="Cash Value"
+            type="number"
+            formatter="currency"
+            data-field-name="Cash_Value__c"
+            value={NewAsset.Cash_Value__c}
+          ></lightning-input>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            label="Cancel"
+            title="ScheduleFForm"
+            onclick={hideAssetsForm}
+          ></lightning-button>
+          <lightning-button
+            label="Save"
+            title="ScheduleFForm"
+            onclick={saveAssetForm}
+          ></lightning-button>
+        </footer>
+      </div>
+    </section>
+  </div>
+</template>

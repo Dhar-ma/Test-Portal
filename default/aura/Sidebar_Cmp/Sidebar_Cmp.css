@@ -1,0 +1,81 @@
+.THIS .left-panel {
+    background: #E9EDF0;
+    height: 100%;
+    text-align: center;
+}
+
+.THIS .sidebar-title {
+    color: #272A6F;
+    font-size: 21px;
+    padding: 20px 0px 10px;
+}
+
+.THIS .sidebar-menu {
+    padding: 20px 10px;
+}
+
+.THIS .sidebar-menu img {
+    display: block;
+    width: 55px;
+    margin: 0 auto;
+}
+
+.THIS .sidebar-menu button {
+    margin-top: 15px;    
+    border-radius: 4px;
+    border: none;
+    padding: 2px 0px;
+    width: 160px;
+}
+
+.THIS .sidebar-menu .active {
+	background: #262A6E;
+}
+
+.THIS .slds-modal__container.modal-body-content {
+    background: #272A6F;
+    width: 50%;
+    margin: 10% auto 0;
+    height: auto;
+    color: #fff;
+    position: relative;
+    text-align: center;
+    border-radius: 0;
+}
+/* modal CSS*/
+.THIS .modal-body-content button.slds-button.slds-button_icon.slds-modal__close {
+    position: absolute;
+    z-index: 9010;
+    top: 12px;
+    right: 12px;
+    display: inherit;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.THIS .modal-body-content h1 {
+    font-size: 32px;
+    font-weight: lighter;
+}
+
+.THIS .modal-body-content h2 {
+    font-size: 20px;
+    margin: 22px 0px;
+}
+
+.THIS .inner-modal-content p {
+    font-size: 16px;
+    line-height: 36px;
+}
+
+.THIS .container {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.THIS.page-section-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Linked_Object_API_Name__c</columns>
+    <columns>Linked_Object_Id__c</columns>
+    <columns>Update_Integration_Status__c</columns>
+    <columns>Update_Integration_Success_Date__c</columns>
+    <columns>Update_Integration_Try_Count__c</columns>
+    <columns>Update_Needed_Date__c</columns>
+    <columns>Integration_Last_Error_Code__c</columns>
+    <columns>Integration_Last_Error_Message__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

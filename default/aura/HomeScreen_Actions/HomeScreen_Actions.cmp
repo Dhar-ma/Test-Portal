@@ -1,0 +1,176 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global"
+                controller="CommunityUtils">
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/> 
+    <aura:attribute name="showSuccessMessage" type="boolean" default="false"/> 
+    
+    <aura:attribute name="showOpenNewAccountLink" type="boolean" default="false"/> 
+    
+    <aura:attribute name="showNewCaseForm" type="boolean" default="false"/> 
+    <aura:attribute name="caseRec" type="object" /> 
+    <aura:attribute name="showSubtype" type="boolean" default="True"/> 
+    
+    <aura:attribute name="userLoggedIn" type="boolean" default="True"/> 
+    <aura:attribute name="financialAccounts" type="List" default="[]"/>
+    <aura:attribute name="selectedFinancialAccount" type="List"/>
+    <aura:attribute name="selectedProductTypes" type="List"/>
+    
+    <aura:attribute name="caseTypes" type="List" />
+    <aura:attribute name="selectedType" type="String" />
+    <aura:attribute name="selectedReson" type="String" />
+    
+    <aura:attribute name="objDetail" type="Case" default="{'sobjectType' : 'Case'}"/>
+    <aura:attribute name="caseType" type="string" default="Type" />
+    <aura:attribute name="caseReason" type="string" default="Action_Type__c" />
+    <aura:attribute name="productType" type="string" default="Product_Type__c" />
+    <aura:attribute name="caseTypeReasonMap" type="map" />
+    <aura:attribute name="caseReasonProductTypeMap" type="object" />
+    <aura:attribute name="financialAccountTypeMap" type="object" />
+    <aura:attribute name="listCaseType" type="list" default="[]" />
+    <aura:attribute name="listCaseReason" type="list" default="[]" />
+    <aura:attribute name="listProductType" type="list" default="[]"/>
+    <aura:attribute name="Disclosure" type="string" default="" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="page-section-box">
+        <lightning:card title="Submit Requests">
+            <p class="slds-p-horizontal_small" style="margin:2%;">
+                <ul class="slds-accordion">
+                    <aura:iteration var="caseType" items="{!v.listCaseType}">
+                        <li class="slds-accordion__list-item">
+                            <section class="slds-accordion__section">
+                                <div class="slds-accordion__summary">
+                                    <span class="slds-avatar slds-avatar--large">
+                                        <img src="{!$Resource.CaseTypsIcons + '/Icons/'+caseType.Name+'.PNG'}"/>
+                                    </span>
+                                    <h3 class="slds-accordion__summary-heading" style="margin-left: 15px;">
+                                        <button aria-controls="accordion-details-02" aria-expanded="false" 
+                                                class="slds-button slds-button_reset slds-accordion__summary-action">
+                                            <span class="slds-accordion__summary-content" >{!caseType.Type}</span>
+                                        </button>
+                                    </h3>
+                                    <lightning:button name="{!caseType.Type}" label="Request" onclick="{!c.handleRequestClick}"/>
+                                </div>
+                            </section>
+                        </li>
+                    </aura:iteration> 
+                </ul>
+            </p>
+            
+        </lightning:card>
+    </div>
+    
+    
+    <aura:if isTrue="{!v.showNewCaseForm}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideCaseForm}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!"
+                                        title="close" variant="inverse"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Case</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium cust-content" id="modal-content-id-1">
+                    
+                    <lightning:recordEditForm aura:id="caseEditForm"
+                                              objectApiName="Case"
+                                              onload="{!c.handleFormLoad}"
+                                              onsuccess="{!c.handleCaseSaveSuccess}"
+                                              onsubmit="{!c.handleSubmit}">
+                        <lightning:messages />
+                        
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-3">
+                                <div style="display:none;">
+                                    <lightning:inputField aura:id="typeInput" fieldName="Type" required="true" disabled="true" />
+                                </div>
+                                <lightning:inputField aura:id="subject" fieldName="Subject" required="true"/>
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" for="horizontal-input-id-01">Action Type</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning:select  aura:id="caseReasonInput" label="" 
+                                                          required="false"
+                                                          value="{!v.caseRec.Action_Type__c}"
+                                                          onchange="{!c.onCaseReasonChange}">
+                                            <aura:iteration items="{!v.listCaseReason}" var="reason">
+                                                <option text="{!reason}" value="{!reason}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <lightning:inputField aura:id="caseDescription" fieldName="Description"/>
+                                <div class="inputFieldsPlaceholder">
+                                    <lightning:card aura:id="additionalFieldsPlaceholder"></lightning:card>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-left_large">
+                                <aura:if isTrue="{!v.listProductType.length > 0}">
+                                    <lightning:checkboxGroup name="Checkbox Group"
+                                                             label="Select Associated account for this request"
+                                                             options="{!v.listProductType}"
+                                                             value="{!v.selectedProductTypes}"/>
+                                </aura:if>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.Disclosure}">
+                            <div class="slds-align_absolute-center" style="display: block; text-align: center; color: rgb(25,17,105);width:75%;">
+                                <div>
+                                    <p>
+                                        {!v.Disclosure}
+                                    </p>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <div class="slds-align_absolute-center" style="height:3rem">
+                            <lightning:button class="slds-m-top_small" variant="brand" type="submit" label="Save" />
+                            <lightning:button class="slds-m-top_small" label="Cancel" onclick="{!c.hideCaseForm}" />
+                        </div>                       
+                        
+                    </lightning:recordEditForm>
+                    
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showSuccessMessage}">
+        
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small modal-container" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container modal-body-content">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                        onclick="{!c.closeSuccessMessage}">
+                    <lightning:icon iconName="utility:close" variant="inverse" size="x-small"></lightning:icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h1>Thank you!</h1>
+                <h2>We received your request.</h2>
+                <div class="inner-modal-content" id="modal-content-id-1">
+                    <p>
+                        We are working diligently to process your request the same business day.
+                        <br/>
+                        If you submit your request after 2:00pm, we will start processing 
+                        <br/>
+                        by the next business day.
+                    </p>
+                </div>
+            </div> 
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+</aura:component>

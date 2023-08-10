@@ -1,0 +1,81 @@
+<!--
+  @description       : 
+  @author            : Dharmraj Baravkar
+  @group             : 
+  @last modified on  : 11-18-2022
+  @last modified by  : Dharmraj Baravkar
+-->
+<template>
+  <div if:true={isLoaded}>
+    <lightning-spinner alternative-text="Loading..." size="large" variant="brand">
+    </lightning-spinner>
+  </div>
+  <div if:false={isTabChange}>
+    <div>
+      <div if:false={issubmit} class="slds-var-m-around_x-large">
+        <div class="slds-align_absolute-center  slds-badge slds-border--bottom slds-text-heading_large"
+          style="width:max-content;">
+          <p>Question Number : {questionNumber}</p>
+        </div>
+        <div if:true={currentQuestion}>
+          <div class="slds-var-m-vertical_large">
+            <div style="font-size: 110%;">
+              <p class="slds-badge slds-var-m-bottom_x-small " style="font-size: 110%; text-align:right; color: red;">
+                Remaining Time : {timetCount}</p>
+            </div>
+            <lightning-formatted-rich-text
+              class="slds-accordion__summary-heading slds-action-overflow--touch__footer slds-border--top slds-border_bottom"
+              value={currentQuestion.Question__c}>
+            </lightning-formatted-rich-text>
+            <template for:each={currentQuestion.Test_Question_Options__r} for:item="child">
+              <div class="slds-clearfix slds-var-m-top_medium slds-var-m-left_large " key={child.Id}>
+                <div if:true={currentQuestion.Multiple_Selection__c}>
+                  <input style="margin-top:7px;" class="slds-float_left slds-var-m-top_xx-small" type="checkbox"
+                    id={child.Id} onclick={handelCheckBox} data-optionid={child.Id}
+                    data-questoinid={currentQuestion.Id} />
+                  <label for={child.Id} class="slds-float_left slds-var-m-left_xx-small">
+                    <lightning-formatted-rich-text value={child.Option_Description__c}>
+                    </lightning-formatted-rich-text>
+                  </label>
+                </div>
+                <div if:false={currentQuestion.Multiple_Selection__c}>
+                  <input style="margin-top:7px;" class="slds-float_left slds-var-m-top_xx-small" type="radio"
+                    id={child.Id} name={currentQuestion.Id} onclick={handelradiobutton} data-optionid={child.Id}
+                    data-questoinid={currentQuestion.Id} />
+                  <label for={child.Id} class="slds-float_left slds-var-m-left_xx-small">
+                    <lightning-formatted-rich-text value={child.Option_Description__c}>
+                    </lightning-formatted-rich-text>
+                  </label>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+        <div if:true={isLastQuestion}>
+          <lightning-button label="Previous" title="previous Question" onclick={previousQuestion}
+            class="slds-m-left_x-small">
+          </lightning-button>
+          <lightning-button style="font-size: large;" variant="destructive" label="Submit" title="Submit"
+            onclick={submitTest} class="slds-m-left_x-small slds-var-m-around_x-small">
+          </lightning-button>
+        </div>
+        <div if:false={isLastQuestion}>
+          <lightning-button style="font-size: large;" label="Previous" variant="brand-outline" title="previous Question"
+            onclick={previousQuestion} class="slds-m-left_x-small">
+          </lightning-button>
+          <lightning-button style="font-size:large; width: 14%;" label="Next" variant="brand" title="Next Question"
+            onclick={nextQuestion} class="slds-m-left_x-small">
+          </lightning-button>
+        </div>
+      </div>
+      <div if:true={issubmit}>
+        <p style="text-align: center;
+        margin-left: 27%;
+        font-size: 200%;" class="slds-align_absolute-center slds-text-heading_large">Thank you for your
+          time,
+          Our HR team will Inform you.
+        </p>
+      </div>
+    </div>
+  </div>
+</template>

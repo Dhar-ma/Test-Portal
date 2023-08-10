@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Borrower_or_Co_Borrower__c</fullName>
+    <defaultValue>&quot;Primary Borrower&quot;</defaultValue>
+    <externalId>false</externalId>
+    <label>Primary Borrower or Co-Borrower</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Primary Borrower</fullName>
+                <default>false</default>
+                <label>Primary Borrower</label>
+            </value>
+            <value>
+                <fullName>Co-Borrower</fullName>
+                <default>false</default>
+                <label>Co-Borrower</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

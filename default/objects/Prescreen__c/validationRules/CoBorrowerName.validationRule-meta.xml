@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CoBorrowerName</fullName>
+    <active>true</active>
+    <description>When the TYPE field = Co-Borrower, the Co-Borrower NAME field must have a value</description>
+    <errorConditionFormula>(ISPICKVAL( Primary_Borrower_or_Co_Borrower__c , &quot;Co-Borrower&quot;)&amp;&amp; ( Co_Borrower_First_Name__c =NULL))</errorConditionFormula>
+    <errorDisplayField>Co_Borrower_First_Name__c</errorDisplayField>
+    <errorMessage>Please fill out the Co-Borrower Name since the field &quot;Primary Borrower or Co-Borrower&quot; = Co-Borrower</errorMessage>
+</ValidationRule>

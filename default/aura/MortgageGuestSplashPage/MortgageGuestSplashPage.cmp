@@ -1,0 +1,54 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:html tag="style">
+        .slds-col--padded.contentRegion.comm-layout-column {padding: 0;}
+    </aura:html>
+    <div>
+        <div class="page-banner">
+            <img src="{!$Resource.MortgageEMSSplash + '/EMFS_Splash/MortgageHeader.png'}" class="banner-img"/>
+            <div class="banner-text">
+                <h1 style="color:white">Let Us Help.</h1>
+                <p style="color:white">
+                    Handle all of your mortgage-related needs anytime, anywhere on 
+                    any device. We make it easy to perform most of your tasks online 
+                    like uploading documents, tracking milestones, and communicating 
+                    with your mortgage specialist.
+                </p>
+                <button class="banner-btn">START NOW</button>
+            </div>
+        </div>         
+        <div class="page-content">
+            <h2 class="page-headline">Explore Mortgage Anywhere</h2>
+            <div class="bank-info-sections">
+                <div class="info-type">
+                    <img src="{!$Resource.MortgageEMSSplash + '/EMFS_Splash/01.png'}" class="section-img"/>
+                    <h3>Apply for a Mortgage</h3>
+                    <p>
+                        Complete your loan 
+                        with the guidance you 
+                        need at the pace 
+                        you need
+                    </p>
+                </div>
+                <div class="info-type">
+                    <img src="{!$Resource.MortgageEMSSplash + '/EMFS_Splash/03.png'}" class="section-img"/>
+                    <h3>Upload Docs &amp; Materials</h3>
+                    <p>
+                        Your personalized 
+                        portal allows you to organize 
+                        and submit your 
+                        documentation
+                    </p>
+                </div>
+                <div class="info-type">
+                    <img src="{!$Resource.MortgageEMSSplash + '/EMFS_Splash/02.png'}" class="section-img"/>
+                    <h3>Receive Other Assistance</h3>
+                    <p>
+                        With Mortgage Anywhere, 
+                        you can complete a variety of 
+                        tasks online
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,33 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="showModal" type="boolean" default="false"/>
+    
+    <lightning:button variant="brand" label="Request Action" class="slds-align_absolute-center"
+                      title="Request Action" onclick="{!c.showModal}" />
+    
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small"
+                 aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close"
+                            onclick="{!c.hideModal}">
+                        <lightning:icon iconName="utility:close" alternativeText="close" title="close" 
+                                        variant="inverse" size="small"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Request Action</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <c:requestTaskActionForUser recordId="{!v.recordId}"
+                                                onmodalclose="{!c.hideModal}">
+                    </c:requestTaskActionForUser>
+                    
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+</aura:component>

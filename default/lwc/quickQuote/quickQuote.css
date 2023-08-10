@@ -1,0 +1,33 @@
+.page-section-box {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+}
+.detail-box {
+    border-radius: 0.25rem;
+    border: 2px solid #D4D4D4;
+}
+.detail-header {
+    background: #E9EDF0;
+    border-top-left-radius:.125rem;
+    border-top-right-radius:.125rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+    padding-bottom:.5rem;
+}
+.detail-title {
+    padding: 1rem 1rem .5rem 1rem;
+    font-size: 20px !important;
+    line-height: 36px !important;
+    font-family: montserrat;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight:600;
+    color: #191169;
+}
+.loan-detail {
+    padding: .875rem .25rem;
+}
+.loan-detail-input {
+    padding: .125rem .75rem;
+}

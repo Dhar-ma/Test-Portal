@@ -1,0 +1,26 @@
+.THIS {
+}
+.THIS .form-content .slds-visual-picker.slds-visual-picker_vertical {
+  margin: 10px auto;
+}
+.THIS .check-icn lightning-primitive-icon svg {
+  fill: #fff;
+  margin: 2px;
+}
+.THIS .list-view {
+  width: 25rem;
+  margin: 10px auto;
+  background: #fafaf9;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+.THIS
+  .list-view
+  .slds-form-element__control
+  span.slds-checkbox
+  label.slds-checkbox__label {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+}

@@ -1,0 +1,6 @@
+<design:component>
+	<!--<design:attribute name="selectedBranchId" label="selectedBranchId"  default=""/>
+    <design:attribute name="serviceResources" label="serviceResources" />
+    <design:attribute name="serviceTerritoryMembers" label="serviceTerritoryMembers" />
+    <design:attribute name="account" label="account" />-->
+</design:component>

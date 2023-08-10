@@ -1,0 +1,73 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div
+    style="box-shadow: 1px 1px 15px #8ca3b7"
+    class="slds-var-p-around_x-small"
+  >
+    <div if:true={isLoaded} class="exampleHolder">
+      <lightning-spinner
+        variant="brand"
+        alternative-text="Loading"
+        size="medium"
+      ></lightning-spinner>
+    </div>
+    <div if:false={isLoaded} class="slds-var-m-around_small">
+      <div class="page-section-box">
+        <ul class="">
+          <li class="slds-item">
+            <article class="slds-tile slds-tile_board">
+              <article class="slds-tile slds-media">
+                <div class="slds-media__figure">
+                  <lightning-avatar
+                    size="large"
+                    variant="circle"
+                    src={mediumPhotoUrl}
+                  ></lightning-avatar>
+                </div>
+                <div class="slds-media__body">
+                  <h3 class="slds-truncate">
+                    <a href="#">{name}</a>
+                  </h3>
+                  <div class="slds-tile__detail">
+                    <dl>
+                      <dt
+                        class="slds-item_label slds-text-color_weak slds-truncate width-unset"
+                        title="Email"
+                      >
+                        Email:
+                      </dt>
+                      <dd
+                        class="slds-item_detail slds-truncate width-unset"
+                        title="Email"
+                      >
+                        {email}
+                      </dd>
+                      <dt
+                        class="slds-item_label slds-text-color_weak slds-truncate width-unset"
+                        title="Mobile Phone"
+                      >
+                        Mobile Phone:
+                      </dt>
+                      <dd
+                        class="slds-item_detail slds-truncate width-unset"
+                        title="Mobile Phone"
+                      >
+                        {mobilePhone}
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </article>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>

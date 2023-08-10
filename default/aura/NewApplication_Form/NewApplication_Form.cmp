@@ -1,0 +1,855 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/> 
+    <aura:attribute name="currentUserId" type="String" default="0"/>
+    <aura:attribute name="currentUserAccountId" type="String" default="0"/>
+    <aura:attribute name="currentTab" type="String" default="0"/> 
+    <aura:attribute name="isEligibleForLoan" type="boolean" default="true"/> 
+    <aura:attribute name="showFormTypeSelector" type="boolean" default="false"/> 
+    
+    
+    <aura:attribute name="LoanApplication" type="object"  /> 
+    <aura:attribute name="businessInfoAccount" type="object"  /> 
+    <aura:attribute name="selectedBusinessInfoAccountId" type="String" default=""  /> 
+    <aura:attribute name="listOwners" type="object"  /> 
+    <aura:attribute name="selectedBusinessOwnerContactId" type="String" default=""  /> 
+            
+    <aura:attribute name="showContactForm" type="boolean" default="false"/> 
+    <aura:attribute name="OwnerRec" type="object"  /> 
+    <aura:attribute name="CertificationAndAuthRec" type="object" /> 
+    
+    <aura:attribute name="showCalulator" type="boolean" default="false"/> 
+        
+    <aura:attribute name="Yes_No_options" type="List"/>
+    <aura:attribute name="purposeOfLoanoptions" type="List"/>
+    <aura:attribute name="statusOption" type="List"  /> 
+    <aura:attribute name="requiredDocumentIds" type="String" /> 
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.selectedBusinessInfoAccountId}" 
+                  action="{!c.handleBusinessAccountChange}"/>
+    <aura:handler name="change" value="{!v.selectedBusinessOwnerContactId}" 
+                  action="{!c.handleContactChange}"/>
+    
+    <article class="slds-card">
+        
+        <div class="slds-text-heading_medium slds-text-align_center header-cust">            
+            Paycheck Protection Program Form            
+        </div>  
+        <div class="cust-progress-bar">     
+            <lightning:progressIndicator currentStep="{!v.LoanApplication.Status__c}" 
+                                         type="path" variant="base">
+                <aura:iteration items="{!v.statusOption}" var="option">
+                    <lightning:progressStep label="{!option}" value="{!option}"/>
+                </aura:iteration>
+            </lightning:progressIndicator>
+        </div>
+        <div class="main-container">
+            <lightning:tabset variant="vertical" selectedTabId="{!v.currentTab}">
+                <lightning:tab label="Instructions" id="0">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Instructions</div>
+                    
+                    
+                    <div class="tab-container">
+                        <div class="slds-align_absolute-center" style="display: block; text-align: center; padding: 2%;">
+                            <div>
+                                <a href="https://ppp-demo-dev-ed.my.salesforce.com/sfc/p/#4R0000006PBv/a/4R000000U1rB/TqWQp7TtZ96f.jClYERVm_B8t0CoPIniK7uFYS7dT9k"
+                                   target="_blank" style="color: blue;"> PPP Application Instructions</a>
+                            </div>
+                            <br/><br/>
+                            <lightning:input aura:id="read-me" type="checkbox" 
+                                             label="I have read the above instructions."
+                                             name="read-me-input1"/>
+                        </div>                        
+                        
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            <lightning:button variant="brand" label="Next" title="Next"
+                                              onclick="{! c.showApplicationQuestionTab }"/>
+                            
+                            <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                        </div>
+                    </div>                    
+                    
+                </lightning:tab>
+                <lightning:tab label="Application Questions" id="1">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Application Questions</div>
+                    
+                    
+                    <div class="tab-container">
+                        <aura:if isTrue="{!v.isEligibleForLoan}">    
+                            The below questions must be answered for all Business Owners who own 20% or greater of the business as a whole. For example;
+                            If any business owner has to answer the question with a “Yes”, then the entire question has to be answered with a “Yes. 
+                            
+                            
+                            <table class="cust-table-eligibilty">
+                                <tr>
+                                    <td>                    
+                                        1. Is the Applicant or any owner of the Applicant presently suspended, debarred,
+                                        proposed for debarment, declared ineligible, voluntarily excluded from participation
+                                        in this transaction by any Federal department or agency, or presently involved in any bankruptcy?                   
+                                    </td>
+                                    <td style="width:15%;">                    
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q1"
+                                                              label="q1"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_1__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>            
+                                <tr>
+                                    <td>                    
+                                        2. Has the Applicant, any owner of the Applicant, or any business owned or controlled by any of them, ever obtained a direct or guaranteed loan from SBA or any other Federal agency that is currently delinquent or has defaulted in the last 7 years and caused a loss to the government?
+                                    </td>
+                                    <td style="width:15%;">                    
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q2"
+                                                              label="q2"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_2__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                    
+                                        3. Is the Applicant or any owner of the Applicant an owner of any other business, or have common management with, any other
+                                        business? If yes, list all such businesses and describe the relationship on a separate sheet identified as addendum A.
+                                    </td>
+                                    <td style="width:15%;">                    
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q3"
+                                                              label="q3"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_3__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>                            
+                                <tr>
+                                    <td>                    
+                                        4. Has the Applicant received an SBA Economic Injury Disaster Loan between January 31, 2020 and April 3, 2020? If yes,
+                                        provide details on a separate sheet identified as addendum B.
+                                    </td>
+                                    <td style="width:15%;">                    
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q4"
+                                                              label="q4"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_4__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>                            
+                                <tr>
+                                    <td>                    
+                                        5.  Is the Applicant (if an individual) or any individual owning 20% or more 
+                                        of the equity of the Applicant subject to an indictment, criminal information, 
+                                        arraignment, or other means by which formal criminal charges are brought in any jurisdiction, 
+                                        or presently incarcerated, or on probation or parole?
+                                    </td>
+                                    <td style="width:15%;">                    
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q5"
+                                                              label="q5"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_5__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>                            
+                                <tr>
+                                    <td>                    
+                                        6. Within the last 5 years, for any felony, has the Applicant (if an individual) 
+                                        or any owner of the Applicant 1) been convicted; 2) pleaded guilty; 
+                                        3) pleaded nolo contendere; 4) been placed on pretrial diversion; 
+                                        or 5) been placed on any form of parole 
+                                        or probation (including probation before judgment)?
+                                    </td>
+                                    <td style="width:15%;">
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q6"
+                                                              label="q6"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_6__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>                            
+                                <tr>
+                                    <td>                    
+                                        7. Is the United States the principal place of residence for all employees of the Applicant included in the
+                                        Applicant’s payroll calculation above?
+                                    </td>
+                                    <td style="width:15%;">
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q7"
+                                                              label="q7"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_7__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                                    
+                                        8. Is the Applicant a franchise that is listed in the SBA’s Franchise Directory? 
+                                    </td>
+                                    <td style="width:15%;">
+                                        <lightning:radioGroup aura:id="eligibilty-form" name="q8"
+                                                              label="q8"
+                                                              variant="label-hidden"
+                                                              options="{! v.Yes_No_options }"
+                                                              value="{! v.LoanApplication.Eligibility_Question_8__c }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </td>
+                                </tr>                            
+                            </table>
+                        </aura:if>
+                        <aura:if isTrue="{!not(v.isEligibleForLoan)}">                
+                            <div class="slds-text-heading_large success-msg">Sorry! You're not eligible for loan</div>
+                            
+                            <div class="slds-text-heading_small slds-align_absolute-center" 
+                                 style="height:5rem; text-align: center; width: 85%;">
+                                Based on the answers you provided you are not eligible for the loan.<br/>
+                                If you have any questions, see the left section of the screen for options for communicating with a representative, or navigate to the Support tab at the top of the portal for common support articles and Frequently Asked Questions                    </div>
+                            
+                        </aura:if>
+                        
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            <lightning:button variant="brand" label="Save and Next" title="Next"
+                                              onclick="{! c.checkEligibility }"
+                                              disabled="{!not(v.isEligibleForLoan)}"/>
+                            
+                            <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                        </div>
+                    </div>                    
+                    
+                </lightning:tab>
+                <lightning:tab label="Business Information" id="2">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Business Information</div>
+                    <div class="tab-container">
+                        
+                        <c:CustomLookup objectName="Account" fieldName="Name" label="Select Business Name"
+                                        iconName="standard:account" placeholder="Enter Business Name"
+                                        value="{!v.selectedBusinessInfoAccountId}"
+                                        whereClause="{! '(CreatedById=\'' + v.currentUserId +'\''
+                                                     +  ' OR Id = \''+ v.currentUserAccountId +'\')'}" />
+                                         
+                        <div class="slds-text-color_weak">Note: Please select Business name above or fill below form if it's not available.</div>
+                      
+                        <lightning:input aura:id="account-form" type="text" 
+                                         label="Business Legal Name" required="true"
+                                         value="{!v.businessInfoAccount.Name}"/>
+                        
+                        <lightning:input aura:id="account-form" type="text" 
+                                         label="Business TIN (EIN, SSN)" required="true"
+                                         value="{!v.businessInfoAccount.Business_TIN__c}"/>
+                        
+                        <lightning:inputAddress aura:id="account-form" addressLabel="Business Address"
+                                                streetLabel="Street"
+                                                cityLabel="City"
+                                                countryLabel="Country"
+                                                provinceLabel="State or Province"
+                                                postalCodeLabel="PostalCode"            
+                                                required="true"                                                  
+                                                street="{!v.businessInfoAccount.BillingStreet}"
+                                                city="{!v.businessInfoAccount.BillingCity}"
+                                                country="{!v.businessInfoAccount.BillingCountry}"
+                                                province="{!v.businessInfoAccount.BillingState}"
+                                                postalCode="{!v.businessInfoAccount.BillingPostalCode}"
+                                                />
+                        
+                        <lightning:input aura:id="account-form" type="text" 
+                                         label="DBA or Tradename if applicable" required="true"
+                                         value="{!v.businessInfoAccount.DBA_or_Tradename__c}"/>
+                        
+                        <lightning:input aura:id="account-form" type="number" max="500"
+                                         label="Number of Employees (must be 500 or less)" 
+                                         required="true" value="{!v.businessInfoAccount.Number_of_Employees__c}"/>
+                        
+                        <lightning:select  aura:id="account-form" label="Business Classification" 
+                                          required="true"
+                                          value="{!v.businessInfoAccount.Business_Classification__c}">
+                            <option value="">--None--</option>
+                            <option value="Sole Proprietor">Sole Proprietor</option>
+                            <option value="Partnership">Partnership</option>
+                            <option value="C-Corp">C-Corp</option>
+                            <option value="S-Corp">S-Corp</option>
+                            <option value="LLC">LLC</option>
+                            <option value="Indepedent Contractor">Indepedent Contractor</option>
+                            <option value="Eligible self-employed individual">Eligible self-employed individual</option>
+                            <option value="501(c)(3) nonprofit">501(c)(3) nonprofit</option>
+                            <option value="501(c)(19) veterans organization">501(c)(19) veterans organization</option>
+                            <option value="Tribal business (sec. 31(b)(2)(C) of Small Business Act)">
+                                Tribal business (sec. 31(b)(2)(C) of Small Business Act)</option>
+                            <option value="Other">Other</option>
+                        </lightning:select>
+                        
+                        <aura:if isTrue="{!v.businessInfoAccount.Business_Classification__c == 'Other'}">          
+                            <lightning:input aura:id="account-form" type="text" 
+                                             label="Describe Business Classification - 'Other' "
+                                             value="{!v.businessInfoAccount.Business_Classification_Other__c}"/>
+                        </aura:if>
+                        
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            <lightning:button variant="brand" label="Save and Next" 
+                                              title="Next" onclick="{! c.saveAccountInfo }" />
+                            
+                            <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                        </div>
+                    </div>
+                    
+                </lightning:tab>
+                <lightning:tab label="Business Owner(s) Information" id="3">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Business Owner(s) Information</div>
+                    <div class="tab-container">                         
+                        
+                        List all owners of 20% or more of the equity of the Applicant.
+                        
+                        <lightning:card variant="Narrow" title="Business Owners" iconName="action:add_contact">
+                            <aura:set attribute="actions">
+                                <lightning:button label="New" iconName="utility:add" 
+                                                  iconPosition="left" onclick="{!c.showNewContactForm}" />
+                                
+                            </aura:set>
+                            <p class="slds-p-horizontal_small">                                 
+                                
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout:fixed;">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Action">Action</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="First Name">First Name</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Last Name">Last Name</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Title">Title</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="% of Ownership">% of Ownership</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="TIN (EIN or SSN)">TIN (EIN or SSN)</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Address">Address</div>
+                                            </th>                                             
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.listOwners}" var="owner" indexVar="indx">
+                                            <tr class="slds-hint-parent">                                                 
+                                                <td>
+                                                    <div class="slds-truncate">                                                         
+                                                        <button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-border-filled" 
+                                                                title="More Options" data-row="{!indx}" onclick="{!c.editContactForm}">
+                                                            <lightning:Icon iconName="utility:edit" size="x-small"
+                                                                            alternativeText="edit" title="edit" />
+                                                            <span class="slds-assistive-text">More options</span>
+                                                        </button>                                                         
+                                                    </div>
+                                                </td>
+                                                
+                                                <th>
+                                                    <div class="slds-truncate">
+                                                        <a href="javascript:void(0);" tabindex="-1">{!owner.Contact__r.FirstName}</a>
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="slds-truncate">{!owner.Contact__r.LastName}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!owner.Title__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!owner.Percent_of_Ownership__c }</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!owner.TIN_EIN_or_SSN__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">
+                                                        <lightning:formattedAddress street="{!owner.Contact__r.MailingStreet}"
+                                                                                    city="{!owner.Contact__r.MailingCity}"
+                                                                                    country="{!owner.Contact__r.MailingCountry}"
+                                                                                    province="{!owner.Contact__r.MailingState}"
+                                                                                    postalCode="{!owner.Contact__r.MailingPostalCode}"
+                                                                                    /></div>
+                                                </td>
+                                                
+                                            </tr>                                         
+                                            
+                                        </aura:iteration>
+                                        
+                                    </tbody>
+                                </table>
+                                
+                            </p>
+                        </lightning:card>                         
+                        
+                        <div class="slds-text-color_weak">Note: All business owners in total must equal 90% or higher of the total ownership of the business.</div>
+                        
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            
+                            <lightning:button variant="brand" label="Save and Next" title="Next"
+                                              onclick="{!c.validateOwnersInfo}"/>
+                            
+                            <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                        </div>                         
+                    </div>
+                </lightning:tab>
+                <lightning:tab label="Loan Information" id="4">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Loan Information</div>
+                    <div class="tab-container">     
+                        
+                        <div class="amount-detail">
+                            
+                            <lightning:input aura:id="loanApp-form" type="number" class="cust-width"
+                                             label="Average Monthly Payroll " required="true" step="0.01"
+                                             value="{!v.LoanApplication.Average_Monthly_Payroll__c}"/>
+                            
+                            <lightning:button label="Amounts Calculator" title="Amounts Calculator"
+                                              onclick="{! c.showCalulator }"/>
+                            
+                        </div>
+                        <div style="display:flex;">
+                            <lightning:input aura:id="loanApp-form" type="number" class="cust-width"
+                                             label="Loan Request Amount " required="true" step="0.01"
+                                             value="{!v.LoanApplication.Loan_Request_Amount__c}"
+                                             max="10000000"/>
+                            
+                            <div class="slds-text-color_weak" style="width:60%;margin:1%;">Loan Request Amount = (Monthly Payroll X 2.5 + Outstanding balance of an EIDL loan, less any forgivable Advance (if applicable)  
+                                NOTE:  EIDL loan received between 1/31/2020 and 4/3/2020
+                                <a href="https://home.treasury.gov/system/files/136/PPP--Fact-Sheet.pdf" target="_blank" style="color: blue;">Further Explanation</a>
+                            </div>
+                            
+                        </div>
+                        
+                        <lightning:checkboxGroup aura:id="loanApp-form" name="Purpose_of_Loan"
+                                                 label="Purpose of Loan"
+                                                 options="{! v.purposeOfLoanoptions }"
+                                                 value="{! v.LoanApplication.Purpose_of_Loan }"
+                                                 required="true"/>   
+                        
+                        <lightning:input aura:id="loanApp-form" type="text" class="cust-width"
+                                         label="Describe Reason if 'Other' selected"
+                                         value="{!v.LoanApplication.Other_Purpose_of_Loan_Description__c}"/>
+                        <br/>
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            <lightning:button variant="brand" label="Next" title="Next" onclick="{!c.saveLoanInfo}"/>
+                            
+                            <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                        </div>        
+                    </div>
+                </lightning:tab>
+                <lightning:tab label="Required Document Uploads" id="5">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Required Document Uploads</div>
+                    <div class="tab-container"> 
+                        
+                        <aura:if isTrue="{! and(not(empty(v.requiredDocumentIds)), not(empty(v.LoanApplication.Id)) )}">
+                            <c:requiredFileUpload recordId="{!v.LoanApplication.Id}"
+                                                  childLookupRelationshipName=""
+                                                  storageObjectName="Required_Application_Document__c"
+                                                  storageParentLookup="Loan_Application__c"
+                                                  storageFileTypeLookup="File_Type__c"
+                                                  fileTypeIds="{!v.requiredDocumentIds}">
+                            </c:requiredFileUpload>
+                            
+                            <aura:set attribute="else">
+                                
+                                <div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+                                    Please fill the previous sections of the form</div>
+                                
+                            </aura:set>
+                        </aura:if>
+              
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            <lightning:button variant="brand" label="Next" title="Next" onclick="{!c.setCertificationTab}"/>
+                        </div>  
+                    </div>
+                    
+                    
+                </lightning:tab>
+                <lightning:tab label="Certifications And Authorizations" id="6">
+                    
+                    <div class="slds-text-color_weak slds-text-align_center 
+                                slds-text-heading_small">
+                        Certifications And Authorizations</div>
+                    <div class="tab-container">    
+                        
+                        By Signing Below, You Make the Following Representations, Authorizations, and Certifications
+                        <br/>I certify that:
+                        <ul style="list-style: disc;margin-left: 2em;">
+                            <li>I have read the statements included in this form, including the Statements Required by Law and Executive Orders, and I understand them.</li>
+                            <li> The Applicant is eligible to receive a loan under the rules in effect at the time this application is submitted that have been issued by the
+                                Small Business Administration (SBA) implementing the Paycheck Protection Program under Division A, Title I of the Coronavirus
+                                Aid, Relief, and Economic Security Act (CARES Act) (the Paycheck Protection Program Rule).
+                            </li>
+                            <li>The Applicant (1) is an independent contractor, eligible self-employed individual, or sole proprietor or (2) employs no more
+                                than the greater of 500 or employees or, if applicable, the size standard in number of employees established by the SBA in 13
+                                C.F.R. 121.201 for the Applicant’s industry.
+                            </li>
+                            <li>I will comply, whenever applicable, with the civil rights and other limitations in this form.
+                            </li>
+                            <li>All SBA loan proceeds will be used only for business-related purposes as specified in the loan application and consistent with the
+                                Paycheck Protection Program Rule.
+                            </li>
+                            <li>To the extent feasible, I will purchase only American-made equipment and products.
+                            </li>
+                            <li>The Applicant is not engaged in any activity that is illegal under federal, state or local law.
+                            </li> 
+                            <li>
+                                Any loan received by the Applicant under Section 7(b)(2) of the Small Business Act between January 31, 2020 and April 3, 2020 was
+                                for a purpose other than paying payroll costs and other allowable uses loans under the Paycheck Protection Program Rule.
+                            </li>
+                            
+                        </ul>
+                        <br/>
+                        For Applicants who are individuals: I authorize the SBA to request criminal record information about me from criminal justice agencies for the
+                        purpose of determining my eligibility for programs authorized by the Small Business Act, as amended.
+                        <br/><br/> 
+                        <div class="slds-text-heading_small">
+                            CERTIFICATIONS
+                        </div><br/> 
+                        
+                        The authorized representative of the Applicant must certify in good faith to all of the below by initialing next to each one:
+                        
+                        <table class="cust-table-eligibilty">
+                            <tr>
+                                <td class="custwidth">   
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_1" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_1__c}"/>
+                                </td>
+                                <td>
+                                    The Applicant was in operation on February 15, 2020 and had employees for whom it paid salaries and payroll taxes or paid independent 
+                                    contractors, as reported on Form(s) 1099-MISC.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth">
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_2" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_2__c}"/>
+                                </td>
+                                <td>
+                                    Current economic uncertainty makes this loan request necessary to support the ongoing operations of the Applicant.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth"> 
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_3" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_3__c}"/> 
+                                </td>
+                                <td>
+                                    The funds will be used to retain workers and maintain payroll or make mortgage interest payments, lease payments, and utility payments,
+                                    as specified under the Paycheck Protection Program Rule; I understand that if the funds are knowingly used for unauthorized purposes,
+                                    the federal government may hold me legally liable, such as for charges of fraud.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth"> 
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_4" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_4__c}"/> 
+                                </td>
+                                <td>
+                                    The Applicant will provide to the Lender documentation verifying the number of full-time equivalent employees on the Applicant’s
+                                    payroll as well as the dollar amounts of payroll costs, covered mortgage interest payments, covered rent payments, and covered utilities
+                                    for the eight-week period following this loan.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth"> 
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_5" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_5__c}"/> 
+                                </td>
+                                <td>
+                                    I understand that loan forgiveness will be provided for the sum of documented payroll costs, covered mortgage interest payments,
+                                    covered rent payments, and covered utilities, and not more than 25% of the forgiven amount may be for non-payroll costs.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth"> 
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_6" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_6__c}"/> 
+                                </td>
+                                <td>
+                                    During the period beginning on February 15, 2020 and ending on December 31, 2020, the Applicant has not and will not receive another
+                                    loan under the Paycheck Protection Program.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth">  
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_7" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_7__c}"/> 
+                                </td>
+                                <td>
+                                    I further certify that the information provided in this application and the information provided in all supporting documents and
+                                    forms is true and accurate in all material respects. I understand that knowingly making a false statement to obtain a guaranteed loan
+                                    from SBA is punishable under the law, including under 18 USC 1001 and 3571 by imprisonment of not more than five years and/or a
+                                    fine of up to $250,000; under 15 USC 645 by imprisonment of not more than two years and/or a fine of not more than $5,000; and, if
+                                    submitted to a federally insured institution, under 18 USC 1014 by imprisonment of not more than thirty years and/or a fine of not
+                                    more than $1,000,000.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="custwidth"> 
+                                    <lightning:input aura:id="cert-form" type="text" maxlength="3"
+                                                     label="answer_8" required="true" variant="label-hidden"
+                                                     value="{!v.CertificationAndAuthRec.Answer_8__c}"/> 
+                                </td>
+                                <td>
+                                    I acknowledge that the lender will confirm the eligible loan amount using required documents submitted. I understand,
+                                    acknowledge and agree that the Lender can share any tax information that I have provided with SBA's authorized representatives,
+                                    including authorized representatives of the SBA Office of Inspector General, for the purpose of compliance with SBA Loan
+                                    Program Requirements and all SBA reviews.
+                                </td>
+                            </tr>
+                            
+                        </table>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">
+                                        Signature of Authorized Representative of Applicant
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        _______________
+                                    </div>
+                                </div>
+                                
+                                <lightning:input aura:id="cert-form" type="text" maxlength="255"
+                                                 label="Print Name" required="true" 
+                                                 value="{!v.CertificationAndAuthRec.Print_Name__c}"/> 
+                                
+                                
+                            </div>
+                            <div class="slds-col">
+                                <span></span>
+                            </div>
+                            <div class="slds-col">
+                                <span></span>
+                            </div>
+                            <div class="slds-col">
+                                
+                                <lightning:input aura:id="cert-form" type="date" placeholder="MM/DD/YYYY"
+                                                 label="Date" required="true" dateStyle="short"
+                                                 value="{!v.CertificationAndAuthRec.Date__c}"/> 
+                                
+                                
+                                <lightning:input aura:id="cert-form" type="text" maxlength="255"
+                                                 label="Title" required="true"
+                                                 value="{!v.CertificationAndAuthRec.Title__c}"/> 
+                                
+                            </div>
+                        </div>
+                        
+                        <br/>
+                        
+                        <div class="slds-align_absolute-center button-pannel" style="height:5rem">
+                            
+                            <lightning:button variant="brand" label="Submit" title="Submit"
+                                              onclick="{!c.submitApplication}"
+                                              disabled="{!empty(v.LoanApplication.Id)}"/>
+                            
+                            <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelForm }"/>
+                        </div>                          
+                    </div>
+                    
+                </lightning:tab>
+            </lightning:tabset>
+                        
+        </div>
+    </article>
+    
+    <aura:if isTrue="{!v.showContactForm}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideContactForm}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!" title="close" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Business Owner Information</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <div class="tab-container">
+                        
+                        <div class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title="Person Info">Person Info</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content">
+                                
+                                <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                
+                                <c:CustomLookup objectName="Contact" fieldName="Name" label="Select Person Name"
+                                                iconName="standard:contact" placeholder="Enter Person Name"
+                                                value="{!v.selectedBusinessOwnerContactId}"
+                                                whereClause="{! '(CreatedById=\'' + v.currentUserId +'\''
+                                                             +  ' OR AccountId = \''+ v.currentUserAccountId +'\')'}"/>
+                                
+                                <div class="slds-text-color_weak">Note: Please select person name above or fill this form if it's not available.</div>
+                                                                
+                                <lightning:input aura:id="contact-form" type="text" 
+                                                 label="FirstName" required="{!empty(v.OwnerRec.Contact__r.Id)}"
+                                                 value="{!v.OwnerRec.Contact__r.FirstName}"/>
+                                
+                                <lightning:input aura:id="contact-form" type="text" 
+                                                 label="LastName" required="true"
+                                                 value="{!v.OwnerRec.Contact__r.LastName}"/>
+                                
+                               
+                            </div>
+                            <div class="slds-col">
+                                <lightning:inputAddress aura:id="contact-form" addressLabel="Mailing Address"
+                                                        streetLabel="Street"
+                                                        cityLabel="City"
+                                                        countryLabel="Country"
+                                                        provinceLabel="State or Province"
+                                                        postalCodeLabel="PostalCode"            
+                                                        required="true"                                                  
+                                                        street="{!v.OwnerRec.Contact__r.MailingStreet}"
+                                                        city="{!v.OwnerRec.Contact__r.MailingCity}"
+                                                        country="{!v.OwnerRec.Contact__r.MailingCountry}"
+                                                        province="{!v.OwnerRec.Contact__r.MailingState}"
+                                                        postalCode="{!v.OwnerRec.Contact__r.MailingPostalCode}"
+                                                        />
+                                
+                            </div>
+                        </div>
+                                
+                            </div>
+                        </div>
+                        <div class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title="Ownership Info">Ownership Info</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content">
+                                    
+                                <lightning:input aura:id="contact-form" type="text" 
+                                                 label="Title" required="true"
+                                                 value="{!v.OwnerRec.Title__c}"/>
+                                
+                                <lightning:input aura:id="contact-form" type="number" max="100"
+                                                 label="% of Ownership" required="true"
+                                                 value="{!v.OwnerRec.Percent_of_Ownership__c}"/>
+                                
+                                <lightning:input aura:id="contact-form" type="text" 
+                                                 label="TIN (EIN or SSN)" required="true"
+                                                 value="{!v.OwnerRec.TIN_EIN_or_SSN__c}"/>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.hideContactForm}">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick="{!c.saveOwnerForm}">Save</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showCalulator}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideCalulator}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!" title="close" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Amounts Calculator</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                   
+                    <c:PPP_Loan_Calculator aura:id="calcComp"></c:PPP_Loan_Calculator>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick="{!c.getCalculatedValues}" >Use these values</button>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.hideCalulator}">Cancel</button>
+               </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:attribute name="loanTypes" type="String[]" default="Small Business Loan,Paycheck Protection Program"/>
+    
+    <aura:if isTrue="{!v.showFormTypeSelector}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" onclick="{!c.closeSelectApplicationType}" alternativeText="close"/>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Select Application Type</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning:select aura:id="loan-type" name="select" label="Select a Loan type"
+                                      required="true" class="cust-padd">
+                        <aura:iteration items="{!v.loanTypes}" var="loantype">
+                            <option text="{!loantype}" value="{!loantype}"></option>
+                        </aura:iteration>
+                    </lightning:select>
+                    
+                    <div class="slds-align_absolute-center" style="height:5rem">
+                        <button class="slds-button slds-button_brand" onclick="{!c.checkApplicationType}" >Submit</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

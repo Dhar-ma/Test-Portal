@@ -1,0 +1,65 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" 
+                controller="LoanTypeWrapperController">
+    
+    <aura:attribute name="LoanTypes" type="List" default="['Mortgage Loan','Consumer Loan','Business Loan']"/>
+    <aura:attribute name="selectedLoanType" type="String"/>
+    <aura:attribute name="showLoanType" type="boolean" default="false"/>
+    <aura:attribute name="showSelectLoanType" type="boolean" default="true"/>
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.showSelectLoanType}">
+        <fieldset class="slds-form-element">
+            <div class="slds-text-heading_large slds-text-align_center slds-m-top_small slds-m-bottom_small slds-text-color_default">
+                Select Loan Type
+            </div>
+            <div class="slds-form-element__control form-content">
+                <aura:iteration items="{!v.LoanTypes}" var="type" >
+                    <div class="slds-visual-picker slds-visual-picker_vertical">
+                        <input type="radio" id="{!type}" value="{!type}" name="loanType" onclick="{!c.showLoanSelection}"/>
+                        <label for="{!type}">
+                            <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                                <span>
+                                    <span class="slds-text-heading_medium slds-m-bottom_x-small">{!type}</span>
+                                </span>
+                            </span>
+                            <span class="slds-icon_container slds-visual-picker__text-check check-icn">
+                                <lightning:icon iconName="utility:check" size="xx-small" />
+                            </span>
+                        </label>
+                    </div>
+                </aura:iteration>
+            </div>
+        </fieldset> 
+        <div class="slds-text-align_center">
+            <lightning:button variant="brand" label="Next" title="Next" onclick="{! c.showSelectedLoanProgram}" />
+        </div>
+    </aura:if>
+    
+    
+    
+    <aura:if isTrue="{!and(v.selectedLoanType == 'Mortgage Loan', v.showLoanType)}">
+        <!--MortgageLoanApplication_Form-->
+        <c:MortgageLoanApplication_Form/>
+    </aura:if>
+    <aura:if isTrue="{!and(v.selectedLoanType == 'Consumer Loan', v.showLoanType)}">
+        <!--AutoLoanProgram-->
+        <c:AutoLoanProgram/>
+    </aura:if>
+    <aura:if isTrue="{!and(v.selectedLoanType == 'Business Loan', v.showLoanType) }">
+        <!--Personal Loan-->
+        <!--<c:NewApplication_Form/>-->
+        <c:BusinessLoanForm/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

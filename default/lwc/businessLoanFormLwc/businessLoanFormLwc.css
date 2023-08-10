@@ -1,0 +1,11 @@
+/* .slds-vertical-tabs__nav-item.slds-is-active {
+  background-color: #00006b;
+} */
+
+.tab-active > .disabledTab > .heading {
+  background-color: red;
+}
+/* 
+.tab-active > .disabledTab {
+  background-color: red;
+} */

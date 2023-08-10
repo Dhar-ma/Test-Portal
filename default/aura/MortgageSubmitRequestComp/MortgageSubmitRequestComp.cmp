@@ -1,0 +1,11 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" 
+                controller="CommunityUtils">
+    
+	<!--Submit Request Attribute -->
+    <aura:attribute name="listCaseType" type="list" default="[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <c:HomeScreen_Actions listCaseType = "{!v.listCaseType}" />
+    
+</aura:component>

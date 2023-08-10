@@ -1,0 +1,36 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global" 
+                controller="WorkGroupTypeSelection">
+    
+    <aura:attribute name="appointmentTypes" type="list" default="[]" />
+    <aura:attribute name="selectedAppointmentType" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <div class="slds-text-heading_large slds-text-align_center slds-m-top_small slds-m-bottom_small slds-text-color_default">
+            Select Group Type
+    </div>
+    
+    <fieldset class="slds-form-element slds-align_absolute-center">
+        <div class="slds-form-element__control">
+            <aura:iteration var="appointment" items="{!v.appointmentTypes}">
+                <div class="slds-visual-picker slds-visual-picker_medium">
+                    <input type="radio" id="{!appointment.Name}" value="{!appointment.Type}" name="options" onclick="{!c.setAppointmentType}"/>
+                    <label for="{!appointment.Name}">
+                        <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                            <span class="slds-icon_container">
+                                <img src="{!$Resource.Appointment_Type_Icons + '/AppointmentIcons/'+appointment.Name+'.PNG'}"/>
+                            </span>
+                        </span>
+                        <span class="slds-visual-picker__body">
+                            <span class="slds-text-heading_small">{!appointment.Type}</span>
+                        </span>
+                        <span class="slds-icon_container slds-visual-picker__text-check">
+                            <!--<lightning:icon iconName="utility:check" size="xx-small" />-->
+                        </span>
+                    </label>
+                </div>
+            </aura:iteration>
+        </div>
+    </fieldset>
+    
+</aura:component>

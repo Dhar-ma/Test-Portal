@@ -1,0 +1,25 @@
+.primary-contact-container {
+  border: 1px solid #d4d4d4;
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  padding: 0.5rem;
+}
+
+.bottom-space {
+  padding-bottom: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  lightning-layout-item.primary-contact:nth-child(odd) {
+    padding-right: 0.75rem;
+  }
+
+  lightning-layout-item.primary-contact:nth-child(even) {
+    padding-left: 0.75rem;
+  }
+}
+@media (max-width: 1023px) {
+  .bottom-space-mobile {
+    padding-bottom: 0.5rem;
+  }
+}

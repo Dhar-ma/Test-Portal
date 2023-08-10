@@ -1,0 +1,60 @@
+<!--
+  @description       : 
+  @author            : Amol
+  @group             : 
+  @last modified on  : 10-13-2021
+  @last modified by  : Amol
+-->
+<template>
+    <div if:true={spinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" variant="brand">
+        </lightning-spinner>
+    </div>
+    <template if:false={recordIdAvailable}>
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error error-msg" role="alert">
+            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+            </span>
+            <h2>Record Id Not Available</h2>
+        </div>
+    </template>
+    <div style="padding-left: 2%; padding-right: 2%;">
+        <template if:true={showQuestionForm}>
+            Answer the following question:
+            <div class="slds-form-element" style="padding:1rem;">
+                <label class="slds-form-element__label">
+                    {taskRec.Description}
+                </label>
+                <div class="slds-form-element__control">
+                    <lightning-input type="text" label="answer" name="answerText" variant="label-hidden" required
+                        value={answerText} onchange={genericOnChange} class="form__field"></lightning-input>
+                </div>
+            </div>
+            <div class="slds-align_absolute-center" style="height:5rem">
+                <lightning-button class="slds-m-left_x-small" variant="brand" label="Submit" onclick={saveTask}>
+                </lightning-button>
+            </div>
+    
+        </template>
+        <template if:true={showFileUploadForm}>
+    
+            <div class="slds-text-heading_small">Please upload below files:</div><br />
+            <template if:true={isApplicationObject}>
+                <c-required-file-upload record-id={taskRec.WhatId} child-lookup-relationship-name=""
+                    storage-object-name="Required_Application_Document__c" storage-parent-lookup="Residential_Loan_Application__c"
+                    storage-file-type-lookup="File_Type__c" file-type-ids={fileTypeIds}>
+                </c-required-file-upload>
+            </template>
+            <template if:true={isCaseObject}>
+                <c-required-file-upload record-id={taskRec.WhatId} child-lookup-relationship-name=""
+                    storage-object-name="Case_Document__c" storage-parent-lookup="Case__c"
+                    storage-file-type-lookup="File_Type__c" file-type-ids={fileTypeIds}>
+                </c-required-file-upload>
+            </template>
+            <div class="slds-align_absolute-center" style="height:5rem">
+                <lightning-button label="Mark as Complete" title="Mark as Complete" icon-name="utility:check"
+                    class="slds-m-left_x-small" onclick={completeTask}></lightning-button>
+            </div>
+    
+        </template>
+    </div>
+</template>

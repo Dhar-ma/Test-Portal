@@ -1,0 +1,98 @@
+<template>
+    <article class="slds-card page-section-box">
+        <!-- QUOTE HEADER -->
+        <lightning-layout class="slds-card_header slds-p-around_medium header" horizontal-align="spread">
+            <lightning-layout-item>
+                <lightning-layout class="list-header">
+                    <div class="slds-p-right_small">
+                        <!-- <img src={sureQuoteLogo}> -->
+                    </div>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- QUOTE ITEMS -->
+        <lightning-layout multiple-rows class="slds-p-around_small">
+
+            <!-- LOAN DETAILS -->
+            <lightning-layout-item size="12" class="detail-box bottom-space">
+                <!-- TITLE -->
+                <lightning-layout multiple-rows class="detail-header">
+                    <lightning-layout-item size="12" class="detail-title">
+                        <lightning-layout horizontal-align="spread">
+                            <lightning-layout-item>
+                                <h2>
+                                    <span class="slds-truncate">
+                                        Loan Details
+                                    </span>
+                                </h2>
+                            </lightning-layout-item>
+                            <lightning-layout-item>
+                                <!-- ADD ACTIONS  -->
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <!-- INPUTS -->
+                <lightning-layout multiple-rows class="loan-detail">
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input1" label="First Name" value="Melissa"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input1" label="Last Name" value="Dunn"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="email" name="input1" label="Email" value="mdunn@consultems.com"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="number" name="input1" label="Loan Amount" value="400000" formatter="currency" step="0.01"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="number" name="input2" label="Credit Score" value="720" step="1"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="number" name="input3" label="LTV" value=".5" formatter="percent" step="0.05"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input4" label="Income Documentation" value="Full Doc - Two Years" ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input5" label="Property Type" value="One Unit"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input6" label="Transaction Type" value="Purchase" ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="type" name="input7" label="Occupancy" value="Investment Property"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input8" label="Housing History" value="0x30x24" ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input9" label="Housing Event" value="N/A or > 48 Months"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input10" label="Citzenship Status" value="Citizen or Permanent Resident Alien" ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="type" name="input11" label="FTHB/FTInvestor" value="No"></lightning-input>
+                    </lightning-layout-item>
+                    
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input12" label="Interest Only" value="No" ></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="loan-detail-input">
+                        <lightning-input type="text" name="input13" label="DTI" value="&#60;= 45% or Not Applicable, Investor Cash Flow"></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>

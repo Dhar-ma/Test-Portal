@@ -1,0 +1,122 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes" access="global" 
+                controller="Branch_Selection_View_Controller">
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/> 
+    <aura:attribute name="showdata" type="boolean" default="false"/>     
+    <aura:attribute name="selectedBranchId" type="String" default=""/>    
+    <aura:attribute name="selectedBranch" type="object"/>
+    <aura:attribute name="isFlowOpen" type="boolean" default="false"/>
+    <aura:attribute name="groupTypeId" type="String" default=""/> 
+    <aura:attribute name="isMobile" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    
+    <aura:handler name="change" value="{!v.selectedBranchId}" 
+                  action="{!c.handleBranchIdChange}"/>
+    
+    <div class="page-section-box">
+        <aura:if isTrue="{!v.isFlowOpen}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container ">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" onclick="{!c.closeFlowModal}"/>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
+                    </div>
+                </div>
+            </section>
+        </aura:if>
+        <aura:if isTrue="{!v.showdata}">
+            <div class="card-wrapper">
+                <lightning:card variant="Narrow" title="Preferred Branch" iconName="standard:account"
+                                class="cust-card">
+      
+                    <p class="slds-p-horizontal_small" Style="border-top: 1px solid #e4e2e2">       
+                        <!--<div style="max-width:60%; ">-->
+                        <aura:if isTrue="{! not(empty(v.selectedBranch))}">
+                            <article class="slds-card">
+                                <div class="slds-card__header selected-branch-header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <aura:if isTrue="{!!v.isMobile}">
+                                            <div class="slds-media__figure">
+                                                <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                                    <lightning:icon iconName="standard:account"/>
+                                                </span>
+                                            </div>
+                                        </aura:if>
+                                        <div class="slds-media__body">
+                                            <h2 class="slds-card__header-title">
+                                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Accounts">
+                                                    <span>{!v.selectedBranch.Name}</span>
+                                                </a>
+                                            </h2>
+                                            <dl class="slds-list_horizontal slds-wrap">
+                                                <dd class="slds-truncate slds-dl_horizontal__detail slds-tile__meta">
+                                                    <p class="slds-truncate" title="Location">
+                                                        <aura:if isTrue="{! not(empty(v.selectedBranch.BillingStreet))}">
+                                                            {!v.selectedBranch.BillingStreet}
+                                                        </aura:if>
+                                                        <aura:if isTrue="{! not(empty(v.selectedBranch.BillingStreet))}">
+                                                            {!v.selectedBranch.BillingStreet},
+                                                        </aura:if>
+                                                        <aura:if isTrue="{! not(empty(v.selectedBranch.BillingCity))}">
+                                                            {!v.selectedBranch.BillingCity},
+                                                        </aura:if>
+                                                        <aura:if isTrue="{! not(empty(v.selectedBranch.BillingState))}">
+                                                            {!v.selectedBranch.BillingState},
+                                                        </aura:if>
+                                                        <aura:if isTrue="{! not(empty(v.selectedBranch.BillingPostalCode))}">
+                                                            {!v.selectedBranch.BillingPostalCode},
+                                                        </aura:if>
+                                                        {!v.selectedBranch.BillingCountry }
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        
+                                        <div class="slds-no-flex">
+                                            <aura:if isTrue="{!v.isMobile}">
+                                                <lightning:buttonMenu alternativeText="Show menu" onselect="{!c.startFlow}" menuAlignment="right">
+                                                    <lightning:menuItem value="MenuItemOne" label="Change Branch" />
+                                                </lightning:buttonMenu>
+                                            </aura:if>
+                                            <aura:if isTrue="{!!v.isMobile}">
+                                                <button variant="brand" label="Change Branch" title="Change Branch" onclick="{! c.startFlow }" class="slds-button slds-button_neutral">Change Branch</button>
+                                            </aura:if>
+                                        </div>
+                                    </header>
+                                </div>
+                            </article>
+                        </aura:if>
+                        <br/>
+                        <c:branchPrimaryContacts selectedBranch="{!v.selectedBranch}"></c:branchPrimaryContacts>
+                    </p>
+                </lightning:card>
+            </div>
+            <aura:set attribute="else">
+                <div class="card-wrapper">
+                    <lightning:card variant="Narrow" title="Preferred Branch" iconName="standard:account"
+                                    class="cust-card">
+                        <span class="slds-var-p-right_x-small uiOutputText forceBreadCrumbItem sub-title-tx">Branch</span>
+                        <p class="slds-p-horizontal_small" Style="border-top: 1px solid #e4e2e2">
+                            <div class="slds-align_absolute-center" style="height:5rem">
+                                You don't have selected any Prefered branch. Please click &nbsp;<button class="slds-button" onclick="{! c.startFlow }">here </button> &nbsp;to select branch.
+                            </div>
+                        </p>
+                    </lightning:card>
+                </div>
+            </aura:set>
+        </aura:if>
+        <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>  
+    </div>  
+</aura:component>

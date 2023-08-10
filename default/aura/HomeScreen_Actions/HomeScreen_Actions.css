@@ -1,0 +1,58 @@
+.THIS {
+}
+.THIS .cust-content{
+        min-height: 80%;
+}
+.THIS.cust-action-container div{
+    display: inline-block;
+    width: 20%;
+}
+.THIS.border-top{ border-top: 1px solid #e0e0e0;padding-top: 8px;}
+
+.THIS div img:hover {
+    padding-left: 5px;cursor: pointer;
+}
+
+@media (max-width:580px) 
+    {
+    .THIS.cust-action-container div{width: 50%; text-align: center;}
+}
+
+/* success modal css */
+.THIS .slds-modal__container.modal-body-content {
+    background: #272A6F;
+    width: 50%;
+    margin: 10% auto 0;
+    height: auto;
+    color: #fff;
+    position: relative;
+    text-align:center;
+    border-radius: 0; 
+}
+.THIS .modal-body-content button.slds-button.slds-button_icon.slds-modal__close {
+    position: absolute;
+    z-index: 9010;
+    top: 12px;
+    right: 12px;
+    display: inherit;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+.THIS .modal-body-content h1 {
+    font-size: 32px;
+    font-weight: lighter;
+}
+.THIS .modal-body-content h2 {
+    font-size: 20px;
+    margin: 22px 0px;
+}
+.THIS .inner-modal-content p{font-size: 16px;line-height: 36px;}
+.THIS .inputFieldsPlaceholder .slds-card__header{display: none !important;}
+
+.THIS.page-section-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,39 @@
+<!--
+ - Created by Joe Cadd on 4/5/2020.
+ -->
+
+<!-- Required File Upload Status -->
+<template>
+
+    <div if:false={iconOnly} class={fileUploadStatusCardType}>
+        <div class="slds-box section-status-card ">
+            <div class="slds-grid slds-grid_align-center slds-wrap">
+                <div class="slds-col">
+                    <div if:true={hasFilesUploaded}>
+                        <lightning-icon icon-name="utility:success" variant="success" size="large"></lightning-icon>
+                    </div>
+                    <div if:false={hasFilesUploaded}>
+                        <lightning-icon icon-name="utility:upload" size="large"></lightning-icon>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-text-align_center status-card-text">
+                    <div class="slds-align_absolute-center" style="min-height:2.5rem">{fileStorageInfo.fileType.Name}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icon only display -->
+    <div if:true={iconOnly} class={fileUploadStatusCardType}>
+        <div if:true={hasFilesUploaded}>
+            <lightning-icon icon-name="utility:success" variant="success" size="medium"></lightning-icon>
+        </div>
+        <div if:false={hasFilesUploaded}>
+            <lightning-icon icon-name="utility:upload" size="medium"></lightning-icon>
+        </div>
+    </div>
+
+
+
+</template>

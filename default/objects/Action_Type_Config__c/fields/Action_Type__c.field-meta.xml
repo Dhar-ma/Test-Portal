@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Action Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account Question</fullName>
+                <default>false</default>
+                <label>Account Question</label>
+            </value>
+            <value>
+                <fullName>Add Authorized User</fullName>
+                <default>false</default>
+                <label>Add Authorized User</label>
+            </value>
+            <value>
+                <fullName>Add or Remove Beneficiary</fullName>
+                <default>false</default>
+                <label>Add or Remove Beneficiary</label>
+            </value>
+            <value>
+                <fullName>Add or Remove Driver or Vehicle</fullName>
+                <default>false</default>
+                <label>Add or Remove Driver or Vehicle</label>
+            </value>
+            <value>
+                <fullName>Add or Remove Joint Owner</fullName>
+                <default>false</default>
+                <label>Add or Remove Joint Owner</label>
+            </value>
+            <value>
+                <fullName>Address Change</fullName>
+                <default>false</default>
+                <label>Address Change</label>
+            </value>
+            <value>
+                <fullName>Ask a Question</fullName>
+                <default>false</default>
+                <label>Ask a Question</label>
+            </value>
+            <value>
+                <fullName>Change an Investment</fullName>
+                <default>false</default>
+                <label>Change an Investment</label>
+            </value>
+            <value>
+                <fullName>Change Due Date</fullName>
+                <default>false</default>
+                <label>Change Due Date</label>
+            </value>
+            <value>
+                <fullName>Change Loan Date</fullName>
+                <default>false</default>
+                <label>Change Loan Date</label>
+            </value>
+            <value>
+                <fullName>Close Acccount / Change Insurance Provided</fullName>
+                <default>false</default>
+                <label>Close Acccount / Change Insurance Provided</label>
+            </value>
+            <value>
+                <fullName>Close Credit Card Account</fullName>
+                <default>false</default>
+                <label>Close Credit Card Account</label>
+            </value>
+            <value>
+                <fullName>Close Debit Card Account</fullName>
+                <default>false</default>
+                <label>Close Debit Card Account</label>
+            </value>
+            <value>
+                <fullName>Close Deposit Account</fullName>
+                <default>false</default>
+                <label>Close Deposit Account</label>
+            </value>
+            <value>
+                <fullName>Close Wealth Account</fullName>
+                <default>false</default>
+                <label>Close Wealth Account</label>
+            </value>
+            <value>
+                <fullName>Courtesy Pay or NSF</fullName>
+                <default>false</default>
+                <label>Courtesy Pay or NSF</label>
+            </value>
+            <value>
+                <fullName>Credit Card Advance</fullName>
+                <default>false</default>
+                <label>Credit Card Advance</label>
+            </value>
+            <value>
+                <fullName>Debit Card Fraud</fullName>
+                <default>false</default>
+                <label>Debit Card Fraud</label>
+            </value>
+            <value>
+                <fullName>Debit Card Not Working</fullName>
+                <default>false</default>
+                <label>Debit Card Not Working</label>
+            </value>
+            <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
+                <fullName>Fraud Issue</fullName>
+                <default>false</default>
+                <label>Fraud Issue</label>
+            </value>
+            <value>
+                <fullName>Freeze Card</fullName>
+                <default>false</default>
+                <label>Freeze Card</label>
+            </value>
+            <value>
+                <fullName>General Questions</fullName>
+                <default>false</default>
+                <label>General Questions</label>
+            </value>
+            <value>
+                <fullName>Get a Quote</fullName>
+                <default>false</default>
+                <label>Get a Quote</label>
+            </value>
+            <value>
+                <fullName>HELOC Credit Card Inquiries</fullName>
+                <default>false</default>
+                <label>HELOC Credit Card Inquiries</label>
+            </value>
+            <value>
+                <fullName>Increase Credit Line</fullName>
+                <default>false</default>
+                <label>Increase Credit Line</label>
+            </value>
+            <value>
+                <fullName>Insurance Claim</fullName>
+                <default>false</default>
+                <label>Insurance Claim</label>
+            </value>
+            <value>
+                <fullName>Lost Debit Card</fullName>
+                <default>false</default>
+                <label>Lost Debit Card</label>
+            </value>
+            <value>
+                <fullName>Make a Payment</fullName>
+                <default>false</default>
+                <label>Make a Payment</label>
+            </value>
+            <value>
+                <fullName>Name Change</fullName>
+                <default>false</default>
+                <label>Name Change</label>
+            </value>
+            <value>
+                <fullName>Notary or Medallion Stamp</fullName>
+                <default>false</default>
+                <label>Notary or Medallion Stamp</label>
+            </value>
+            <value>
+                <fullName>Online Banking Issue</fullName>
+                <default>false</default>
+                <label>Online Banking Issue</label>
+            </value>
+            <value>
+                <fullName>Open Deposit Account</fullName>
+                <default>false</default>
+                <label>Open Deposit Account</label>
+            </value>
+            <value>
+                <fullName>Open Investment Account</fullName>
+                <default>false</default>
+                <label>Open Investment Account</label>
+            </value>
+            <value>
+                <fullName>Order Card</fullName>
+                <default>false</default>
+                <label>Order Card</label>
+            </value>
+            <value>
+                <fullName>Order Checks, Get Temporary Checks, Bank Check, Money Order</fullName>
+                <default>false</default>
+                <label>Order Checks, Get Temporary Checks, Bank Check, Money Order</label>
+            </value>
+            <value>
+                <fullName>Payoff and Close Account</fullName>
+                <default>false</default>
+                <label>Payoff and Close Account</label>
+            </value>
+            <value>
+                <fullName>Porfolio / Investment Question</fullName>
+                <default>false</default>
+                <label>Porfolio / Investment Question</label>
+            </value>
+            <value>
+                <fullName>Remove Authorized User</fullName>
+                <default>false</default>
+                <label>Remove Authorized User</label>
+            </value>
+            <value>
+                <fullName>Renew CD</fullName>
+                <default>false</default>
+                <label>Renew CD</label>
+            </value>
+            <value>
+                <fullName>Repin Debit Card</fullName>
+                <default>false</default>
+                <label>Repin Debit Card</label>
+            </value>
+            <value>
+                <fullName>Replace Card</fullName>
+                <default>false</default>
+                <label>Replace Card</label>
+            </value>
+            <value>
+                <fullName>Request Escrow Statement</fullName>
+                <default>false</default>
+                <label>Request Escrow Statement</label>
+            </value>
+            <value>
+                <fullName>Request ID Cards</fullName>
+                <default>false</default>
+                <label>Request ID Cards</label>
+            </value>
+            <value>
+                <fullName>Request Mortgage Verification</fullName>
+                <default>false</default>
+                <label>Request Mortgage Verification</label>
+            </value>
+            <value>
+                <fullName>Request or Reset PIN</fullName>
+                <default>false</default>
+                <label>Request or Reset PIN</label>
+            </value>
+            <value>
+                <fullName>Request Payoff</fullName>
+                <default>false</default>
+                <label>Request Payoff</label>
+            </value>
+            <value>
+                <fullName>Request Rates</fullName>
+                <default>false</default>
+                <label>Request Rates</label>
+            </value>
+            <value>
+                <fullName>Request Statement</fullName>
+                <default>false</default>
+                <label>Request Statement</label>
+            </value>
+            <value>
+                <fullName>Request Tax Statement</fullName>
+                <default>false</default>
+                <label>Request Tax Statement</label>
+            </value>
+            <value>
+                <fullName>Skip A payment</fullName>
+                <default>false</default>
+                <label>Skip A payment</label>
+            </value>
+            <value>
+                <fullName>Transaction Related Questions</fullName>
+                <default>false</default>
+                <label>Transaction Related Questions</label>
+            </value>
+            <value>
+                <fullName>Travel Notice</fullName>
+                <default>false</default>
+                <label>Travel Notice</label>
+            </value>
+            <value>
+                <fullName>Update Insurance</fullName>
+                <default>false</default>
+                <label>Update Insurance</label>
+            </value>
+            <value>
+                <fullName>Refer a Friend or Family Member</fullName>
+                <default>false</default>
+                <label>Refer a Friend or Family Member</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

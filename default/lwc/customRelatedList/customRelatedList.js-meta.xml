@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Custom Related List</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="objectAPIName" type="String" label="Child Object API Name" description="Child API Name for the child object."/>
+            <property name="fieldOneApiName" type="String" label="Field 1" description="API Name of the first field to display."/>
+            <property name="fieldTwoApiName" type="String" label="Field 2" description="API Name of the second field to display."/>
+            <property name="fieldThreeApiName" type="String" label="Field 3" description="API Name of the third field to display."/>
+            <property name="fieldFourApiName" type="String" label="Field 4" description="API Name of the fourth field to display."/>
+            <property name="filterCriteria" type="String" label="Filter Criteria" description="SOQL query where clause to filter results."/>
+            <property name="titleOverride" type="String" label="Title Override" description="Override the standard title with a custom title."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

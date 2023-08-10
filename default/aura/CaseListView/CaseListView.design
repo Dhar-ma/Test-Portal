@@ -1,0 +1,8 @@
+<design:component>
+	<design:attribute name="objectApiName" Label="Object API Name"/>    
+    <design:attribute name="listViewName" Label="List View API Name"/>    
+    <design:attribute name="titleOverride" Label="Title Override"/>  
+    <design:attribute name="actionLabel" Label="Action Label"/>
+    <design:attribute name="actionUrl" label='Action URL'/>
+    <design:attribute name="type" label="Type" datasource="Internal,External"/>
+</design:component>

@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title={titleOverride} icon-name="standard:case">
+
+        <div class="page-section-box">
+            <template if:true={actionUrl}>
+                <lightning-button class="action-button" label={actionLabel} icon-name="utility:add" icon-position="left"
+                    onclick={handleNavigationAction}>
+                </lightning-button>
+            </template>
+            <template if:true={displayListView}>
+                <!-- DESKTOP -->
+                <template if:false={isMobile}>
+                    <div style="height: 210px;" if:true={isLoad}>
+                        <lightning-datatable key-field="id" data={newCaseList} columns={columns}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+                    </div>
+                </template>
+                <!-- MOBILE -->
+                <template if:true={isMobile}>
+                    <c-custom-related-list list-view-api-name={listViewApiName} record-id={contactId}
+                        object-a-p-i-name={objectApiName} title-override={titleOverride} type={type}
+                        url-prefix={urlPrefix}>
+                    </c-custom-related-list>
+                    <!-- list-view-api-name={listViewAPIName}
+                    {listViewAPIName}
+                    record-id={contactId}
+                    title-override={titleOverride}
+                    type={type}
+                    url-prefix={urlPrefix} -->
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

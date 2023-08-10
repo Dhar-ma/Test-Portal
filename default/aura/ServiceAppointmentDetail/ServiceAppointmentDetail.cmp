@@ -1,0 +1,48 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" 
+                controller="ServiceAppointmentDetailController">
+    
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="ServiceAppointment">
+        <lightning:card title="Service Appointment Details" iconName="action:record">
+            <p class="slds-p-horizontal_small">
+
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="AppointmentNumber" />    
+                        <lightning:outputField fieldName="AccountId" />    
+                        <lightning:outputField fieldName="ContactId" /> 
+                        <lightning:outputField fieldName="AdditionalInformation" /> 
+                        <lightning:outputField fieldName="WorkTypeId" /> 
+                        <lightning:outputField fieldName="Work_Type_Group__c" />
+                        <lightning:outputField fieldName="Service_Resource__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="SchedStartTime" />    
+                        <lightning:outputField fieldName="SchedEndTime" />    
+                        <lightning:outputField fieldName="AppointmentType" />  
+                        <lightning:outputField fieldName="Address" /> 
+                        <lightning:outputField fieldName="Phone" /> 
+                        <lightning:outputField fieldName="Email" /> 
+                    </div>
+                </div>
+            </p>
+            <div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+                <lightning:button variant="brand" label="Cancel Service Appointment" title="Cancel Service Appointment"
+                                  onclick="{! c.cancelAppointment }"/>
+            </div>
+            
+        </lightning:card>        
+    </lightning:recordViewForm>
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

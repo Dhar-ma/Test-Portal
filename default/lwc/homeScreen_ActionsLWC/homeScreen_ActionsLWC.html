@@ -1,0 +1,135 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div if:true={isLoaded}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+    <div if:false={isLoaded}>
+        <div class="page-section-box">
+            <lightning-card title="Submit Requests">
+                <div if:true={isDataLoad} class="slds-p-horizontal_small" style="margin:2%;">
+                    <ul class="slds-accordion">
+                        <template for:each={listCaseType} for:item="caseType">
+                            <li key={caseType.Type} class="slds-accordion__list-item">
+                                <section class="slds-accordion__section">
+                                    <div class="slds-accordion__summary">
+                                        <span class="slds-avatar slds-avatar--large">
+                                            <img src={caseType.Logo} />
+                                        </span>
+                                        <h3 class="slds-accordion__summary-heading" style="margin-left: 15px;">
+                                            <button aria-controls="accordion-details-02" aria-expanded="false"
+                                                class="slds-button slds-button_reset slds-accordion__summary-action">
+                                                <span class="slds-accordion__summary-content">{caseType.Type}</span>
+                                            </button>
+                                        </h3>
+                                        <lightning-button label="Request" data-name={caseType.Type} title="Request"
+                                            onclick={handleRequestClick}></lightning-button>
+                                    </div>
+                                </section>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
+        </div>
+
+        <div if:true={showNewCaseForm}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon icon-name="utility:close"
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            onclick={handleClose} alternative-text="Close" title="Close">
+                        </lightning-button-icon>
+
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Case</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium cust-content" id="modal-content-id-1">
+                        <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleCaseSaveSuccess}
+                            onsubmit={handleSubmit}>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <div style="display:none;">
+                                        <lightning-input-field value={subject} field-name="Type" required="true"
+                                            disabled="true"></lightning-input-field>
+                                    </div>
+                                    <lightning-input-field value={subject} field-name="Subject"
+                                        required="true"></lightning-input-field>
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label" for="horizontal-input-id-01">Action
+                                            Type</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-combobox name="Action Type" value={value}
+                                                placeholder="--- None ---" options={caseReasonList}
+                                                onchange={onCaseReasonChange}></lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <lightning-input-field field-name="Description"></lightning-input-field>
+                                    <div if:true={isaddField}>
+                                        <div>
+                                            <template for:each={additionalCaseFieldsList} for:item="addField">
+                                                <div key={addField}>
+                                                    <lightning-input-field
+                                                        field-name={addField}></lightning-input-field>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-p-left_large">
+                                    <div if:true={isproductTypesList}>
+                                        <lightning-checkbox-group name="Select Associated account for this request"
+                                            label="Select Associated account for this request"
+                                            options={productTypesList} value={checkBoxvalue}
+                                            onchange={handleChange}></lightning-checkbox-group>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={Disclosure}>
+                                <div class="slds-align_absolute-center"
+                                    style="display: block; text-align: center; color: rgb(25,17,105);width:75%;">
+                                    <div>
+                                        <p>
+                                            {Disclosure}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-align_absolute-center" style="height:3rem">
+                                <lightning-button class="slds-m-top_small" label="Cancel"
+                                    onclick={handleReset}></lightning-button>
+                                <lightning-button class="slds-m-top_small slds-var-m-left_medium" type="submit"
+                                    variant="brand" label="Save Record"></lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div if:true={showSuccessMessage}>
+
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small modal-container"
+                aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container modal-body-content">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={handleCloseSuccessMessage}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="x-small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h1>Thank you!</h1>
+                    <h2>We received your request.</h2>
+                    <div class="inner-modal-content">
+                        <p>
+                            We are working diligently to process your request the same business day.
+                            <br />
+                            If you submit your request after 2:00pm, we will start processing
+                            <br />
+                            by the next business day.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,139 @@
+.THIS {
+}
+.THIS .guest-branch-info{text-align: center;}
+.THIS .branch-search {
+    max-width: 80%;
+    margin: 0 auto;
+}
+.THIS .branch-title {
+        margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: lighter;
+        color: #000;
+    margin-bottom: 10px;
+}
+.THIS p.info-text {
+    font-size: .8125rem;
+    margin-bottom: 30px;
+    color: #000;
+}
+.THIS h2.branch-sub-title {
+    font-size: 1.125rem;
+    color: #34424b;    
+}
+.THIS .service-type {
+    margin: 20px 0px 30px;
+}
+.THIS .service-type ul {
+    list-style-type: none;
+    text-align: left;
+    padding: 10px 30px;
+}
+
+.THIS .service-type ul li img {
+    margin-right: 10px;
+}
+.THIS .service-type ul li {
+    display: inline-block;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: .8125rem; 
+}
+.THIS .branch-search .heading {
+   display:none
+}
+.THIS .branch-search .blue-title{
+    color: #282773;
+    font-weight: bold;
+    font-size:1.125rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.THIS .branch-search lightning-base-combobox.slds-combobox_container .slds-combobox input {
+    background: #282773;
+    color: #fff;
+}
+
+.THIS .branch-search lightning-base-combobox .slds-input__icon-group.slds-input__icon-group_right lightning-primitive-icon svg {
+    fill: #fff !important;
+}
+.THIS .branch-search .googleLogo {visibility: hidden !important;}
+.THIS .branch-search .slds-visual-picker.runtime_appointmentbookingVisualPickerCard {
+    display: inline-block;
+    width: 46%;
+    margin: 2%;
+    vertical-align: top;
+}
+.THIS .branch-search .responsive.slds-visual-picker__figure .runtime_appointmentbookingFlowLocation .slds-gutters{
+    display: block;
+}
+.THIS .branch-search .slds-col.slds-size_6-of-12 {
+    width: 100%;
+    text-align: center;
+}
+.THIS .branch-search .slds-col.slds-size_6-of-12.operatingHours {
+        display: none;
+}
+.THIS .branch-search .responsive.slds-visual-picker__figure.slds-visual-picker__text .slds-grid.slds-gutters {
+    display: block;
+}
+.THIS .branch-search .responsive.slds-visual-picker__figure.slds-visual-picker__text { 
+      background-repeat: no-repeat;
+    background-position: top center;
+    padding-top: 60px;
+    border: 1px solid transparent;
+    box-shadow: none;
+    background-size: 40px;
+}
+.THIS .branch-search .responsive.slds-visual-picker__figure.slds-visual-picker__text:hover {
+    border-color: #282773;
+}
+.THIS .branch-search .responsive.slds-visual-picker__figure.slds-visual-picker__text lightning-formatted-address div {
+    font-size: .8125rem;
+}
+.THIS .help-link
+{
+       text-align: center; margin-top: 20px;
+}
+.THIS .help-link a{ 
+    text-decoration:underline;
+    color: #282773;
+    font-weight: bold;
+    font-size:1.125rem;
+}
+.THIS .branch-search .runtime_appointmentbookingFlowLocation .slds-col.slds-size_4-of-12.radius {
+    width: 25%;
+}
+.THIS .branch-search .runtime_appointmentbookingFlowLocation .slds-col.slds-size_8-of-12 {
+    width: 75%;
+} 
+
+@media (max-width:920px)
+    {
+    .THIS .service-type ul li{width:100%;}
+}
+@media (max-width:767px)
+{
+    .THIS .branch-search {max-width: 80%;}
+}
+@media (max-width:520px) 
+{
+    .THIS .branch-search .slds-visual-picker.runtime_appointmentbookingVisualPickerCard {
+    width: 100%;
+    margin: 0 0 10px;
+    }
+    .THIS .branch-search .runtime_appointmentbookingFlowLocation .slds-col.slds-size_8-of-12 {
+    width: 100%;
+}
+    .THIS .branch-search .runtime_appointmentbookingFlowLocation .slds-col.slds-size_4-of-12.radius {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+    .THIS .service-type ul{padding: 10px 10px;}
+}
+
+@media (max-width:420px)
+{
+    .THIS .service-type ul li img{width: 32px;}
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Service Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Credit Card Request / Maintenance</fullName>
+                <default>false</default>
+                <label>Credit Card Request / Maintenance</label>
+            </value>
+            <value>
+                <fullName>Debit Card Request / Maintenance</fullName>
+                <default>false</default>
+                <label>Debit Card Request / Maintenance</label>
+            </value>
+            <value>
+                <fullName>Deposit Account Request / Maintenance</fullName>
+                <default>false</default>
+                <label>Deposit Account Request / Maintenance</label>
+            </value>
+            <value>
+                <fullName>General Assistance &amp; Customer Info Changes</fullName>
+                <default>false</default>
+                <label>General Assistance &amp; Customer Info Changes</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Loan Request / Maintenance</fullName>
+                <default>false</default>
+                <label>Loan Request / Maintenance</label>
+            </value>
+            <value>
+                <fullName>Mortgage Request / Maintenance</fullName>
+                <default>false</default>
+                <label>Mortgage Request / Maintenance</label>
+            </value>
+            <value>
+                <fullName>Open Account</fullName>
+                <default>false</default>
+                <label>Open Account</label>
+            </value>
+            <value>
+                <fullName>Wealth / Investment</fullName>
+                <default>false</default>
+                <label>Wealth / Investment</label>
+            </value>
+            <value>
+                <fullName>Refer a Friend or Family Member</fullName>
+                <default>false</default>
+                <label>Refer a Friend or Family Member</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level_2_Is_List__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>If the Configured item is a list, the second element will be retrieved.</inlineHelpText>
+    <label>Level 2 Is List</label>
+    <type>Checkbox</type>
+</CustomField>

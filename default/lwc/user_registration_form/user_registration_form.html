@@ -1,0 +1,361 @@
+<template>
+    <lightning-card class='card cust-branding'>
+
+        <div if:true={spinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"
+                               variant="brand">
+            </lightning-spinner>
+        </div>
+
+
+        <div slot="title" class="slds-text-heading_large slds-align_absolute-center">
+            Loan Portal
+        </div>
+
+        <div if:false={isMemeber}>
+        
+            <div class="slds-p-around_medium lgc-bg member-login">
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text" label="Member Id" id="memberId" name="memberId" value={memberId} maxlength="10"
+                        onchange={genericOnChange} placeholder="Member Id" required class="form__field">
+        
+                    </lightning-input>
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text" label="Last 4 Social Security #" value={last4SocialSecurity} placeholder="Last 4 Social Security #"
+                        name="last4SocialSecurity" onchange={genericOnChange} required class="form__field"
+                        max-length="4" min-length="4">
+                    </lightning-input>
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="date" date-style="short" label="Date Of Birth" value={dateOfBirth} placeholder="Date Of Birth"
+                        name="dateOfBirth" onchange={genericOnChange} required class="form__field">
+                    </lightning-input>
+                </div>
+                <div class="slds-align_absolute-center">
+                    <lightning-button style="padding-left: 5px;" variant="brand" type='submit' label="Submit" onclick={submit}></lightning-button>
+                </div>
+                <br />
+                <div class="slds-text-heading_small slds-align_absolute-center">
+                    Don’t have member Id?
+                </div>
+                <br />
+                <div class="slds-align_absolute-center">
+                    <lightning-button style="padding-left: 5px;" class="slds-button" type='submit' label="Click Here" onclick={handleMemberId}></lightning-button>
+                </div>
+            </div>
+        </div>
+
+       <div if:true= {isMemeber}> 
+            <div class="member-login-form">
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text"
+                                     label="First Name"
+                                     value={firstname}
+                                     placeholder="First Name"
+                                     name="firstname"
+                                     maxlength="40"
+                                     onchange={genericOnChange}
+                                     class="form__field">
+                    </lightning-input>
+                    <!-- <label class="slds-form-element__label" for="form-element-01">First Name</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="form-element-01" placeholder="First Name" class="slds-input" />
+                    </div> -->
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                        <lightning-input type="text"
+                                     label="Middle Name"
+                                     maxlength="80"
+                                     onchange={genericOnChange}
+                                     value={middlename}
+                                     placeholder="Middle Name"
+                                     name="middlename"
+                                     class="form__field">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                        <lightning-input type="text"
+                                     required
+                                     label="Last Name"
+                                     maxlength="80"
+                                     onchange={genericOnChange}
+                                     value={lastname}
+                                     placeholder="Last Name *"
+                                     name="lastname"
+                                     class="form__field">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <!--<lightning-input type="date"
+                                     date-style="short"
+                                     message-when-bad-input	= "Your entry does not match the allowed format MM/DD/YYYY."
+                                     label="Date Of Birth"
+                                     value={dateOfBirth}
+                                     placeholder="MM/DD/YYYY"
+                                     name="dateOfBirth"
+                                     onchange={genericOnChange}
+                                     class="form__field"> 
+                    </lightning-input>-->
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Date Of Birth</label>
+                        <div class="slds-form-element__control">
+                            <input type="date" name="dateOfBirth" format="mm/dd/yyyy" class="slds-input form__field"
+                            onchange={genericOnChange} placeholder="MM/DD/YYYY" value={dateOfBirth}/>
+                        </div>
+                      </div>
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text" label="Last 4 Social Security #" value={last4SocialSecurity} placeholder="Last 4 Social Security #"
+                        name="last4SocialSecurity" onchange={genericOnChange} class="form__field" max-length="4" min-length="4">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="email" value={email} maxlength="150"
+                                     label="Email Address"
+                                     onchange={genericOnChange}
+                                     placeholder="Email Address *"
+                                     name="email"
+                                     class="form__field">
+                    </lightning-input>
+                   <!-- <label class="slds-form-element__label" for="form-element-01">Email Address</label>
+                    <div class="slds-form-element__control">
+                        <input type="email" placeholder="Email Address" class="slds-input" />
+                    </div> -->
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="tel"
+                                     value={phone}
+                                     label="Home Phone"
+                                     maxlength="15"
+                                     onchange={genericOnChange}
+                                     placeholder="Home Phone"
+                                     name="phone"
+                                     class="form__field">
+                    </lightning-input>
+                    <!-- <label class="slds-form-element__label" for="form-element-01">Contact No</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" placeholder="Contact No" class="slds-input" />
+                    </div> -->
+                </div>
+
+            <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="tel"
+                                        value={cellphone}
+                                        label="Cell Phone"
+                                        maxlength="15"
+                                        onchange={genericOnChange}
+                                        placeholder="Cell Phone"
+                                        name="cellphone"
+                                        class="form__field">
+                    </lightning-input>
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-combobox name="areYou1199Member" label="Are you an 1199 Member?" value={areYou1199Member} 
+                        options={areYou1199MemberOptions} onchange={genericOnChange} class="form__field">
+                    </lightning-combobox>
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text"
+                                     value={address}
+                                     onchange={genericOnChange}
+                                     label="Street"
+                                     maxlength="250"
+                                     placeholder="Street"
+                                     name="address"
+                                     class="form__field">
+                    </lightning-input>
+                    <!--
+                    <label class="slds-form-element__label" for="form-element-01">Address</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" placeholder="Address" class="slds-input" />
+                    </div> -->
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text"
+                                     label="City"
+                                     value={city}
+                                     maxlength="40"
+                                     onchange={genericOnChange}
+                                     placeholder="City"
+                                     name="city"
+                                     class="form__field">
+                    </lightning-input>
+                </div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-combobox name="state" label="State" value={state} placeholder="Select State" 
+                        options={stateoptions} onchange={genericOnChange} class="form__field">
+                    </lightning-combobox>
+
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text"
+                                     value={zip}
+                                     label="Zip"
+                                     maxlength="20"
+                                     onchange={genericOnChange}
+                                     placeholder="Zip"
+                                     name="zip"
+                                     class="form__field">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input type="text"
+                                     label="Country"
+                                     value={country}
+                                     maxlength="40"
+                                     onchange={genericOnChange}
+                                     placeholder="Country"
+                                     name="country"
+                                     class="form__field">
+                    </lightning-input>
+                </div>
+            <div class="accordian-section">
+                <div class="section-title">Employer Information</div>
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                    <label class="slds-form-element__label">Are you Unemployed?</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" label="Are you Unemployed?" checked={isUnemployed} name="isUnemployed"
+                            onchange={genericOnChange} variant="label-hidden"></lightning-input>
+                    </div>
+                </div>
+
+                <!--<div class="slds-form-element slds-m-vertical_xx-small">
+                    <lightning-input
+                            type="Search"
+                            onchange={handleKeyChange}
+                            class="slds-m-bottom_small"
+                            label="Employer"
+                            value={searchKey}
+                    ></lightning-input>
+                    <template if:true={accounts}>
+                        <template for:each={accounts} for:item="account">
+                            <p key={account.Id} value={account.Id} id={account.Id} onclick={onselectContact}>{account.Name}</p>
+                        </template>
+                    </template>
+                </div>-->
+                <div class="slds-form-element slds-m-vertical_xx-small" style="position:relative;">
+
+                    <lightning-input
+                            type="text"
+                            onchange={handleKeyChange}
+                            class="slds-m-bottom_small"
+                            label="Employer" placeholder="Search Employer"
+                            value={searchKey}
+                            disabled={isUnemployed} ></lightning-input>
+                    <template if:true={accounts}>
+                        <ul class="slds-lookup__list dropDownList" role="listbox">
+                            <template for:each={accounts} for:item="account">
+                                <div key={account.Id} data-id={account.Id} data-name={account.Name} onclick={handleAccounSelect}>
+                                    <li role="presentation">
+                                        <span class="slds-lookup__item-action slds-media slds-media--center" role="option">
+                                                <span class="slds-media__figure slds-listbox__option-icon">
+                                                    <span class="slds-icon_container slds-icon-standard-account">
+                                                        <lightning-icon icon-name="standard:account" alternative-text="Account"
+                                                        size="xx-small" title="Account"></lightning-icon>
+                                                    </span>
+                                                </span>
+                                            <div class="slds-media__body">
+                                                <div class="slds-lookup__result-text">
+                                                   {account.Name}
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </li>
+                                </div>
+                            </template>
+                        </ul>
+                    </template>
+
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+
+                        <lightning-input type="text" label="Employer Not found? Enter it here" value={accountName} 
+                            onchange={genericOnChange} placeholder="Employer Name" name="accountName" 
+                            class="form__field" disabled={isUnemployed}>
+                        </lightning-input>
+                </div>
+
+                <div class="slds-form-element slds-m-vertical_xx-small">
+                        <lightning-input type="email" value={workEmail} maxlength="150"
+                                         label="Work Email Address"
+                                         onchange={genericOnChange}
+                                         placeholder="Work Email Address"
+                                         name="workEmail"
+                                         class="form__field">
+                        </lightning-input>
+                </div>
+            </div>
+
+            <div class="accordian-section">
+                    <div class="section-title">Emergency Contact Information</div>
+                    <div class="slds-form-element slds-m-vertical_xx-small">
+                            <lightning-input type="text"
+                                         label="Emergency Contact Last Name"
+                                         maxlength="80"
+                                         onchange={genericOnChange}
+                                         placeholder="Emergency Contact Last Name"
+                                         value={emergencyContactLastName}
+                                         name="emergencyContactLastName"
+                                         class="form__field">
+                        </lightning-input>
+                    </div>
+    
+                    <div class="slds-form-element slds-m-vertical_xx-small">
+                            <lightning-input type="text"
+                                         label="Emergency Contact First Name"
+                                         maxlength="80"
+                                         onchange={genericOnChange}
+                                         placeholder="Emergency Contact First Name"
+                                         value={emergencyContactFirstName}
+                                         name="emergencyContactFirstName"
+                                         class="form__field">
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-form-element slds-m-vertical_xx-small">
+                            <lightning-input type="text"
+                                         label="Emergency Contact Relationship"
+                                         maxlength="80"
+                                         onchange={genericOnChange}
+                                         placeholder="Emergency Contact Relationship"
+                                         value={emergencyContactRelationship}
+                                         name="emergencyContactRelationship"
+                                         class="form__field">
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-form-element slds-m-vertical_xx-small">
+                            <lightning-input type="tel"
+                                                label="Emergency Contact Phone Number"
+                                                maxlength="15"
+                                                onchange={genericOnChange}
+                                                placeholder="Emergency Contact Phone Number"
+                                                value={emergencyContactPhone}
+                                                name="emergencyContactPhone"
+                                                class="form__field">
+                            </lightning-input>
+                        </div>                
+            </div>  
+
+                <div class="align-btn slds-m-top_small slds-m-bottom_medium">
+                    <lightning-button label="Cancel" class="slds-m-left_x-small"  title="Cancel"  variant="brand-outline"
+                                      onclick={cancelsignUp} >
+                    </lightning-button>
+                    <lightning-button label="Submit"  title="Submit"  variant="brand" onclick={signUp}
+                                      class="slds-m-left_x-small">
+                    </lightning-button>
+
+                </div>
+            </div>
+        </div> 
+    </lightning-card>
+
+</template>

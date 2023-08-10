@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="objectAPIName" type="String" label="Object API Name" />
+            <property name="listViewAPIName" type="String" label="List View API Name" />
+            <property name="titleOverride" type="String" label="Title Override" />
+            <property name="actionLabel" type="String" label="Action Label" />
+            <property name="actionURL" type="String" label="Action URL" />
+            <property label="Type" name="type" type="String" datasource="External, Internal" default="External"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

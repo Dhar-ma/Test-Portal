@@ -1,0 +1,106 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+    <!-- <div class="page-section-box">
+        <div class="sidebar-title">We’re Here to Help</div>
+        <div class="sidebar-menu">
+            <img src={calenderLogo} />
+            <button class="slds-button slds-button_brand active" onclick={beginFlow}>Schedule Appointment</button>
+        </div>
+        <div class="sidebar-menu">
+            <img src={qustionLog} />
+            <button id="online-btn" style="display:none" class="slds-button slds-button_brand active"
+                onclick={startChat}>Chat Now</button>
+            <button id="offline-btn" class="slds-button slds-button_brand active" onclick={openCaseForm}>Chat
+                Now</button>
+        </div>
+        <div class="sidebar-menu">
+            <img src={LayerLogo} />
+            <button class="slds-button slds-button_brand active" onclick={openKnowledgeTab}>Search For Answers</button>
+        </div>
+    </div> -->
+
+    <div class="page-section-box">
+        <div class="container">
+            <div style="height: 100%;">
+                <div class="left-panel">
+                    <div class="sidebar-title">We’re Here to Help</div>
+                    <div if:true={isLoggedIn}>
+                        <div class="sidebar-menu">
+                            <img src={calenderLogo} />
+                            <button class="slds-button slds-button_brand active" onclick={beginFlow}>Schedule
+                                Appointment</button>
+                        </div>
+                        <div class="sidebar-menu">
+                            <img src={qustionLog} />
+                            <button id="online-btn" style="display:none" class="slds-button slds-button_brand active"
+                                onclick={startChat}>Chat Now</button>
+                            <button id="offline-btn" class="slds-button slds-button_brand active"
+                                onclick={openCaseForm}>Chat
+                                Now</button>
+                        </div>
+                        <div class="sidebar-menu">
+                            <img src={LayerLogo} />
+                            <button class="slds-button slds-button_brand active" onclick={openKnowledgeTab}>Search For
+                                Answers</button>
+                        </div>
+                    </div>
+                    <div if:false={isLoggedIn}>
+                        <div class="sidebar-menu">
+                            <img src={qustionLog} />
+                            <button id="online-btn1" style="display:none" class="slds-button slds-button_brand active"
+                                onclick={startChat}>Chat Now</button>
+                            <button id="offline-btn2" class="slds-button slds-button_brand active"
+                                onclick={openCaseForm}>Chat
+                                Now</button>
+                        </div>
+                        <div class="sidebar-menu">
+                            <img src={contactUsLogo} />
+                            <button class="slds-button slds-button_brand active" onclick={showContactInfo}>Contact
+                                Us</button>
+                        </div>
+
+                    </div>
+                    <div if:true={contactInfoVisible}>
+                        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                            class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <lightning-button-icon icon-name="utility:close"
+                                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    onclick={handleClose} alternative-text="Close"
+                                    title="Close"></lightning-button-icon>
+                                <div class="slds-modal__content slds-p-around_medium">
+                                    <h1>{Company_Name}</h1>
+                                    <div>
+                                        <p>
+                                            Address: {Company_Address}<br />
+                                            Phone: {Company_Phone}<br />
+                                            Email: {Company_Email}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div if:true={isFlowOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <lightning-button-icon icon-name="utility:close"
+                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    onclick={handleClose} alternative-text="Close" title="Close"></lightning-button-icon>
+                <div style="overflow-y: scroll; max-height: fit-content;">
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-flow flow-api-name={flowApiName} flow-input-variables={flowInputVariables}
+                            onstatuschange={handleFlowStatusChange}>
+                        </lightning-flow>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

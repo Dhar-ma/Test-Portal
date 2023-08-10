@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_Case_Fields__c</fullName>
+    <description>API names of case fields that needs to appear on case form for user&apos;s input</description>
+    <externalId>false</externalId>
+    <inlineHelpText>API names of case fields that needs to appear on case form for user&apos;s input</inlineHelpText>
+    <label>Additional Case Fields</label>
+    <length>130000</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,33 @@
+<!--
+  @description       : 
+  @author            : 'Amol K'
+  @group             : 
+  @last modified on  : 02-14-2023
+  @last modified by  : 'Amol K'
+-->
+<template>
+    <div style="box-shadow: 1px 1px 5px #8ca3b7;" class="slds-box">
+        <div class="slds-box--border">
+            <div>
+                <div class="slds-clearfix slds-var-m-around_small">
+                    <div class="slds-var-m-top_xx-small slds-float_right">
+                        <lightning-button label="+ New Application" onclick={createNewApplication}></lightning-button>
+                    </div>
+                    <div class=" slds-m-top--xx-small slds-float_left">
+                        <lightning-icon icon-name="custom:custom18"></lightning-icon>
+                    </div>
+                    <div class="slds-var-m-left_xx-small slds-float_left">
+                        <p>Loan Application</p>
+                        <p class="slds-text-heading_small "><b> My Application</b></p>
+                    </div>
+
+                </div>
+                <div if:true={isLoad}>
+                    <lightning-datatable key-field="id" data={loanApplicationList} hide-checkbox-column
+                        columns={column}>
+                    </lightning-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

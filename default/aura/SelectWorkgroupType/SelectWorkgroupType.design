@@ -1,0 +1,7 @@
+<design:component>
+	<design:attribute name="selectedWorkTypeGroup" Label="selected workgroup Type"/>
+    <design:attribute name="appointmentTopic" Label="Appointment Topic"/>
+    <design:attribute name="selectedAdditionalInfo" Label="Additional Info"/>
+    <design:attribute name="selectedGroupType" Label="Selected Group Type"/>
+    
+</design:component>

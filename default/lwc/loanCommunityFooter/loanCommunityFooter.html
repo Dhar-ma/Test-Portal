@@ -1,0 +1,36 @@
+<template>
+    <div style={containerStyle} class="loan-footer">
+        <div class="footer-container">
+            <!-- DESCRIPTION -->
+            <div class="description-contianer ">
+                <lightning-formatted-rich-text value={footerDescription}></lightning-formatted-rich-text>
+            </div>
+            <!-- LINKS -->
+            <div class="links-container">
+                <!-- SECTION 1 -->
+                <template if:true={links.sectionOne}>
+                    <div class="link-section">
+                        <div class="slds-text-heading_small">{links.sectionOne.title}</div><br/>
+                        <ul>
+                            <template for:each={links.sectionOne.links} for:item="link">
+                                <li key={link.label}>{link.label}</li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+
+                <!-- SECTION 2 -->
+                <template if:true={links.sectionTwo}>
+                    <div class="link-section">
+                        <div class="slds-text-heading_small">{links.sectionTwo.title}</div><br/>
+                        <ul>
+                            <template for:each={links.sectionTwo.links} for:item="link">
+                                <li key={link.label}>{link.label}</li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

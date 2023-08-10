@@ -1,0 +1,9 @@
+<design:component>
+	<design:attribute name="objectInfo" label="Object API Name" 
+                      description="The base object to fetch data from." />
+    <design:attribute name="currentListViewName" label="List View API Name" 
+                      description="List view API name" />
+    <design:attribute name="iconName" label="Icon Name" 
+                      description="SLDS Icon Name for Object" />
+    
+</design:component>

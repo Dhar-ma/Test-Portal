@@ -1,0 +1,37 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div style="box-shadow: 1px 1px 15px #8ca3b7">
+    <lightning-card title="Open Tasks" icon-name="standard:task">
+      <span class="slds-var-m-around_small">Tasks</span>
+      <div if:false={isMobile}>
+        <div if:true={isLoad} style="height: 300px, auto">
+          <template if:true={taskList}>
+            <lightning-datatable
+              key-field="Id"
+              hide-checkbox-column
+              data={taskList}
+              onrowaction={handelRowAction}
+              columns={columns}
+            >
+            </lightning-datatable>
+          </template>
+        </div>
+      </div>
+      <div if:true={isMobile}>
+        <div if:true={isLoad}>
+          <template for:each={taskList} for:item="task">
+            <div key={task.Id}>
+              <p>{task.Subject}</p>
+            </div>
+          </template>
+        </div>
+      </div>
+    </lightning-card>
+  </div>
+</template>

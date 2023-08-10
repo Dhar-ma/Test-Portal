@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level_1_Use_First_Item__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Mark this if the JSON is a list but you expect only 1 element and that element will be used.</inlineHelpText>
+    <label>Level 1 Use First Item</label>
+    <type>Checkbox</type>
+</CustomField>

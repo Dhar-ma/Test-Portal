@@ -1,0 +1,57 @@
+.THIS {}
+
+.THIS .cust-amount-width{width:150px;}
+.THIS .calculate-section {
+    display: flex;
+    align-items: flex-start;
+    margin: 5px 0px 20px;
+    position:relative;
+}
+.THIS .calculate-section.section-align-top{ align-items: flex-start;}
+
+.THIS .calculate-section lightning-input.slds-form-element {
+    width: 35%;
+    padding-right: 20px; 
+}
+.THIS p 
+{ 
+    margin: 10px 0px;
+    font-size: 13px;
+}
+.THIS .calculate-section p {
+    margin: 0px;
+    width:100%;
+}
+.THIS .slds-form-element__control.slds-grow {
+    margin-bottom: 15px;
+}
+.THIS h3.note-text {
+    margin-bottom: 20px;
+}
+.THIS .calculation-detail {
+    border-radius: 5px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #f3f2f2;
+}
+.THIS .calculation-detail p{margin: 6px 0px 0px;}
+.THIS .calculate-section p.collabse-section {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: all 0.4s ease-in;
+}
+.THIS p.collabse-section.show {-webkit-line-clamp:unset}
+.THIS a.more-info{
+    margin:5px 0px 20px;
+    color: #0070d2; text-decoration:underline; 
+    display: inline-block;
+    position: absolute;
+    top: 38%;
+    z-index: 99;
+    right: 0;
+}
+.THIS p.collabse-section.show a.more-info {
+    display: none;
+}

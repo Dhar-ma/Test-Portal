@@ -1,0 +1,204 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global"
+                controller="UserAccountController">
+    <!--Component-->
+    <aura:attribute name="AccountRec" type="object" />
+    <aura:attribute name="ContactRec" type="object" />
+    <aura:attribute name="UserRec" type="object" />
+    
+    <aura:attribute name="Citizenship" type="List"  />
+    <aura:attribute name="PersonalInterests" type="List"  />
+    <aura:attribute name="FinancialInterests" type="List"  />
+    <aura:attribute name="MaritalStatus" type="List"  />
+    <aura:attribute name="TaxBracket" type="List"  />
+    <aura:attribute name="InvestmentExperience" type="List"  />
+    <aura:attribute name="InvestmentObjectives" type="List"  />
+    <aura:attribute name="TimeHorizon" type="List"  />
+    <aura:attribute name="RiskTolerance" type="List"  />
+    <aura:attribute name="SelectedFinancialInterest" type="List"  />
+    <aura:attribute name="SelectedPersonalInterests" type="List"  />
+    <aura:attribute name="SelectedInvestmentObjectives" type="List"  />
+    <aura:attribute name="showKYCEditForm" type="boolean" default="false"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    
+        <lightning:card title="About Me" iconName="standard:user" class="slds-p-around_medium">
+            
+            <div>
+                <p style="text-align: justify;">
+                    We would like to get to know you better, so 
+                    <a href="" style="color: #00B085;" onclick="{!c.editKYCDetails}">click here</a> 
+                    to add your interests, background and goals.
+                </p>
+            </div>
+        </lightning:card>
+    
+    <aura:if isTrue="{!v.showKYCEditForm}">
+        <section style="background: rgba(0,0,0,0.5);" role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick="{!c.hideAccountForm}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!"
+                                        title="close" variant="inverse"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">My Information</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium cust-content" id="modal-content-id-1">
+                    <div class="slds-m-around--xx-large">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-2 slds-p-around_medium">
+                                <lightning:textarea name="aboutMe" label="About Me" value="{!v.UserRec.AboutMe}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="selectKYCStaus" label="Primary Citizenship"
+                                                  required="false" value="{!v.ContactRec.FinServ__PrimaryCitizenship__c}">
+                                    <aura:iteration items="{!v.Citizenship}" var="country">
+                                        <option text="{!country}" value="{!country}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="selectKYCStaus" label="Country Of Birth"
+                                                  required="false" value="{!v.ContactRec.FinServ__CountryOfBirth__c}">
+                                    <aura:iteration items="{!v.Citizenship}" var="country">
+                                        <option text="{!country}" value="{!country}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="selectKYCStaus" label="Secondary Citizenship"
+                                                  required="false" value="{!v.ContactRec.FinServ__SecondaryCitizenship__c}">
+                                    <aura:iteration items="{!v.Citizenship}" var="country">
+                                        <option text="{!country}" value="{!country}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:dualListbox aura:id="PersonalInterests"
+                                                       name="PersonalInterests"
+                                                       label="Personal Interests"
+                                                       sourceLabel="Available"
+                                                       selectedLabel="Chosen"
+                                                       options="{!v.PersonalInterests }"
+                                                       value="{!v.SelectedPersonalInterests}"
+                                                       onchange="{! c.handlePersonalInterestsChange }"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="selectKYCStaus" label="Marital Status	"
+                                                  required="false" value="{!v.ContactRec.FinServ__MaritalStatus__c}">
+                                    <aura:iteration items="{!v.MaritalStatus}" var="status">
+                                        <option text="{!status}" value="{!status}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:dualListbox aura:id="FinancialInterests"
+                                                       name="FinancialInterests"
+                                                       label="Financial Interests"
+                                                       sourceLabel="Available"
+                                                       selectedLabel="Chosen"
+                                                       options="{!v.FinancialInterests }"
+                                                       value="{!v.SelectedFinancialInterest}"
+                                                       onchange="{! c.handleFinancialInterestsChange }"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:input name="WeddingAnniversary" value="{!v.ContactRec.FinServ__WeddingAnniversary__c}"
+                                                 type="date"  label="Wedding Anniversary" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="selectKYCStaus" label="Tax Bracket"
+                                                  required="false" value="{!v.ContactRec.FinServ__TaxBracket__c}">
+                                    <aura:iteration items="{!v.TaxBracket}" var="tax">
+                                        <option text="{!tax}" value="{!tax}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="selectKYCStaus" label="Tax Bracket"
+                                                  required="false" value="{!v.AccountRec.FinServ__InvestmentExperience__c}">
+                                    <aura:iteration items="{!v.InvestmentExperience}" var="ivestment">
+                                        <option text="{!ivestment}" value="{!ivestment}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:input label="Net Worth" type="number" formatter="currency" 
+                                                 required="false" value="{!v.AccountRec.FinServ__NetWorth__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="TimeHorizon" label="Time Horizon"
+                                                  required="false" value="{!v.AccountRec.FinServ__TimeHorizon__c}">
+                                    <aura:iteration items="{!v.TimeHorizon}" var="time">
+                                        <option text="{!time}" value="{!time}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:dualListbox aura:id="InvestmentObjectives"
+                                                       name="InvestmentObjectives"
+                                                       label="Investment Objectives"
+                                                       sourceLabel="Available"
+                                                       selectedLabel="Chosen"
+                                                       options="{!v.InvestmentObjectives }"
+                                                       value="{!v.SelectedInvestmentObjectives}"
+                                                       onchange="{! c.handleInvestmentObjectivesChange }"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:input aura:id="ssn" type="text" 
+                                                     label="SSN/Tax ID (Last Four Digits)"
+                                                     value="{!v.ContactRec.FinServ__LastFourDigitSSN__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:select name="RiskTolerance" label="Risk Tolerance"
+                                                  required="false" value="{!v.AccountRec.FinServ__RiskTolerance__c}">
+                                    <aura:iteration items="{!v.RiskTolerance}" var="risk">
+                                        <option text="{!risk}" value="{!risk}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:input aura:id="Occupation" type="text" 
+                                                     label="Occupation" value="{!v.ContactRec.FinServ__Occupation__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                               <lightning:input aura:id="TaxId" type="text" 
+                                                     label="TaxId" value="{!v.ContactRec.FinServ__TaxId__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <lightning:input aura:id="NumberOfDependents" type="number" 
+                                                     label="Number Of Dependents" value="{!v.ContactRec.FinServ__NumberOfDependents__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                               <lightning:input aura:id="LanguagesSpoken" type="text" 
+                                                     label="Languages Spoken" value="{!v.ContactRec.FinServ__LanguagesSpoken__c}"/>
+                            </div>
+                        </div>
+                        <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.UpdateKYCDetails}"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </aura:if>
+    
+</aura:component>

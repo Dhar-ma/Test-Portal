@@ -1,0 +1,58 @@
+<!--
+ - Created by Joe Cadd on 4/1/2020.
+ -->
+<!--TODO Add form factor dynamic layout styling/sizing-->
+<!-- Existing File Card -->
+<template>
+    <div class="slds-col slds-size_1-of-1 slds-p-top_small file-tile-col">
+        <div class="file-tile slds-grid slds-grid_align-center slds-wrap slds-gutters_direct-xxx-small">
+
+            <div class="imageSection slds-col slds-size_1-of-1">
+
+                <!--IMAGE URL - <img src="/sfc/servlet.shepherd/version/download/0681g000000WbciAAC" />-->
+                <!--PREVIEW URL - <img src="/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=0681g000000WbciAAC"/>-->
+                <div class="trim">
+                    <img src={previewUrl} alt={contentDocumentLink.ContentDocument.Title} class="previewImage" />
+                </div>
+                <!-- <lightning-icon icon-name="doctype:attachment" alternative-text={contentDocumentLink.ContentDocument.Title} title={contentDocumentLink.ContentDocument.FileType}></lightning-icon>-->
+            </div>
+
+            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small slds-text-align_center">
+                <p class="slds-truncate">{contentDocumentLink.ContentDocument.Title}.{contentDocumentLink.ContentDocument.FileExtension}</p>
+            </div>
+
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-spread slds-gutters_direct-xxx-small slds-p-bottom_xx-small">
+                <div class="slds-col">
+<!--                    <lightning-button-->
+<!--                            label="Preview"-->
+<!--                            class=""-->
+<!--                            variant="brand-outline"-->
+<!--                            onclick={handlePreviewFile}>-->
+<!--                    </lightning-button>-->
+                    <lightning-button-icon
+                            data-id={contentDocumentLink.ContentDocumentId}
+                            icon-name="utility:zoomin"
+                            variant="brand"
+                            alternative-text="Preview"
+                            onclick={previewFile}
+                            title="Preview">
+                    </lightning-button-icon>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-p-top_x-small slds-truncate">{fileSizeText}</div>
+                </div>
+                <div if:true={allowDelete} class="slds-col">
+                    <lightning-button-icon
+                            name={contentDocumentLink.ContentDocumentId}
+                            icon-name="utility:delete"
+                            onclick={handleDeleteFile}
+                            variant="border-filled" alternative-text="Delete this file"
+                            size="medium">
+                    </lightning-button-icon>
+                </div>
+            </div>
+
+            <!--                        {contentDocumentLink.ContentDocument.LatestPublishedVersion.TextPreview}-->
+        </div>
+    </div>
+</template>

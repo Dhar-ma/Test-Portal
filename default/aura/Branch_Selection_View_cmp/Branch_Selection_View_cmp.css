@@ -1,0 +1,77 @@
+.THIS {
+}
+.THIS.page-section-box {
+    background: #fff;
+  
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+    border: 1px solid #ccc;
+} 
+.THIS .card-wrapper header.slds-card__header.slds-grid {
+    background: #fafaf9;
+    margin-bottom: 0;
+    padding: 0.75rem 1rem 0.75rem;
+}
+.THIS .card-wrapper .slds-card__body {
+    margin: 0;
+    padding-bottom: 10px;
+}
+.THIS .add-col-padding tr th{padding:.5rem;}
+.THIS .card-wrapper header.slds-card__header.slds-grid lightning-icon.slds-icon-custom-custom18.slds-icon_container, 
+.THIS .card-wrapper header.slds-card__header.slds-grid lightning-icon.slds-icon-custom-custom18.slds-icon_container svg
+{
+    width: 32px;
+    height: 32px;
+}
+.THIS .card-wrapper header.slds-card__header .slds-media__body.slds-truncate {
+    margin-top: 13px;
+}
+
+.THIS .card-wrapper article article .slds-card__header.slds-grid {
+    padding-top: 8px;
+}
+.THIS .card-wrapper .sub-title-tx 
+{
+    position: absolute; 
+    z-index: 10;
+    top: 7px;
+    left: 62px; 
+}
+.THIS .card-wrapper .slds-card__header .slds-media__figure svg.slds-icon.slds-icon_small {
+    width: 32px;
+    height: 32px;
+}
+
+.THIS .card-wrapper .slds-card__body .slds-media__figure {
+    margin-top: 0;
+}
+.THIS .card-wrapper header.slds-card__header.slds-grid lightning-icon.slds-icon-custom-custom18 lightning-primitive-icon
+{
+        width: 100%;
+    display: block;
+    height: 100%;
+}
+.THIS .slds-text-heading_small{
+    font-size: 1.125rem;
+}
+
+.THIS .space-top {
+    padding-top:.5rem;
+}
+
+.THIS .primary-contact-container {
+    border: 1px solid #D4D4D4;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+    padding: 0.5rem;
+}
+
+@media (max-width:48em) {
+    .THIS .slds-modal__container {
+        margin:0rem 0rem !important;
+    }  
+    .THIS .selected-branch-header {
+        padding:1rem 0rem 0rem !important;
+        margin: 0rem;
+    } 
+}

@@ -1,0 +1,113 @@
+<!--
+  @description       : 
+  @author            : 'Amol K'
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div style="box-shadow: 1px 1px 15px #8ca3b7">
+    <lightning-card title="Preferred Branch" icon-name="standard:account">
+      <div if:true={isFlowOpen}>
+        <section
+          role="dialog"
+          tabindex="-1"
+          aria-modal="true"
+          aria-labelledby="modal-heading-01"
+          class="slds-modal slds-fade-in-open"
+        >
+          <div class="slds-modal__container">
+            <button
+              class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+              title="Close"
+              onclick={handleClose}
+            >
+              <lightning-icon
+                icon-name="utility:close"
+                size="medium"
+                alternative-text="Indicates close"
+              >
+              </lightning-icon>
+            </button>
+            <div
+              class="slds-modal__content slds-m-around_medium"
+              id="modal-content-id-1"
+            >
+              <p>
+                <c-flow-status-changed
+                  flowstatus={_flowStatus}
+                ></c-flow-status-changed>
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div if:true={selectedBranchInfo}>
+        <div
+          class="slds-clearfix slds-border_top slds-var-m-around_medium slds-var-p-top_medium"
+        >
+          <div class="slds-float_right">
+            <lightning-button
+              label="Change Branch"
+              slot="actions"
+              onclick={startFlow}
+            ></lightning-button>
+          </div>
+          <div class="slds-float_left" if:true={selectedBranchInfo}>
+            <div class="slds-clearfix">
+              <div
+                class="slds-float_left slds-var-m-left_small slds-var-m-top_xx-small slds-var-m-right_small"
+              >
+                <lightning-icon
+                  icon-name="standard:account"
+                  alternative-text="Account"
+                  size="medium"
+                  title="Account"
+                ></lightning-icon>
+              </div>
+              <div class="slds-float_right">
+                <p class="slds-text-heading_small">
+                  <a href="#">{selectedBranchInfo.Name}</a>
+                </p>
+
+                <div class="slds-list_horizontal">
+                  <p if:true={selectedBranchInfo.BillingStreet}>
+                    {selectedBranchInfo.BillingStreet},
+                  </p>
+                  <p if:true={selectedBranchInfo.BillingCity}>
+                    {selectedBranchInfo.BillingCity},
+                  </p>
+                  <p if:true={selectedBranchInfo.BillingState}>
+                    {selectedBranchInfo.BillingState},
+                  </p>
+                  <p if:true={selectedBranchInfo.BillingPostalCode}>
+                    {selectedBranchInfo.BillingPostalCode},
+                  </p>
+                  <p>{selectedBranchInfo.BillingCountry}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div if:true={selectedBranchInfo}>
+          <c-branch-primary-contacts-l-w-c
+            selected-branch={selectedBranchInfo}
+          ></c-branch-primary-contacts-l-w-c>
+        </div>
+      </div>
+
+      <div if:false={selectedBranchInfo}>
+        <div class="slds-list_horizontal slds-wrap">
+          <div class="slds-align_absolute-center" style="height: 5rem">
+            You don't have selected any Prefered branch. Please click &nbsp;<a
+              style="color: rgb(84, 84, 255)"
+              href="#"
+              onclick={startFlow}
+              >here </a
+            >&nbsp; to select branch.
+          </div>
+        </div>
+      </div>
+    </lightning-card>
+  </div>
+</template>

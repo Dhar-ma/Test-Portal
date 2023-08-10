@@ -1,0 +1,40 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="CustomRelatedListController">
+    <!-- Design Attributes -->
+    <aura:attribute name="objectApiName" type="String" default=""/>
+    <aura:attribute name="listViewName" type="String" default=""/>
+    <aura:attribute name="titleOverride" type="String"/>
+    <aura:attribute name="actionLabel" type="String"/>
+    <aura:attribute name="actionUrl" type="String"/>
+    <aura:attribute name="type" type="String"/>
+
+    <!-- Internal Attributes -->
+    <aura:attribute name="contactId" type="String" default=""/>
+    <aura:attribute name="urlPrefix" type="String" />
+    <aura:attribute name="isMobile" type="Boolean" default="false"/>
+    <aura:attribute name="displayListView" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+
+    <div class="page-section-box">
+        <aura:if isTrue="{!v.actionUrl}">
+            <lightning:button class="action-button" label="{!v.actionLabel}" iconName="utility:add" iconPosition="left" onclick="{!c.handleNavigationAction}" />
+        </aura:if>
+        <aura:if isTrue="{!v.displayListView}">
+            <!-- DESKTOP -->
+            <aura:if isTrue="{!!v.isMobile}">
+                <lightning:listView 
+                    objectApiName="{!v.objectApiName}"
+                    listName="{!v.listViewName}"
+                    rows="5"
+                    showSearchBar="false"
+                    showActionBar="false"
+                    enableInlineEdit="false"
+                    showRowLevelActions="false"/>
+            </aura:if>
+            <!-- MOBILE -->
+            <aura:if isTrue="{!v.isMobile}">
+                <c:customRelatedList listViewApiName="{!v.listViewName}" recordId="{!v.contactId}" objectAPIName="{!v.objectApiName}" titleOverride="{!v.titleOverride}" type="{!v.type}" urlPrefix="{!v.urlPrefix}"></c:customRelatedList>
+            </aura:if>
+        </aura:if>
+    </div>
+</aura:component>

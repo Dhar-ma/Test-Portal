@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Question_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Question Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Application Question</fullName>
+                <default>false</default>
+                <label>Application Question</label>
+            </value>
+            <value>
+                <fullName>Declaration</fullName>
+                <default>false</default>
+                <label>Declaration</label>
+            </value>
+            <value>
+                <fullName>ApplicantConsent</fullName>
+                <default>false</default>
+                <label>ApplicantConsent</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

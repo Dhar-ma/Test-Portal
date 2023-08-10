@@ -1,0 +1,90 @@
+<!--
+  @description       : 
+  @author            : 'Amol K'
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div class="page-section-box" style="box-shadow: 1px 1px 15px #8ca3b7">
+    <div class="card-wrapper">
+      <lightning-card
+        class="slds-var-m-around_large"
+        title="My Applications"
+        icon-name="custom:custom18"
+      >
+        <span
+          class="slds-var-m-top_small slds-var-p-right_x-small uiOutputText forceBreadCrumbItem sub-title-tx"
+          >Loan Application</span
+        >
+        <lightning-button
+          class="button slds-float_right slds-var-m-around_small"
+          label="New application"
+          icon-name="utility:add"
+          icon-position="left"
+          onclick={handleNewApplication}
+        ></lightning-button>
+
+        <table
+          class="slds-table slds-table_cell-buffer slds-table_bordered add-col-padding"
+          style="table-layout: fixed"
+        >
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Date">Date</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Type">Type</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Status">Status</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Details">Details</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template
+              for:each={listApplicationsList}
+              for:item="loanApplication"
+            >
+              <tr key={loanApplication.Id} class="slds-hint-parent">
+                <th>
+                  <div class="slds-truncate">
+                    <lightning-formatted-date-time
+                      value={loanApplication.CreatedDate}
+                    ></lightning-formatted-date-time>
+                  </div>
+                </th>
+                <td>
+                  <div
+                    if:true={loanApplication.Loan_Program__r}
+                    class="slds-truncate"
+                  >
+                    {loanApplication.Loan_Program__r.Name}
+                  </div>
+                </td>
+                <td>
+                  <div class="slds-truncate">{loanApplication.Status}</div>
+                </td>
+                <td>
+                  <div class="slds-truncate">
+                    <a
+                      href="#"
+                      style="color: #00b085"
+                      data-id={loanApplication.Id}
+                      onclick={handleEditApplication}
+                      >View Application</a
+                    >
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </lightning-card>
+    </div>
+  </div>
+</template>

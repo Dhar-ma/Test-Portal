@@ -1,0 +1,42 @@
+.member-login{max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;}
+.member-login-form{max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;}
+ .cCenterPanel {
+        max-width: unset !important;
+}
+    
+
+.align-btn{text-align:center; margin: 10px auto;}
+ul.dropDownList {
+    background: #fff;
+    box-shadow: 0 0 3px #ccc;
+    max-height: 146px;
+    overflow: auto;
+    position: absolute;
+    z-index: 52;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin-top: -11px;
+}
+.member-login-form .slds-form-element.slds-m-vertical_xx-small {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+}
+.member-login-form .slds-form-element:nth-child(2n),
+.accordian-section .slds-form-element:nth-child(3n), 
+.accordian-section .slds-form-element:nth-child(5n) 
+{
+    padding-left: 10px;
+}
+.accordian-section {
+    padding: 10px 0px;
+}
+.section-title {
+    background: #eee;
+    padding: 6px 10px;
+}

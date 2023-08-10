@@ -1,0 +1,17 @@
+.THIS force-list-view-manager-status-info{
+    display:none;
+}
+
+.THIS force-list-view-manager-button-bar{
+    display:none;
+}
+
+.THIS .forceListViewSettingsMenu{
+    display:none;
+}
+.THIS.page-section-box {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px #8ca3b7;
+    border: 1px solid #ccc;
+}

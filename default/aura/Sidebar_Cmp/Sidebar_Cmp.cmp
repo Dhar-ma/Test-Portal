@@ -1,0 +1,99 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" 
+                controller="CommunityUtils"
+                access="global" >
+    
+    <aura:attribute name="userLoggedIn" type="boolean" default="true"/>
+    <aura:attribute name="contactInfoVisible" type="boolean" default="false"/>
+    <aura:attribute name="isFlowOpen" type="boolean" default="false"/>
+    <aura:attribute name="contactId" type="String"/>
+    <aura:attribute name="accountId" type="String"/> 
+    
+    <ltng:require scripts="{!$Resource.LiveAgentDeployment}" afterScriptsLoaded="{!c.doInit}" /> 
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	
+    <div class="page-section-box">
+        <div class="container">
+            <div style="height: 100%;">
+                <div class="left-panel">       
+                    <div class="sidebar-title">We’re Here to Help</div>
+                    
+                    <aura:if isTrue="{!v.userLoggedIn}">
+                        <!--<lightning:flow aura:id="flowData"/>-->
+                        
+                        <aura:if isTrue="{!v.isFlowOpen}">
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <!-- MODAL BOX HEADER Start-->
+                                    <header class="slds-modal__header slds-modal__header_empty">
+                                        <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" onclick="{!c.closeFlowModal}"/>
+                                    </header>
+                                    <!--MODAL BOX BODY Part Start-->
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                        
+                                        <lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}"/>
+                                    </div>
+                                </div>
+                            </section>
+                        </aura:if>
+                        
+                        <div class="sidebar-menu">
+                            <img src="{!$Resource.SidebarResources + '/Calendar.png'}"/>
+                            <button class="slds-button slds-button_brand active"
+                                    onclick="{!c.beginFlow}">Schedule Appointment</button>
+                        </div>
+                        <div class="sidebar-menu">
+                            <img src="{!$Resource.SidebarResources + '/Question.png'}"/>
+                            <button id="online-btn" style="display:none" class="slds-button slds-button_brand active"
+                                    onclick="{!c.startChat}">Chat Now</button>
+                            <button id="offline-btn" class="slds-button slds-button_brand active" 
+                                    onclick="{!c.openCaseForm}">Chat Now</button>
+                        </div>
+                        <div class="sidebar-menu">
+                            <img src="{!$Resource.SidebarResources + '/Layer.png'}"/>
+                            <button class="slds-button slds-button_brand active" 
+                                    onclick="{!c.openKnowledgeTab}">Search For Answers</button> 
+                        </div>
+                        
+                        <aura:set attribute="else">
+                            <div class="sidebar-menu">
+                                <img src="{!$Resource.SidebarResources + '/Question.png'}"/>
+                                <button id="online-btn" style="display:none" class="slds-button slds-button_brand active" 
+                                        onclick="{!c.startChat}">Chat Now</button>
+                                <button id="offline-btn" class="slds-button slds-button_brand active" 
+                                        onclick="{!c.openCaseForm}">Chat Now</button>
+                            </div>
+                            <div class="sidebar-menu">
+                                <img src="{!$Resource.SidebarResources + '/contactus.svg'}"/>
+                                <button class="slds-button slds-button_brand active" 
+                                        onclick="{!c.showContactInfo}">Contact Us</button> 
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>    
+            </div>
+            
+            <aura:if isTrue="{!v.contactInfoVisible}">            
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small modal-container" 
+                         aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                    <div class="slds-modal__container modal-body-content">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                                onclick="{!c.hideContactInfo}">
+                            <lightning:icon iconName="utility:close" variant="inverse" size="x-small"
+                                            onclick="{!c.hideContactInfo}"></lightning:icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1>{!$Label.c.Company_Name}</h1>
+                        <div class="inner-modal-content" id="modal-content-id-1">
+                            <p>
+                                Address: {!$Label.c.Company_Address}<br/>
+                                Phone: {!$Label.c.Company_Phone}<br/>
+                                Email: {!$Label.c.Company_Email}
+                            </p>
+                        </div>
+                    </div> 
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>            
+            </aura:if>
+        </div> 
+    </div>
+</aura:component>

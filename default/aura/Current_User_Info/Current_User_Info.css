@@ -1,0 +1,22 @@
+.THIS .slds-list_horizontal{
+    display:block;
+}
+.THIS .width-unset{
+    width:unset;
+}
+
+.THIS .page-section-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+    border: 1px solid #ccc;
+}
+
+.THIS.hide {
+    display:none;
+}
+
+.THIS.show {
+    margin-top:1.5rem;
+}

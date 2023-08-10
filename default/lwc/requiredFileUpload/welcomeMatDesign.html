@@ -1,0 +1,110 @@
+<!--
+ - Created by Joe Cadd on 4/20/2020.
+ -->
+
+<!-- welcomeMatDesign -->
+<!-- TODO TODO Finish this design version of the required docs cmp https://www.lightningdesignsystem.com/components/welcome-mat/ -->
+<template>
+    <div class="slds-welcome-mat">
+        <div class="slds-welcome-mat__content">
+            <div class=" slds-size_1-of-2">
+                <div class="slds-welcome-mat__info-content">
+                    <h2 class="slds-text-heading_large">Please Upload Required Documents</h2>
+                    <div class="slds-welcome-mat__info-description slds-text-longform">
+                        <p>Welcome to Lightning Experience, the modern, beautiful user experience from Salesforce. With a sales-and service-centric mindset, we focused on reinventing the desktop environment to better support your business processes.</p>
+                    </div>
+                    <div class="slds-welcome-mat__info-progress">
+                        <p>
+                            <strong>2/5 files uploaded</strong>
+                        </p>
+                    </div>
+                    <div class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" role="progressbar">
+                <span class="slds-progress-bar__value" style="width:40%">
+                  <span class="slds-assistive-text">Progress: 40%</span>
+                </span>
+                    </div>
+                </div>
+            </div>
+            <ul class="slds-welcome-mat__tiles slds-size_1-of-2">
+                <li class="slds-welcome-mat__tile slds-welcome-mat__tile_complete">
+                    <a href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                            <div class="slds-welcome-mat__tile-figure">
+                                <div class="slds-welcome-mat__tile-icon-container">
+                                    <span class="slds-icon_container slds-icon-utility-animal_and_nature">
+            <!--                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true">-->
+                                        <lightning-icon icon-name="utility:upload" class="slds-icon-text-default"></lightning-icon>
+                                        <!--                        </svg>-->
+                                    </span>
+                                    <!--                                    <span class="slds-icon_container slds-icon_container_circle slds-icon-action-check" title="Completed">-->
+                                    <!--            &lt;!&ndash;                        <svg class="slds-icon slds-welcome-mat__icon-check" aria-hidden="true">&ndash;&gt;-->
+                                    <!--            &lt;!&ndash;                          <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#check"></use>&ndash;&gt;-->
+                                    <!--                                        <lightning-icon icon-name="utility:success" class="slds-welcome-mat__icon-check"></lightning-icon>-->
+                                    <!--            -->
+                                    <!--            &lt;!&ndash;                        </svg>&ndash;&gt;-->
+                                    <!--                                        <span class="slds-assistive-text">Completed</span>-->
+                                    <!--                                    </span>-->
+                                    <span class="slds-icon_container slds-icon_container_circle slds-icon-action-check" title="Completed">
+                                                <svg class="slds-icon slds-welcome-mat__icon-check" aria-hidden="true">
+                                                                                          <use xlink:href="/_slds/icons/action-sprite/svg/symbols.svg#check"></use>
+                                                                                        </svg>
+                                        <span class="slds-assistive-text">Completed</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-welcome-mat__tile-body">
+                                <h3 class="slds-welcome-mat__tile-title">Welcome to Salesforce!</h3>
+                                <p class="slds-welcome-mat__tile-description">Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="slds-welcome-mat">
+        <div class="slds-welcome-mat__content ">
+            <ul class="slds-welcome-mat__tiles ">
+                <li class="slds-welcome-mat__tile slds-welcome-mat__tile_complete">
+                    <a href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                            <div class="slds-welcome-mat__tile-figure">
+                                <div class="slds-welcome-mat__tile-icon-container">
+                                            <span class="slds-icon_container slds-icon-utility-animal_and_nature">
+                    <!--                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true">-->
+                                                <lightning-icon icon-name="utility:upload" class="slds-icon-text-default"></lightning-icon>
+                                                <!--                        </svg>-->
+                                            </span>
+                                    <!--                                    <span class="slds-icon_container slds-icon_container_circle slds-icon-action-check" title="Completed">-->
+                                    <!--            &lt;!&ndash;                        <svg class="slds-icon slds-welcome-mat__icon-check" aria-hidden="true">&ndash;&gt;-->
+                                    <!--            &lt;!&ndash;                          <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#check"></use>&ndash;&gt;-->
+                                    <!--                                        <lightning-icon icon-name="utility:success" class="slds-welcome-mat__icon-check"></lightning-icon>-->
+                                    <!--            -->
+                                    <!--            &lt;!&ndash;                        </svg>&ndash;&gt;-->
+                                    <!--                                        <span class="slds-assistive-text">Completed</span>-->
+                                    <!--                                    </span>-->
+                                    <span class="slds-icon_container slds-icon_container_circle slds-icon-action-check" title="Completed">
+                                                        <svg class="slds-icon slds-welcome-mat__icon-check" aria-hidden="true">
+                                                                                                  <use xlink:href="/_slds/icons/action-sprite/svg/symbols.svg#check"></use>
+                                                                                                </svg>
+                                                <span class="slds-assistive-text">Completed</span>
+                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-welcome-mat__tile-body">
+                                <h3 class="slds-welcome-mat__tile-title">Welcome to Salesforce!</h3>
+                                <p class="slds-welcome-mat__tile-description">Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>

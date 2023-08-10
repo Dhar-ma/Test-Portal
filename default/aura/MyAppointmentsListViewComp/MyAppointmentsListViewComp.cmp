@@ -1,0 +1,7 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <!--<div class="page-section-box">
+        
+    </div>-->
+    
+    <c:ListViewComponent objectInfo="ServiceAppointment" currentListViewName="My_ServiceAppointments"/>
+</aura:component>

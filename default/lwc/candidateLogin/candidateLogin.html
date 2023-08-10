@@ -1,0 +1,179 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : Dharmraj Baravkar
+  @group             : 
+  @last modified on  : 08-10-2023
+  @last modified by  : 
+-->
+<template>
+  <div class="testBody">
+    <div>
+      <c-branding></c-branding>
+    </div>
+    <div>
+      <div if:true={isLoaded}>
+        <lightning-spinner
+          alternative-text="Loading..."
+          size="large"
+          variant="brand"
+        >
+        </lightning-spinner>
+      </div>
+      <div class="slds-box">
+        <div if:false={isTestStart}>
+          <div class="information slds-var-m-around_medium">
+            <p>Welcome to Drizzle IT Services.</p>
+            <p>
+              Please provide your email address and the Passcode (shared by our
+              HR team with you) for verification purpose.
+            </p>
+          </div>
+          <div class="loginComp slds-box">
+            <div
+              class="slds-var-m-around_medium slds-align_absolute-center slds-badge slds-border--bottom slds-text-heading_large"
+            >
+              Candidate Verification
+            </div>
+            <div class="loginbody">
+              <div class="slds-p-around_medium lgc-bg">
+                <lightning-input
+                  type="text"
+                  placeholder="Email"
+                  onchange={emailInput}
+                >
+                </lightning-input>
+                <lightning-input
+                  type="password"
+                  placeholder="Passcode"
+                  onkeypress={handleEnter}
+                  onchange={passcodeInput}
+                >
+                </lightning-input>
+                <div style="color: red">
+                  <div if:true={isLogin}>
+                    <p>{loginErrorMessage}</p>
+                  </div>
+                  <div if:true={isCandidateAlreadyExist}>
+                    <p>{validateErrorMessage}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <lightning-button
+            style="font-size: large"
+            class="slds-accordion__summary-content slds-align_absolute-center slds-var-m-top_large"
+            variant="success"
+            label="VERIFY"
+            title="Log In"
+            onclick={verifyCandidate}
+          ></lightning-button>
+        </div>
+        <div>
+          <div if:true={isTestStart}>
+            <div if:false={isValidStudent}>
+              <div>
+                <div
+                  style="margin-left: 2%; width: fit-content; font-size: 15px"
+                >
+                  <b>
+                    Test will be contain (<b>{info.Number_of_Questions__c}</b>)
+                    question.<br /><br
+                  /></b>
+
+                  1. All question are mandatory.
+                  <br />
+                  2. No negative marking.
+                  <br />
+                  3. Ensure you have non-interrupting internet connection.<br />
+                  4. Make sure you use a proper laptop or computer with camera
+                  access.<br />
+                  5. Do not refresh page once you click on start test.<br />
+                  6. Do not click on 'Back' button on browser.<br />
+                  7. Do not switch your browser tab during the test.<br />
+                  8. You will be monitored using camera.<br />
+                  9. Use of phone is not allowed while taking a test.<br />
+                  <b
+                    >Note: Each candidate will only be given one opportunity to
+                    take the test, no candidate will be given a second chance.
+                    Therefore, kindly make a note of that.
+                  </b>
+                  <br />
+                </div>
+              </div>
+              <hr />
+              <div>
+                <div>
+                  <input
+                    style="margin-top: 6px"
+                    class="slds-float_left slds-var-m-top_xx-small slds-var-m-right_small"
+                    type="checkbox"
+                    onclick={termAndCondition}
+                  />
+                  <p style="font-size: 16px">
+                    Please read and accept below terms and condition before
+                    starting a test.
+                  </p>
+                </div>
+                <p
+                  class="slds-var-m-around_small"
+                  style="color: red"
+                  if:false={isTermsAndCondition}
+                >
+                  {checkBoxmessage}
+                </p>
+                <hr />
+                <lightning-button
+                  style="font-size: large"
+                  class="slds-var-m-around_medium"
+                  label="Back"
+                  onclick={refreshComp}
+                >
+                </lightning-button>
+                <lightning-button
+                  style="font-size: large"
+                  class="slds-var-m-around_medium"
+                  variant="brand"
+                  label="Start Test"
+                  onclick={startTest}
+                >
+                </lightning-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div if:true={isValidStudent}>
+            <table>
+              <tr>
+                <td style="width: 70%">
+                  <c-test-quetions
+                    question-set-id={setId}
+                    qyery-value={qyeryValue}
+                    is-tab-change={isTabChange}
+                    candidate-test-id={candidateTestId}
+                    passcode={passcode}
+                    duration={duration}
+                    email={email}
+                    question-count={questionCount}
+                  >
+                  </c-test-quetions>
+                </td>
+                <td style="width: 30%">
+                  <div>
+                    <video
+                      style="width: 100%; margin-bottom: 35%"
+                      autoplay
+                      class="videoelement"
+                    ></video>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

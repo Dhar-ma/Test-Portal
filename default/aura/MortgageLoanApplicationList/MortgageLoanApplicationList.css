@@ -1,0 +1,46 @@
+.THIS {
+}
+.THIS.page-section-box {
+    background: #fff;
+    padding: 7px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+    border: 1px solid #ccc;
+}
+.THIS .card-wrapper header.slds-card__header.slds-grid {
+    background: #fafaf9;
+    margin-bottom: 0;
+    padding: 0.75rem 1rem 0.75rem
+}
+.THIS .card-wrapper .slds-card__body {
+    margin: 0;
+}
+.THIS .card-wrapper .slds-card {
+    border: none;
+}
+.THIS .add-col-padding tr th{padding:.5rem;}
+.THIS .card-wrapper header.slds-card__header.slds-grid lightning-icon.slds-icon-custom-custom18.slds-icon_container, 
+.THIS .card-wrapper header.slds-card__header.slds-grid lightning-icon.slds-icon-custom-custom18.slds-icon_container svg
+{
+    width: 32px;
+    height: 32px;
+}
+.THIS .card-wrapper header.slds-card__header .slds-media__body.slds-truncate {
+    margin-top: 13px;
+}
+.THIS .card-wrapper .sub-title-tx
+{
+    position: absolute;
+    z-index: 10;
+    top: 1px;
+    left: 51px; 
+}
+.THIS .card-wrapper header.slds-card__header.slds-grid lightning-icon.slds-icon-custom-custom18 lightning-primitive-icon
+{
+        width: 100%;
+    display: block;
+    height: 100%;
+}
+.THIS .slds-text-heading_small{
+    font-size: 1.125rem;
+}

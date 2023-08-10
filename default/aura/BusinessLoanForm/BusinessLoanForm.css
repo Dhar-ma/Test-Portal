@@ -1,0 +1,185 @@
+.THIS { 
+}
+.THIS .header-cust{
+    margin-top: 2%;
+}
+.THIS .cust-progress-bar{
+    padding: 1rem;
+}
+
+.THIS .main-container{
+    margin: 20px auto;    
+    padding: 0.5rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.THIS .button-pannel{ border-top: 1px solid #e0e0e0;margin: 20px 0px;}
+
+.THIS .tab-container{    
+    margin: 20px auto;
+    max-width: 1200px;
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0px;
+}
+
+.THIS .cust-table-eligibilty{
+    table-layout: fixed; width: 100%;
+}
+.THIS .cust-table-eligibilty tr td {
+    word-wrap: break-word;
+    padding: 10px;
+    vertical-align: top;
+}
+.THIS table.cust-table-eligibilty tr td span.slds-radio {
+    display: inline-block;
+}
+.THIS .success-msg{    
+    text-align: center;
+    padding-top: 20px;
+}
+.THIS .cust-width{
+    width:50%;
+}
+
+.THIS .custwidth{
+    width:12%;
+}
+.THIS .amount-detail{ display: flex;align-items: flex-end;}
+.THIS .amount-detail button.slds-button {
+    margin-left: 8px;
+}
+.THIS .cust-padd{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.THIS .disabledTab{
+    background-color: #dedbdb;
+    pointer-events: none;
+}
+
+.THIS .applicationSummary{
+    border: 1px solid #cbc5c5;
+    padding: 20px 0;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+.THIS .slds-item{
+    text-align: center;
+}
+
+.THIS .slds-text-heading--label{
+    font-weight: bold;
+}
+
+.THIS .noteText{
+    font-size: 12px;
+    color: #ff4c4c;
+} 
+.THIS .date-select .slds-form-element.slds-dropdown-trigger{display: flex;}
+.THIS .date-select .slds-form-element.slds-dropdown-trigger label.slds-form-element__label{padding-top: 0;}
+.THIS .date-select .slds-form-element.slds-dropdown-trigger .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right {
+    width: 100%;
+}
+
+.THIS .uiInputRadio {
+    display: inline-flex;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    /* optional */
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -ms-flex-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    margin-left: 25px;
+}
+.THIS .tab-section .slds-vertical-tabs {
+    margin: 20px 0px;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item {
+    background: #e9edf0;
+    position: relative;
+    overflow: visible;
+    margin: 0px 0px 6px; 
+    border-bottom: 0px;
+    height: 44px;
+    width: 95%;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active {
+    color: #fff;
+    background: #262a6e;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active a{
+    color: #fff !important;
+}
+.THIS .tab-section ul.slds-vertical-tabs__nav {
+    border-right: none;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item:after {
+    content: '';
+    border-left: 31px solid #e9edf0;
+    border-bottom: 31px solid transparent;
+    display: inherit;
+    transform: rotate(136deg);
+    position: absolute;
+    left: 100%;
+    z-index: 1;
+    margin-left: -16px;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active:after {
+    border-color: #262a6e;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item a:hover {
+    background: unset;
+}
+.THIS .tab-section .slds-vertical-tabs__content.slds-show {
+    margin-left: 30px;
+    border-left: 1px solid #ccc;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active.slds-has-focus, 
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active.slds-has-focus a
+{text-decoration: none !important;}
+.THIS .slds-path__link{pointer-events:none;}
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Pre App"], 
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Full App"]{
+    background: #005fb2!important;
+    width: 116%;
+    margin: 0px 0 10px;
+    height: 35px;
+    font-weight: bold;
+    pointer-events: none;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Pre App"]:after, 
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Full App"]:after{
+    display: none;
+} 
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Pre App"] a, 
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Full App"] a {
+    cursor: default;
+    color: #fff !important;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item[data-label="Full App"] {
+    margin-top:20px;
+}
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active[data-label="Pre App"] a, 
+.THIS .tab-section li.slds-vertical-tabs__nav-item.slds-is-active[data-label="Full App"] a
+{
+    text-decoration: none !important;
+}
+
+.THIS.customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
+}
+
+.THIS.page-section-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 15px #8ca3b7;
+    border: 1px solid #ccc;
+}

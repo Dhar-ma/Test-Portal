@@ -1,0 +1,908 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : 'Amol K'
+  @group             : 
+  @last modified on  : 02-28-2023
+  @last modified by  : 'Amol K'
+-->
+<template>
+	<div if:true={isLoaded}>
+		<lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+	</div>
+	<div if:false={isLoaded} class="page-section-box">
+
+		<div if:true={isModal}>
+			<section style="background: rgba(62, 59, 59, 0.559);" if:true={isCounsumerLoan} role="dialog" tabindex="-1"
+				aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+				class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<lightning-button-icon class="slds-modal__close slds-button_icon-inverse"
+							icon-name="utility:close" alternative-text="close" title="Close"
+							onclick={closeModalBox}></lightning-button-icon>
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Select Consumer Loan
+							Type
+						</h2>
+					</header>
+					<div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+						<div class="slds-var-m-around_large">
+							<lightning-combobox style="z-index: 10;" name="progress" label="Select a Mortgage Type"
+								value={value} placeholder="Select Progress" options={isCounsumerLoanOption}
+								onchange={handleCounsumerLoanType} required>
+							</lightning-combobox>
+						</div>
+						<div class="slds-var-m-around_medium slds-text-align_center">
+							<lightning-button label="Submit" variant="brand" onclick={setMortgageType}>
+							</lightning-button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<template if:true={consumerLoanType}>
+			<lightning-card variant="Narrow">
+				<div
+					class="slds-text-heading_medium slds-text-align_center slds-m-top_small slds-m-bottom_small slds-text-color_default">
+					<h1>{ConsumerLoanProgram.Name} Application Form</h1>
+				</div>
+				<div class="cust-progress-bar">
+					<lightning-progress-indicator current-step={ResidentialLoanApplication.Status} type="path"
+						variant="base">
+						<template for:each={statusOptions} for:item="step">
+							<lightning-progress-step label={step.label} value={step.value} key={step.label}>
+							</lightning-progress-step>
+						</template>
+					</lightning-progress-indicator>
+				</div>
+				<div class="main-container">
+					<div class="slds-align_absolute-center"
+						style="display: block; text-align: center; color: rgb(25,17,105);width:75%;">
+						<div>
+							<p>
+								{ConsumerLoanProgram.Applicant_Instruction__c}
+							</p>
+						</div>
+					</div>
+					<div class="tab-section">
+						<lightning-tabset class="tab-active" variant="vertical" active-tab-value={currentTab}>
+
+							<lightning-tab label="Pre App" value="one" class="disabledTab">
+								<div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+									Pre App
+								</div>
+							</lightning-tab>
+
+							<lightning-tab label="1. Instructions" value="0">
+								<div class="slds-text-color_weak slds-text-align_center text-success
+                                        slds-text-heading_small">
+									Instructions
+								</div>
+								<div class="tab-container">
+									<div class="slds-align_absolute-center"
+										style="display: block; text-align: center; padding: 2%;">
+										<div>
+											<p style="text-align: justify;">
+												{ConsumerLoanProgram.Loan_Instructions__c}
+											</p>
+										</div>
+										<br></lightning-input><br></lightning-input>
+										<lightning-input type="checkbox" label="I have read the above instructions."
+											name="read-me-input1" checked={ischecked} onchange={handelTermsAndCondition}
+											value={ischecked}></lightning-input>
+									</div>
+									<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+										<lightning-button variant="brand" class="slds-var-m-right_medium" label="Next"
+											title="Next" onclick={showApplicationQuestionTab}></lightning-button>
+										<lightning-button label="Cancel" title="Cancel"
+											onclick={cancelForm}></lightning-button>
+									</div>
+								</div>
+							</lightning-tab>
+
+							<lightning-tab label="2. Loan/Vehicle Information" value="1">
+								<div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+									Loan/Vehicle Information</div>
+								<div class="tab-container" aria-hidden="false">
+									<article class="slds-grid slds-align_absolute-center applicationSummary">
+										<div class="slds-col slds-text-align_center">
+											<p class="slds-text-heading_label slds-truncate" style="font-weight: bold;"
+												title="Monthly Income">
+												Monthly Income</p>
+											<p class="slds-text-body_regular slds-truncate">
+												<lightning-formatted-number
+													value={ResidentialLoanApplication.TotalMonthlyIncome__c}
+													format-style="currency"
+													currency-code="USD"></lightning-formatted-number>
+											</p>
+										</div>
+										<div class="slds-col slds-text-align_center">
+											<p class="slds-text-heading_label slds-truncate" title="Monthly Expence"
+												style="font-weight: bold;">
+												Monthly Expense</p>
+											<p class="slds-text-body_regular slds-truncate">
+												<lightning-formatted-number
+													value={ResidentialLoanApplication.TotalMonthlyExpense__c}
+													format-style="currency"
+													currency-code="USD"></lightning-formatted-number>
+											</p>
+										</div>
+										<div class="slds-col slds-text-align_center">
+											<p class="slds-text-heading_label slds-truncate"
+												title="Debt To Income Ratio" style="font-weight: bold;">
+												Debt To Income Ratio</p>
+											<p class="slds-text-body_regular slds-truncate">
+												<lightning-formatted-number
+													value={ResidentialLoanApplication.Debt_To_Income_Ratio__c}
+													format-style="percent"
+													maximum-fraction-digits="2"></lightning-formatted-number>
+											</p>
+										</div>
+									</article>
+									<div class="slds-section slds-is-open">
+										<div class="slds-var-m-around_small slds-text-heading_small">
+											<b> Loan Information</b>
+										</div>
+										<div class="slds-section__content">
+											<lightning-combobox class="vehicleLoanInfo" label="Purpose of Loan"
+												value={ResidentialLoanApplication.LoanPurpose} options={purposeOfLoan}
+												data-field-api-name="LoanPurpose">
+											</lightning-combobox>
+
+											<lightning-input class="vehicleLoanInfo" label="Estimated Purchase Price"
+												type="number" formatter="currency"
+												data-field-api-name="Estimated_Purchase_Price__c"
+												value={ResidentialLoanApplication.Estimated_Purchase_Price__c}>
+											</lightning-input>
+
+											<lightning-input class="vehicleLoanInfo" label="Desired Loan Amount"
+												type="number" data-field-api-name="Desired_Loan_Amount__c"
+												formatter="currency"
+												value={ResidentialLoanApplication.Desired_Loan_Amount__c} required>
+											</lightning-input>
+
+											<lightning-input class="vehicleLoanInfo" label="Down Payment Amount"
+												type="number" data-field-api-name="Down_Payment_Amount__c"
+												formatter="currency"
+												value={ResidentialLoanApplication.Down_Payment_Amount__c} required>
+											</lightning-input>
+
+											<lightning-combobox class="vehicleLoanInfo"
+												data-field-api-name="AmortizationTerm"
+												value={ResidentialLoanApplication.AmortizationTerm}
+												label="Loan Term(months)" options={LoanTerms}>
+											</lightning-combobox>
+										</div>
+										<div class="slds-section slds-is-open">
+											<div class="slds-var-m-around_small slds-text-heading_small">
+												<b> Vehicle Information</b>
+											</div>
+											<div class="slds-section__content">
+												<lightning-combobox class="vehicleLoanInfo" label="Vehicle Type"
+													value={ResidentialLoanApplication.Vehicle_Type__c}
+													data-field-api-name="Vehicle_Type__c" options={VehicleTypes}
+													onchange={handelVehicleType}></lightning-combobox>
+												<lightning-combobox class="vehicleLoanInfo"
+													label="Is this new or used vehicle?"
+													value={ResidentialLoanApplication.Is_new_or_used_vehicle__c}
+													options={newOrUsedVehicles}
+													data-field-api-name="Is_new_or_used_vehicle__c"></lightning-combobox>
+												<lightning-combobox class="vehicleLoanInfo" label="Vehicle Make"
+													value={ResidentialLoanApplication.Vehicle_Make__c}
+													options={vehicleMakeList}
+													data-field-api-name="Vehicle_Make__c"></lightning-combobox>
+												<lightning-input class="vehicleLoanInfo" label="Vehicle Model"
+													type="text" data-field-api-name="Vehicle_Model__c"
+													value={ResidentialLoanApplication.Vehicle_Model__c}></lightning-input>
+												<lightning-input class="vehicleLoanInfo" label="Vehicle Year"
+													type="text" data-field-api-name="Vehicle_Year__c"
+													value={ResidentialLoanApplication.Vehicle_Year__c}></lightning-input>
+												<lightning-input type="checkbox"
+													checked={ResidentialLoanApplication.Add_Trade_In__c}
+													label="Add Trade-In" name="addTradeIn"
+													onchange={showTradeInFrom}></lightning-input>
+											</div>
+										</div>
+										<div if:true={isTradeInfo} class="slds-section slds-is-open">
+											<div class="slds-var-m-around_small slds-text-heading_small">
+												<b>Trade In Information</b>
+											</div>
+											<div class="slds-section__content">
+												<lightning-combobox class="vehicleLoanInfo"
+													label="What type of vehicle is this?"
+													data-field-api-name="Trade_In_Vehicle_Type__c"
+													value={ResidentialLoanApplication.Trade_In_Vehicle_Type__c}
+													options={VehicleTypes}
+													onchange={handelVehicleType}></lightning-combobox>
+												<lightning-combobox class="vehicleLoanInfo"
+													data-field-api-name="Trade_In_Vehicle_Make__c" label="Vehicle Make"
+													value={ResidentialLoanApplication.Trade_In_Vehicle_Make__c}
+													options={vehicleMakeList}
+													onchange={handelVehicleMake}></lightning-combobox>
+												<lightning-input class="vehicleLoanInfo" label="Vehicle Model"
+													type="text" data-field-api-name="Trade_In_Vehicle_Model__c"
+													value={ResidentialLoanApplication.Trade_In_Vehicle_Model__c}></lightning-input>
+												<lightning-input class="vehicleLoanInfo" label="Vehicle Year"
+													type="text" data-field-api-name="Trade_In_Vehicle_Year__c"
+													value={ResidentialLoanApplication.Trade_In_Vehicle_Year__c}></lightning-input>
+												<lightning-input class="vehicleLoanInfo"
+													data-field-api-name="Trade_In_Current_Value_of_Vehicle__c"
+													label="What is current value of this vehicle?" type="number"
+													formatter="currency"
+													value={ResidentialLoanApplication.Trade_In_Current_Value_of_Vehicle__c}
+													required></lightning-input>
+												<lightning-input class="vehicleLoanInfo"
+													label="How much do you still owe on this vehicle?" type="number"
+													formatter="currency" data-field-api-name="How_Much_Owe__c"
+													value={ResidentialLoanApplication.How_Much_Owe__c}
+													required></lightning-input>
+												<lightning-input class="vehicleLoanInfo"
+													label="How much you are paying monthly for this vehicle?"
+													type="number" formatter="currency"
+													data-field-api-name="Monthly_Pay_For_Vehicle__c"
+													value={ResidentialLoanApplication.Monthly_Pay_For_Vehicle__c}
+													required></lightning-input>
+												<lightning-input class="vehicleLoanInfo"
+													label="Expected Trade In Allowance" type="number"
+													formatter="currency"
+													data-field-api-name="Expected_Trade_In_Allowance__c"
+													value={ResidentialLoanApplication.Expected_Trade_In_Allowance__c}
+													required></lightning-input>
+											</div>
+										</div>
+										<div class="slds-section slds-is-open">
+											<div class="slds-var-m-around_small slds-text-heading_small">
+												<b>Dealership Information</b>
+											</div>
+											<div aria-hidden="false" class="slds-section__content">
+												<lightning-input class="vehicleLoanInfo"
+													data-field-api-name="Dealer_Name__c" label="Name" type="text"
+													value={ResidentialLoanApplication.Dealer_Name__c}></lightning-input>
+												<lightning-input class="vehicleLoanInfo" type="tel"
+													data-field-api-name="Dealer_Phone__c" label="Phone"
+													value={ResidentialLoanApplication.Dealer_Phone__c}></lightning-input>
+												<lightning-input class="vehicleLoanInfo"
+													data-field-api-name="Dealer_Email__c" type="email" name="Email"
+													placeholder="youraddress@company.com" label="Email"
+													value={ResidentialLoanApplication.Dealer_Email__c}></lightning-input>
+												<br></lightning-input>
+												<h2 id="modal-heading">Dealer Address</h2>
+												<div class="slds-grid">
+													<div class="slds-col slds-size_3-of-3 slds-p-around_medium">
+														<lightning-textarea data-field-api-name="Street__c"
+															class="vehicleLoanInfo" name="Street" label="Street"
+															value={ResidentialLoanApplication.Street__c}>
+														</lightning-textarea>
+													</div>
+												</div>
+												<div class="slds-grid">
+													<div class="slds-col slds-size_2-of-3 slds-p-around_medium">
+														<lightning-input data-field-api-name="City__c"
+															class="vehicleLoanInfo" name="City" type="text" label="City"
+															value={ResidentialLoanApplication.City__c}></lightning-input>
+													</div>
+													<div class="slds-col slds-size_1-of-3 slds-p-around_medium">
+														<lightning-input data-field-api-name="State__c"
+															class="vehicleLoanInfo" type="text"
+															label="State or Province"
+															value={ResidentialLoanApplication.State__c}></lightning-input>
+													</div>
+												</div>
+												<div class="slds-grid">
+													<div class="slds-col slds-size_2-of-3 slds-p-around_medium">
+														<lightning-input class="vehicleLoanInfo" name="PostalCode"
+															type="text" label="PostalCode"
+															data-field-api-name="PostalCode__c"
+															value={ResidentialLoanApplication.PostalCode__c}>
+														</lightning-input>
+													</div>
+													<div class="slds-col slds-size_1-of-3 slds-p-around_medium">
+														<lightning-input class="vehicleLoanInfo" name="Country"
+															type="text" label="Country" data-field-api-name="Country__c"
+															value={ResidentialLoanApplication.Country__c}>
+														</lightning-input>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+											<lightning-button label="Save and Next" title="Next" variant="brand"
+												onclick={saveLoanInformation}
+												class="slds-var-m-right_small"></lightning-button>
+											<lightning-button label="Cancel" onclick={cancelForm} title="Cancel">
+											</lightning-button>
+										</div>
+									</div>
+								</div>
+							</lightning-tab>
+
+							<lightning-tab label="3. Loan Applicant(s)" value="2">
+								<div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+									Loan Applicant Information</div>
+								<div class="tab-container">
+									<lightning-card title="Loan Applicant Information" icon-name="action:add_contact">
+										<lightning-button label="New" icon-name="utility:add" icon-position="left"
+											slot="actions" onclick={showNewBorrowerForm}>
+										</lightning-button>
+
+										<div class="slds-p-horizontal_small">
+											<lightning-datatable key-field="id" hide-checkbox-column="true"
+												onrowaction={editBorrowerForm} data={LoanApplicant} columns={columns}>
+											</lightning-datatable>
+										</div>
+									</lightning-card>
+								</div>
+
+							</lightning-tab>
+							<lightning-tab label="Full App" value="3" class="disabledTab">
+								<div class="slds-text-color_weak slds-text-align_center 
+                                        slds-text-heading_small">
+									Full App</div>
+								<div class="tab-container">
+									<div class="slds-align_absolute-center"
+										style="display: block; text-align: center; padding: 2%;">
+										<p style="text-align: justify;">
+											After loan applicants have been entered, the PreApp will be submitted for
+											initial review. The below sections, can be completed after pre-approval, or
+											you can start completing this information at your convenience.
+										</p>
+									</div>
+								</div>
+
+							</lightning-tab>
+							<lightning-tab label="4. Required Document Uploads" value="4">
+								<div class="slds-text-color_weak slds-text-align_center slds-text-heading_small">
+									Required Document Uploads
+								</div>
+								<div class="tab-container">
+									<div if:true={recordIdAndLoanId}>
+										<c-required-file-upload record-id={ResidentialLoanApplication.Id}
+											child-lookup-relationship-name=""
+											storage-object-name="Required_Application_Document__c"
+											storage-parent-lookup="Residential_Loan_Application__c"
+											storage-file-type-lookup="File_Type__c" file-type-ids={requiredDocumentIds}>
+										</c-required-file-upload>
+									</div>
+									<div if:false={recordIdAndLoanId}>
+										<div class="slds-text-color_weak slds-text-align_center 
+												slds-text-heading_small">
+											Please fill the previous sections of the form</div>
+									</div>
+									<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+										<lightning-button variant="brand" label="Next" title="Next"
+											onclick={setCertificationTab}></lightning-button>
+									</div>
+								</div>
+
+							</lightning-tab>
+							<lightning-tab label="5. Certifications And Authorizations" value="5">
+								<div class="slds-text-color_weak slds-text-align_center slds-text-heading_small">
+									Certifications And Authorizations
+								</div>
+								<div class="tab-container">
+									<lightning-card variant="narrow" title="Certifications And Authorizations"
+										icon-name="action:add_contact">
+										<div slot="actions">
+											<lightning-button label="New" icon-name="utility:add" icon-position="left"
+												onclick={showCertificationForm}></lightning-button>
+										</div>
+										<div class="slds-p-horizontal_small">
+											<lightning-datatable key-field="id" hide-checkbox-column="true"
+												onrowaction={editCertificationForm} data={LoanApplicant}
+												columns={columns}>
+											</lightning-datatable>
+										</div>
+										<div class="slds-align_absolute-center slds-var-m-around_medium">
+											<lightning-button variant="brand" label="Submit Full App"
+												title="FullAppComplete" onclick={submitFullApp}></lightning-button>
+										</div>
+									</lightning-card>
+								</div>
+							</lightning-tab>
+						</lightning-tabset>
+					</div>
+				</div>
+			</lightning-card>
+		</template>
+	</div>
+
+
+	<div if:true={isShowBorrowerForm}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+
+				<header class="slds-modal__header">
+					<lightning-button-icon class="slds-modal__close slds-button_icon-inverse" icon-name="utility:close"
+						alternative-text="close" title="Close" onclick={hideBorrowerForm}></lightning-button-icon>
+
+					<div if:true={NewLoanApplicant.Name}>
+						<h2 class="slds-text-heading_medium slds-hyphenate"> {NewLoanApplicant.Name} Information
+						</h2>
+
+					</div>
+					<div if:false={NewLoanApplicant.Name}>
+						<h2 class="slds-text-heading_medium slds-hyphenate"> Borrower Personal Information
+						</h2>
+					</div>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+					<lightning-tabset active-tab-value={PersonalInfoCurrentTab} variant="vertical">
+
+						<lightning-tab label="Personal Information" value="1">
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Personal Information
+							</div>
+							<div class="tab-container">
+
+								<lightning-input label="First Name" data-field-api-name="First_Name__c"
+									value={NewLoanApplicant.First_Name__c} required="true" type="text"
+									class="PersonalInfo"></lightning-input>
+
+								<lightning-input label="Last Name" data-field-api-name="Last_Name__c"
+									value={NewLoanApplicant.Last_Name__c} required="true" type="text"
+									class="PersonalInfo"></lightning-input>
+
+								<lightning-input label="Social Security Number" data-field-api-name="SSN__c"
+									value={NewLoanApplicant.SSN__c} required="true" type="text"
+									class="PersonalInfo"></lightning-input>
+
+								<lightning-input label="No. of Dependents" data-field-api-name="DependentCount"
+									value={NewLoanApplicant.DependentCount} required="true" type="number"
+									class="PersonalInfo"></lightning-input>
+
+								<lightning-combobox class="PersonalInfo" label="Marital Status"
+									data-field-api-name="MaritalStatus" options={maritalStatus}
+									value={NewLoanApplicant.MaritalStatus}>
+								</lightning-combobox>
+
+								<lightning-input label="Home Phone" data-action="Phone__c"
+									value={NewLoanApplicant.Phone__c} required="true" type="tel"
+									class="PersonalInfo"></lightning-input>
+
+								<lightning-input label="Mobile Phone" data-field-api-name="Mobile__c"
+									value={NewLoanApplicant.Mobile__c} required="true" type="tel"
+									class="PersonalInfo"></lightning-input>
+
+								<lightning-input label="Email" data-field-api-name="Email__c"
+									value={NewLoanApplicant.Email__c} required="true" type="email"
+									class="PersonalInfo"></lightning-input>
+
+								<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										data-action="PersonalInfo" onclick={saveLoanApplicantInfo}>
+									</lightning-button>
+								</div>
+							</div>
+						</lightning-tab>
+						<lightning-tab label="Credit Approval" value="2">
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Credit Approval
+							</div>
+							<div class="tab-container">
+								<p style="text-align: justify;">
+									I authorize EMS Financial Services to obtain a consumer credit report on me. EMS
+									Financial Services will use the consumer credit report to “Determine Loan Options”,
+									Upon request, EMS Financial Services will provide me with the name and address of
+									the Consumer Reporting Agency contacted to supply the report. I understand that
+									credit inquiries have the potential to impact my credit score.
+								</p>
+								<br></lightning-input>
+								<div class="slds-grid">
+									<lightning-input data-field-api-name="Approval_Accept__c" type="checkbox"
+										label="I accept" data-checkbox="true" name="Iaccept"
+										checked={NewLoanApplicant.Approval_Accept__c}
+										class="certification"></lightning-input>
+								</div>
+								<br></lightning-input>
+								<div class="slds-grid slds-gutters">
+									<div class="slds-col">
+										<span>
+											<lightning-input data-field-api-name="Approval_Name__c" label="Name"
+												value={NewLoanApplicant.Approval_Name__c} type="text"
+												class="certification"></lightning-input>
+										</span>
+									</div>
+									<div class="slds-col">
+										<span>
+											<lightning-input data-field-api-name="BirthDate__c" label="Date of Birth"
+												value={NewLoanApplicant.BirthDate__c} type="date"
+												class="certification"></lightning-input>
+										</span>
+									</div>
+								</div>
+
+								<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										data-action="CreditApproval" onclick={saveLoanApplicantInfo}></lightning-button>
+								</div>
+							</div>
+						</lightning-tab>
+						<lightning-tab label="Application Questions" value="3">
+
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Application Questions</div>
+							<div class="tab-container slds-var-m-around_small">
+								<template for:each={DeclarationQuestions} for:item="ques">
+									<div key={ques.id} if:true={ques.ApplicationQuestion}>
+										{ques.Description}
+										<div>
+											<div class="slds-clearfix" if:true={ques.Answer}>
+												<div class="slds-float--left slds-var-m-around_small">
+													<label for={ques.Loan_Declaration_Field}>Yes</label>
+													<br>
+													<input checked type="radio" id={ques.Loan_Declaration_Field}
+														name={ques.Loan_Declaration_Field} onchange={onGroup}
+														class="slds-radio applicantDeclaration">
+												</div>
+												<div class="slds-float--left slds-var-m-around_small">
+													<label for={ques.Loan_Declaration_Field}>No</label>
+													<br>
+													<input type="radio" id={ques.Loan_Declaration_Field}
+														name={ques.Loan_Declaration_Field} onchange={onGroup}
+														class="slds-radio">
+												</div>
+											</div>
+											<div class="slds-clearfix" if:false={ques.Answer}>
+												<div class="slds-float--left slds-var-m-around_small">
+													<label for={ques.Loan_Declaration_Field}>Yes</label>
+													<br>
+													<input type="radio" id={ques.Loan_Declaration_Field}
+														data-field-api-name={ques.Loan_Declaration_Field}
+														name={ques.Loan_Declaration_Field} onchange={onGroup}
+														class="slds-radio applicantDeclaration">
+												</div>
+												<div class=" slds-float--left slds-var-m-around_small">
+													<label for={ques.Loan_Declaration_Field}>No</label>
+													<br>
+													<input type="radio" id={ques.Loan_Declaration_Field}
+														data-field-api-name={ques.Loan_Declaration_Field}
+														name={ques.Loan_Declaration_Field} checked onchange={onGroup}
+														class="slds-radio">
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</template>
+								<div class="slds-align_absolute-center">
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										onclick={saveApplicantQuestions}></lightning-button>
+								</div>
+							</div>
+						</lightning-tab>
+						<lightning-tab label="Address Information" value="4">
+
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Address Information
+							</div>
+							<div class="tab-container">
+								<div if:true={NewLoanApplicantBorrowerType}>
+									<lightning-input type="checkbox" label="Copy From Main Borrower"
+										name="copyBorrowerAddress" onchange={getBorrowerAddress}></lightning-input>
+								</div>
+
+								<lightning-input-address onchange={handelPresentAddress}
+									data-field-api-name={LoanApplicantAddress} address-label="Present Address"
+									street-label="Street" city-label="City" country-label="Country"
+									province-label="State or Province" postal-code-label="PostalCode"
+									street={LoanApplicantAddress.ResidenceStreet}
+									city={LoanApplicantAddress.ResidenceCity}
+									country={LoanApplicantAddress.ResidenceCountry}
+									province={LoanApplicantAddress.ResidenceState}
+									postal-code={LoanApplicantAddress.ResidencePostalCode}></lightning-input-address>
+
+								<lightning-input class="AddressInfo" data-field-api-name="ResidenceYearCount"
+									label="Years at current residence" type="number"
+									value={LoanApplicantAddress.ResidenceYearCount}>
+								</lightning-input>
+								<lightning-input class="AddressInfo" data-field-api-name="ResidenceAdditionalMonthCount"
+									label="Months at current residence" type="number"
+									value={LoanApplicantAddress.ResidenceAdditionalMonthCount}>
+								</lightning-input>
+
+								<lightning-input type="checkbox" label="Same as above" name="copyMailingAddress"
+									onchange={copyAddress}></lightning-input>
+
+								<lightning-input-address data-field-api-name={LoanApplicantMalingAddress}
+									address-label="Mailing Address" street-label="Street" city-label="City"
+									country-label="Country" province-label="State or Province"
+									postal-code-label="PostalCode" street={LoanApplicantMalingAddress.ResidenceStreet}
+									city={LoanApplicantMalingAddress.ResidenceCity}
+									country={LoanApplicantMalingAddress.ResidenceCountry}
+									province={LoanApplicantMalingAddress.ResidenceState}
+									postal-code={LoanApplicantMalingAddress.ResidencePostalCode}
+									onchange={handelMailingAddress}></lightning-input-address>
+
+								<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										value="AddressInfo" onclick={saveApplicantAddress}></lightning-button>
+								</div>
+							</div>
+
+						</lightning-tab>
+						<lightning-tab label="Employment Information" value="5">
+
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Employment Information
+							</div>
+							<div class="tab-container">
+								<lightning-input type="checkbox" label="Self Employed" name="IsSelfEmployed"
+									onchange={setSelfEmployment}
+									checked={LoanApplicantEmployment.IsSelfEmployed}></lightning-input>
+
+								<lightning-input class="employmentInfo" data-field-api-name="EmployerName" type="text"
+									label="Employer Name" required="false"
+									value={LoanApplicantEmployment.EmployerName}></lightning-input>
+
+								<lightning-input class="employmentInfo" type="tel"
+									data-field-api-name="Business_Phone__c" label="Business Phone" required="false"
+									value={LoanApplicantEmployment.Business_Phone__c}></lightning-input>
+
+								<lightning-input-address onchange={handelEmploymentAddress}
+									data-field-api-name={LoanApplicantAddress} address-label="Employer Address"
+									street-label="Street" city-label="City" country-label="Country"
+									province-label="State or Province" postal-code-label="PostalCode"
+									street={LoanApplicantEmployment.EmployerStreet}
+									city={LoanApplicantEmployment.EmployerCity}
+									country={LoanApplicantEmployment.EmployerCountry}
+									province={LoanApplicantEmployment.EmployerState}
+									postal-code={LoanApplicantEmployment.EmployerPostalCode}></lightning-input-address>
+
+								<lightning-input data-field-api-name="CurrentJobYearCount" class="employmentInfo"
+									label="Years on job" type="number"
+									value={LoanApplicantEmployment.CurrentJobYearCount}></lightning-input>
+								<lightning-input data-field-api-name="CurrentJobAdditionalMonthCount"
+									class="employmentInfo" label="Months on job" type="number"
+									value={LoanApplicantEmployment.CurrentJobAdditionalMonthCount}>
+								</lightning-input>
+								<lightning-input class="employmentInfo" data-field-api-name="Years_in_Industry__c"
+									label="Years in Industry" type="number"
+									value={LoanApplicantEmployment.Years_in_Industry__c}>
+								</lightning-input>
+								<lightning-input class="employmentInfo" data-field-api-name="JobTitle"
+									label="Position/Title/Business" type="text"
+									value={LoanApplicantEmployment.JobTitle}>
+								</lightning-input>
+
+								<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										onclick={saveApplicantEmployment}></lightning-button>
+								</div>
+							</div>
+
+						</lightning-tab>
+						<lightning-tab label="Income Information" value="6">
+
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Monthly Income Information
+							</div>
+							<div class="tab-container">
+								<lightning-input class="IncomeInfo" data-field-api-name="Base_Monthly_Salary__c"
+									label="Monthly Base Salary" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Base_Monthly_Salary__c} onchange={calculateTotalIncome}>
+								</lightning-input>
+								<lightning-input class="IncomeInfo" data-field-api-name="Monthly_Overtime_Amount__c"
+									label="Monthly Overtime" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Monthly_Overtime_Amount__c}
+									onchange={calculateTotalIncome}>
+								</lightning-input>
+								<lightning-input class="IncomeInfo" data-field-api-name="Monthly_Bonus_Amount__c"
+									label="Monthly Bonus" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Monthly_Bonus_Amount__c}
+									onchange={calculateTotalIncome}>
+								</lightning-input>
+								<lightning-input class="IncomeInfo" data-field-api-name="Monthly_Commission_Amount__c"
+									label="Monthly Comission" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Monthly_Commission_Amount__c}
+									onchange={calculateTotalIncome}>
+								</lightning-input>
+								<lightning-input class="IncomeInfo" data-field-api-name="Devidends_Interest__c"
+									label="Monthly Dividends/Interest" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Devidends_Interest__c} onchange={calculateTotalIncome}>
+								</lightning-input>
+								<lightning-input class="IncomeInfo" data-field-api-name="Net_rental_Income__c"
+									label="Monthly Net Rental Income" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Net_rental_Income__c} onchange={calculateTotalIncome}>
+								</lightning-input>
+								<lightning-input class="IncomeInfo" data-field-api-name="Other_Income__c"
+									label="Monthly Other Income" type="number" formatter="currency"
+									value={LoanApplicantIncomes.Other_Income__c} onchange={calculateTotalIncome}>
+								</lightning-input>
+
+								<lightning-input name="IncomeInfo" data-field-api-name="MonthlyIncomeAmount"
+									value={LoanApplicantIncomes.MonthlyIncomeAmount} type="number" formatter="currency"
+									label="Monthly Income Amount" readonly="true"></lightning-input>
+
+								<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										value="IncomeInfo" onclick={saveApplicantIncomes}></lightning-button>
+								</div>
+							</div>
+
+						</lightning-tab>
+						<lightning-tab label="Debt/Expense Information" value="7">
+
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Monthly Debt/Expense Information <br />
+								<span class="noteText">*(Note: List all Joint Expenses under the Main Borrower only,
+									if there are any CoBorrowers)</span><br />
+								<span class="noteText" style="font-size: 11px;">** Only list Expense Types that are
+									considered Debt, where the debt is borrowed (Loans) or lines of credit (Credit
+									Cards/Lines of Credit), and Expenses that are court ordered/mandatory like child
+									support/alimony. Do not include living expenses like utilities, water, phone,
+									cable, etc.</span>
+							</div>
+							<div class="tab-container">
+								<lightning-input class="ExpenseInfo"
+									label="Outstanding Loans (Average Monthly Payment Amount)" type="number"
+									formatter="currency" data-field-api-name="Outstanding_Loans_Expenses__c"
+									value={NewLoanApplicant.Outstanding_Loans_Expenses__c}
+									onchange={calculateTotalExpenses}>
+								</lightning-input>
+								<lightning-input class="ExpenseInfo"
+									label="Credit Cards (Average Monthly Payment Amount)" type="number"
+									formatter="currency" data-field-api-name="Credit_Cards_Expenses__c"
+									value={NewLoanApplicant.Credit_Cards_Expenses__c} onchange={calculateTotalExpenses}>
+								</lightning-input>
+								<lightning-input class="ExpenseInfo"
+									label="Lines of Credit (Average Monthly Payment Amount)" type="number"
+									formatter="currency" data-field-api-name="Lines_of_Credit_Expenses__c"
+									value={NewLoanApplicant.Lines_of_Credit_Expenses__c}
+									onchange={calculateTotalExpenses}>
+								</lightning-input>
+								<lightning-input class="ExpenseInfo" label="Alimony (Average Monthly Payment Amount)"
+									type="number" formatter="currency" value={NewLoanApplicant.Alimony_Expenses__c}
+									data-field-api-name="Alimony_Expenses__c" onchange={calculateTotalExpenses}>
+								</lightning-input>
+								<lightning-input class="ExpenseInfo"
+									label="Child Support (Average Monthly Payment Amount)" type="number"
+									formatter="currency" data-field-api-name="Child_Support_Expenses__c"
+									value={NewLoanApplicant.Child_Support_Expenses__c}
+									onchange={calculateTotalExpenses}>
+								</lightning-input>
+								<lightning-input class="ExpenseInfo"
+									label="Other Expenses (Average Monthly Payment Amount)" type="number"
+									formatter="currency" data-field-api-name="Other_Expenses__c"
+									value={NewLoanApplicant.Other_Expenses__c} onchange={calculateTotalExpenses}>
+								</lightning-input>
+
+								<lightning-input name="MonthlyExpenseAmount"
+									value={NewLoanApplicant.Monthly_Expenses_Amount__c} type="number"
+									formatter="currency" data-field-api-name="Monthly_Expenses_Amount__c"
+									label="Monthly Expenses Amount" read-only="true"></lightning-input>
+
+								<div class="slds-align_absolute-center button-pannel" style="height:5rem;">
+
+									<lightning-button variant="brand" label="Save and Next" title="Next"
+										value="IncomeInfo" onclick={saveApplicantExpense}></lightning-button>
+								</div>
+							</div>
+
+						</lightning-tab>
+						<lightning-tab label="Applicant Consent" value="8">
+
+							<div class="slds-text-color_weak slds-text-align_center 
+                                            slds-text-heading_small">
+								Applicant Consent <br />
+								<div class="tab-container">
+									<template for:each={DeclarationQuestions} for:item="ques">
+										<div key={ques.id} if:false={ques.ApplicationQuestion}>
+											{ques.Description}
+											<div>
+												<div class="slds-clearfix" if:true={ques.Answer}>
+													<div class="slds-float--left slds-var-m-around_small">
+														<label for={ques.Loan_Declaration_Field}>Yes</label>
+														<br>
+														<input type="radio" id={ques.Loan_Declaration_Field}
+															name={ques.Loan_Declaration_Field} onchange={onGroup}
+															class="slds-radio applicantDeclaration">
+													</div>
+													<div class="slds-float--left slds-var-m-around_small">
+														<label for={ques.Loan_Declaration_Field}>No</label>
+														<br>
+														<input type="radio" id={ques.Loan_Declaration_Field}
+															name={ques.Loan_Declaration_Field} onchange={onGroup}
+															class="slds-radio">
+													</div>
+												</div>
+												<div class="slds-clearfix" if:false={ques.Answer}>
+													<div class="slds-float--left slds-var-m-around_small">
+														<label for={ques.Loan_Declaration_Field}>Yes</label>
+														<br>
+														<input type="radio" id={ques.Loan_Declaration_Field}
+															data-field-api-name={ques.Loan_Declaration_Field}
+															name={ques.Loan_Declaration_Field} onchange={onGroup}
+															class="slds-radio applicantDeclaration">
+													</div>
+													<div class=" slds-float--left slds-var-m-around_small">
+														<label for={ques.Loan_Declaration_Field}>No</label>
+														<br>
+														<input type="radio" id={ques.Loan_Declaration_Field}
+															data-field-api-name={ques.Loan_Declaration_Field}
+															name={ques.Loan_Declaration_Field} checked
+															onchange={onGroup} class="slds-radio">
+													</div>
+												</div>
+											</div>
+										</div>
+									</template>
+									<div class="slds-align_absolute-center  button-pannel">
+										<div class="slds-align_absolute-center  button-pannel" style="height:5rem;">
+											<lightning-button class="slds-var-m-right_small" data-action="AddCoBorrower"
+												variant="brand" label="Add Co-Borrower" title="AddCoBorrower"
+												onclick={saveApplicantConsent}></lightning-button>
+
+											<lightning-button variant="brand" data-action="PreAppSubmit"
+												label="Submit PreApp" title="PreAppSubmit"
+												onclick={saveApplicantConsent}></lightning-button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</lightning-tab>
+					</lightning-tabset>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div if:true={isShowCertificationForm}>
+		<section style="background: rgba(0,0,0,0.5);" role="dialog"
+			class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<lightning-button-icon class="slds-button slds-button_icon slds-modal__close"
+						icon-name="utility:close" alternative-text="close!"
+						onclick={hideCertificationForm}></lightning-button-icon>
+					<h2 class="slds-modal__title slds-hyphenate">Certifications And Authorizations</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium">
+
+					<lightning-formatted-rich-text
+						value={ConsumerLoanProgram.Certification_Description__c}></lightning-formatted-rich-text>
+					<br />
+					<div class="slds-grid">
+						<lightning-input class="certificationqes" data-field-api-name="I_Accept__c" data-checkbox="true"
+							type="checkbox" label="I accept" checked={ApplicationQuestion.I_Accept__c}
+							name="Iaccept"></lightning-input>
+					</div>
+					<br />
+					<div class="slds-grid slds-gutters">
+						<div class="slds-col">
+
+							<lightning-input type="text" label="Name" value={applicationQuestion}
+								class="certificationqes"
+								data-field-api-name="Name_On_Certification__c"></lightning-input>
+						</div>
+						<div class="slds-col">
+							<lightning-input class="certificationqes" data-field-api-name="BirthDate__c" type="date"
+								value={ApplicationQuestion.BirthDate__c} label="Date of Birth">
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+				<footer class="slds-modal__footer">
+					<lightning-button variant="neutral" label="Cancel" title="Cancel"
+						onclick={hideCertificationForm}></lightning-button>
+					<lightning-button variant="brand" label="Save" title="Save"
+						onclick={saveCertificationForm}></lightning-button>
+				</footer>
+			</div>
+		</section>
+	</div>
+</template>

@@ -1,0 +1,74 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="ListViewController">
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/> 
+    <aura:attribute name="listApplications" type="object" /> 
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="page-section-box">
+        <div class="card-wrapper">
+            <lightning:card variant="Narrow" title="My Applications" iconName="custom:custom18" >
+                <span class="slds-var-p-right_x-small uiOutputText forceBreadCrumbItem sub-title-tx">Loan Application</span>
+                <aura:set attribute="actions"> 
+                    <lightning:button label="New application" iconName="utility:add" 
+                                      iconPosition="left" onclick="{!c.handleNewApplication}" />
+                    
+                </aura:set>
+                
+                <p class="">                                
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered add-col-padding" style="table-layout: fixed;">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Date">Date</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Type">Type</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Details">Details</div>
+                                </th>                    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.listApplications}" var="app" indexVar="indx">
+                                <tr class="slds-hint-parent">
+                                    <th>
+                                        <div class="slds-truncate"><ui:outputDate value="{!app.CreatedDate}" format="MM/dd/yyyy" /></div>
+                                    </th>
+                                    <td>
+                                        <div class="slds-truncate"> {!app.Loan_Program__r.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate"> {!app.Status__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">
+                                            <a href="" style="color: #00B085;" onclick="{!c.handleEditApplication}"
+                                               data-row="{!indx}">View Application</a>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>                                         
+                                
+                            </aura:iteration>
+                            
+                        </tbody>
+                    </table>            
+                </p>
+            </lightning:card>                         
+        </div>
+    </div>
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container loaderbg"> 
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+</aura:component>

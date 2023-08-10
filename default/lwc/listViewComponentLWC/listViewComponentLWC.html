@@ -1,0 +1,69 @@
+<!--
+  @description       : 
+  @author            : 'Amol K'
+  @group             : 
+  @last modified on  : 04-25-2023
+  @last modified by  : 
+-->
+<template>
+  <div if:true={isLoaded}>
+    <lightning-spinner
+      alternative-text="Loading"
+      variant="brand"
+      size="medium"
+    ></lightning-spinner>
+  </div>
+  <div if:false={isLoaded} style="box-shadow: 1px 1px 15px #8ca3b7">
+    <lightning-card icon-name={iconName} title={titleOverride}>
+      <div class="page-section-box">
+        <template if:true={actionUrl}>
+          <lightning-button
+            class="action-button"
+            label={actionLabel}
+            icon-name="utility:add"
+            icon-position="left"
+            onclick={handleNavigationAction}
+          >
+          </lightning-button>
+        </template>
+        <template if:true={displayListView}>
+          <!-- DESKTOP -->
+          <template if:false={isMobile}>
+            <div>
+              <div
+                style="max-height: 200px; overflow-y: scroll"
+                if:true={newCaseList}
+              >
+                <lightning-datatable
+                  key-field="id"
+                  data={newCaseList}
+                  columns={column}
+                  hide-checkbox-column="true"
+                >
+                </lightning-datatable>
+              </div>
+            </div>
+          </template>
+          <!-- MOBILE -->
+          <template if:true={isMobile}>
+            <c-custom-related-list
+              list-view-api-name={listViewAPIName}
+              record-id={contactId}
+              object-a-p-i-name={objectAPIName}
+              title-override={titleOverride}
+              type={type}
+              url-prefix={urlPrefix}
+            >
+            </c-custom-related-list>
+          </template>
+        </template>
+      </div>
+      <div
+        class="slds-var-m-around_large slds-align_absolute-center"
+        if:false={isData}
+      >
+        <p>No items to display.</p>
+      </div>
+    </lightning-card>
+  </div>
+</template>

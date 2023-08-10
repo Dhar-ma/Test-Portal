@@ -1,0 +1,58 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : 'Amol K'
+  @group             : 
+  @last modified on  : 02-03-2023
+  @last modified by  : 'Amol K'
+-->
+<template>
+
+    <div if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+    </div>
+
+    <div if:false={isLoaded}>
+        <div if:true={showSelectLoanType}>
+            <fieldset class="slds-form-element">
+                <div
+                    class="slds-text-heading_large slds-text-align_center slds-m-top_small slds-m-bottom_small slds-text-color_default">
+                    Select Loan Type
+                </div>
+                <div class="slds-form-element__control form-content">
+                    <template for:each={LoanTypes} for:item="type">
+                        <div key={type} class="slds-visual-picker slds-visual-picker_vertical">
+                            <input type="radio" id={type} value={type} name="loanType" onclick={showLoanSelection} />
+                            <label for={type}>
+                                <span
+                                    class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                                    <span>
+                                        <span class="slds-text-heading_medium slds-m-bottom_x-small">{type}</span>
+                                    </span>
+                                </span>
+                                <span class="slds-icon_container slds-visual-picker__text-check check-icn">
+                                    <lightning-icon variant="inverse" size="xx-small"
+                                        icon-name="utility:check"></lightning-icon>
+                                </span>
+                            </label>
+                        </div>
+                    </template>
+                </div>
+            </fieldset>
+            <div class="slds-text-align_center">
+                <lightning-button variant="brand" label="Next" title="Next"
+                    onclick={showSelectedLoanProgram}></lightning-button>
+            </div>
+        </div>
+
+        <div if:true={isMortage}>
+            <c-mortgage-loan-application-lwc></c-mortgage-loan-application-lwc>
+        </div>
+        <div if:true={isConsumer}>
+            <c-auto-loan-program-lwc></c-auto-loan-program-lwc>
+        </div>
+        <div if:true={isBusiness}>
+            <c-business-loan-form-lwc></c-business-loan-form-lwc>
+        </div>
+    </div>
+</template>
